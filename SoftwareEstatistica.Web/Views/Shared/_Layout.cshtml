@@ -7,50 +7,20 @@
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="~/lib/materialize/css/materialize.min.css"  media="screen,projection"/>
-    <link type="text/css" rel="stylesheet" href="~/lib/devboxmessages/devBox.message.css"/>
+    <link type="text/css" rel="stylesheet" href="~/lib/devboxmessages/css/devBox.message.css"/>
     <link type="text/css" rel="stylesheet" href="~/css/site.css"/>
 </head>
 <body>
-  <ul id="slide-out" class="sidenav sidenav-fixed blue-grey darken-3">
-      <li class="no-padding">
-        <ul class="collapsible collapsible-accordion">
-          <li>
-          <a class="collapsible-header white-text">Técnicas de Amostragem<i class="material-icons right white-text">zoom_in</i></a>
-          <div class="collapsible-body blue-grey darken-1">
-            <ul>
-              <li><a href="#!" class="white-text">Aleatória</a></li>
-              <li><a href="#!" class="white-text">Uniforme</a></li>
-              <li><a href="#!" class="white-text">Proporcional</a></li>
-              <li><a href="#!" class="white-text">Sistemática</a></li>
-            </ul>
-          </div>
-          </li>
-        </ul>
-      </li>
-      <li class="no-padding">
-          <ul class="collapsible collapsible-accordion">
-          <li>
-            <a class="collapsible-header white-text">Variaveis Quantitativas<i class="material-icons right white-text">zoom_in</i></a>
-            <div class="collapsible-body blue-grey darken-1">
-              <ul>
-                <li><a href="#!" class="white-text">Discreta</a></li>
-                <li><a href="#!" class="white-text">Contínua</a></li>
-              </ul>
-            </div>
-          </li>
-        </ul>
-      </li>
-      <li><a href="#!" id="varQualitativa" class="white-text">Variaveis Qualitativas</a></li>
-    </ul>
-    <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-
     @RenderBody()
+    
+    <div id="corpoSite"></div>
     
     <script type="text/javascript" src="~/lib/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="~/lib/materialize/js/materialize.min.js"></script>
-    <script type="text/javascript" src="~/lib/devboxmessages/jquery.devBox.message.js"></script>
+    <script type="text/javascript" src="~/lib/devboxmessages/js/jquery.devBox.message.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
     <script type="text/javascript" src="~/js/inicializacoes.js"></script>
+    <script type="text/javascript" src="~/js/sideNav.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
