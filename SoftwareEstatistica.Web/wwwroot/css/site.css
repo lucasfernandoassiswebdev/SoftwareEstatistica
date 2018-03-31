@@ -1,3 +1,7 @@
+.chips .input {
+    width: 122px !important;
+}
+
 .sidenav li>a {
     padding: 0 16px !important;
 }

@@ -35,7 +35,7 @@
         </div>
         </div>
     </form>
-    <div id="resultados"></div>
+    <div id="resultados" style="display: none"></div>
 </div>
 
 @section Scripts{
@@ -57,7 +57,22 @@
             .blur(HabilitaDesabilita);
 
         $("#btnEnviaDados").click(function(){
-            $.get("").done().error();
+            var dadosColetados = [];
+
+            var instance = M.Chips.getInstance($(".chips")).chipsData;
+
+            instance.forEach(function(item){
+                dadosColetados.push(item.tag);
+            });
+
+            $.get("/Qualitativas/Rol",{
+                dadosColetados: dadosColetados
+            }).done(function(data){
+                $("#resultados").html(data).slideDown("fast");
+            }).error(function(xhr){
+                M.Toast.dismissAll();    
+                M.toast({html: xhr.responseText, inDuration: 5000});
+            });
         });
 
         function ExibeAjuda(){

@@ -1,0 +1,10 @@
+@{ Layout = null; }
+@model IEnumerable<string> dadosColetados
+
+
+@section Scripts{
+    <script>
+        var dadosColetados = @Model;
+        console.log(dadosColetados);        
+    </script>
+}
