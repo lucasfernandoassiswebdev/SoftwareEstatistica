@@ -1,8 +1,8 @@
-<div class="row">
+<div class="row center">
     <form class="col s12">
         <p>
             <label>
-                <input type="radio" name="radioTipo" value="A" checked/>
+                <input type="radio" name="radioTipo" value="A"/>
                 <span>Amostra</span>
             </label>
             <label>
@@ -10,11 +10,19 @@
                 <span>Populacao</span>
             </label>
         </p>
+        <div id="textAreaVariaveis" style="display: none" class="col s6 offset-s3">
+             <div class="chips">
+                 <p class="caption">Digite os dados abaixo.</p>
+             </div>
+             <a class="waves-effect waves-light btn right blue-grey darken-2 disabled"><i class="material-icons right">send</i>Enviar</a>
+        </div>
     </form>
 </div>
 
 @section Scripts{
     <script type="text/javascript">
-        
+        $("input[name=radioTipo]").change(function(){
+           $("#textAreaVariaveis").slideDown("fast"); 
+        });
     </script>
 }
