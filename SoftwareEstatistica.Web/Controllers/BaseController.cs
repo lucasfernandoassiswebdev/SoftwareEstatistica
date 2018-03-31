@@ -17,7 +17,7 @@ namespace SoftwareEstatistica.Web.Controllers
 
         public IActionResult Error(string message)
         {
-            return Content(HttpStatusCode.BadRequest, message != null ? message : "Algo deu errado na sua solicitação :(");
+            return Content(HttpStatusCode.BadRequest, message ?? "Algo deu errado na sua solicitação :(");
         }
     }
 }
