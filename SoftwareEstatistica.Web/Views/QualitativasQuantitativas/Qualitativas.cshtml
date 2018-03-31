@@ -14,7 +14,7 @@
         <div id="textAreaVariaveis" style="display: none" class="col s6 offset-s3">
             <div id="warningsVariaveis"></div>
             <div class="chips center">
-                <i class="material-icons right" style="cursor:pointer" onclick="ExibeAjuda()">help</i>
+                <i class="material-icons right tooltipped" data-tooltip="Ajuda" data-position="left" onclick="ExibeAjuda()" style="cursor:pointer">help</i>
                 <p>Digite os dados abaixo.</p>
             </div>
             <a class="waves-effect waves-light btn right blue-grey darken-2 disabled" style="margin-bottom:10px;">
@@ -39,6 +39,7 @@
         });
 
         function ExibeAjuda(){
+            M.Toast.dismissAll();
             M.toast({html: "Use a tecla 'Enter' para inserir os dados", inDuration: 5000});
             M.toast({html: "Use pontos ou vírgulas para numeros decimais", inDuration: 5000});
         }
