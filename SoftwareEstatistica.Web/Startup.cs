@@ -47,7 +47,7 @@ namespace SoftwareEstatistica.Web
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Base/Error");
             }
 
             app.UseStaticFiles();
