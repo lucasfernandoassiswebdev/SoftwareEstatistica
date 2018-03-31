@@ -2,7 +2,11 @@
     padding: 0 16px !important;
 }
 
-
+@media only screen and (min-width: 993px){
+    #toast-container {
+        right: 1% !important;
+    }
+}
 
 [type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:after {
     background-color: #455a64 !important

@@ -10,19 +10,37 @@
                 <span>Populacao</span>
             </label>
         </p>
+        
         <div id="textAreaVariaveis" style="display: none" class="col s6 offset-s3">
-             <div class="chips">
-                 <p class="caption">Digite os dados abaixo.</p>
-             </div>
-             <a class="waves-effect waves-light btn right blue-grey darken-2 disabled"><i class="material-icons right">send</i>Enviar</a>
+            <div id="warningsVariaveis"></div>
+            <div class="chips center">
+                <i class="material-icons right" style="cursor:pointer" onclick="ExibeAjuda()">help</i>
+                <p>Digite os dados abaixo.</p>
+            </div>
+            <a class="waves-effect waves-light btn right blue-grey darken-2 disabled" style="margin-bottom:10px;">
+                <i class="material-icons right">send</i>
+                Enviar
+            </a>
         </div>
     </form>
 </div>
 
 @section Scripts{
     <script type="text/javascript">
+        var primeiraVez = true;
+
         $("input[name=radioTipo]").change(function(){
            $("#textAreaVariaveis").slideDown("fast"); 
+
+            if(primeiraVez){
+                ExibeAjuda();
+                primeiraVez = false;
+            }
         });
+
+        function ExibeAjuda(){
+            M.toast({html: "Use a tecla 'Enter' para inserir os dados", inDuration: 5000});
+            M.toast({html: "Use pontos ou vírgulas para numeros decimais", inDuration: 5000});
+        }
     </script>
 }
