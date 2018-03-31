@@ -1,10 +1,7 @@
 @{ Layout = null; }
-@model IEnumerable<string> dadosColetados
+@model IEnumerable<string>
 
+<script>
+    var dados = '@Model.FirstOrDefault()'.replace(/&quot;/g,"");
 
-@section Scripts{
-    <script>
-        var dadosColetados = @Model;
-        console.log(dadosColetados);        
-    </script>
-}
+</script>

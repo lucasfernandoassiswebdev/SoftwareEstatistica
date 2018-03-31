@@ -41,32 +41,25 @@
 @section Scripts{
     <script type="text/javascript">
         var primeiraVez = true;
-
         $("input[name=radioTipo]").change(function(){
            $("#hiddenInputs").slideDown("fast"); 
-
             if(primeiraVez){
                 ExibeAjuda()    ;
                 primeiraVez = false;
             }
         });
-
         $("#varPesquisada, #divChips input")
             .keyup(HabilitaDesabilita)
             .change(HabilitaDesabilita)
             .blur(HabilitaDesabilita);
-
         $("#btnEnviaDados").click(function(){
             var dadosColetados = [];
-
             var instance = M.Chips.getInstance($(".chips")).chipsData;
-
             instance.forEach(function(item){
                 dadosColetados.push(item.tag);
             });
-
             $.get("/Qualitativas/Rol",{
-                dadosColetados: dadosColetados
+                dadosColetados: JSON.stringify(dadosColetados)
             }).done(function(data){
                 $("#resultados").html(data).slideDown("fast");
             }).error(function(xhr){
@@ -74,13 +67,11 @@
                 M.toast({html: xhr.responseText, inDuration: 5000});
             });
         });
-
         function ExibeAjuda(){
             M.Toast.dismissAll();
             M.toast({html: "Use a tecla 'Enter' para inserir os dados", inDuration: 5000});
             M.toast({html: "Use pontos ou vírgulas para numeros decimais", inDuration: 5000});
         }
-
         function HabilitaDesabilita(){
             if($("#varPesquisada").val() && $("#divChips .chip").length > 0)
                 $("#btnEnviaDados").removeClass("disabled");

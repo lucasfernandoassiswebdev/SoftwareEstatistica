@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace SoftwareEstatistica.Web.Controllers
 {
