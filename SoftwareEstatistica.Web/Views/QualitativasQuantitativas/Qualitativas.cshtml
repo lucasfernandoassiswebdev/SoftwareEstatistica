@@ -94,7 +94,10 @@
                 ordenar: ""
             }).done(function(data){
                 $(".rowAdicionada").remove();
-                $("#resultados").html(data).slideDown("fast");
+                
+                $("#resultados").slideUp("fast",function(){
+                    $(this).html(data).slideDown("fast");
+                }) 
             }).error(function(xhr){
                 M.Toast.dismissAll();  
                 M.toast({ html: xhr.responseText });
