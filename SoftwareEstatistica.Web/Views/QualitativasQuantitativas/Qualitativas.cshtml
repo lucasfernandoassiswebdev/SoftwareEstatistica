@@ -1,46 +1,51 @@
 <div class="row center">
-    <form class="col s12">
-        <div class="row">
-            <p>
-                <label>
-                    <input type="radio" name="radioTipo" value="A"/>
-                    <span>Amostra</span>
-                </label>
-                <label>
-                    <input type="radio" name="radioTipo" value="P"/>
-                    <span>Populacao</span>
-                </label>
-            </p>
-        </div>
-        <div style="display: none" id="hiddenInputs">
+    <form class="col s8 offset-s2">
+        <div class="areaDados">
             <div class="row">
-                <div class="input-field col s6 offset-s3">
-                    <input id="varPesquisada" type="text">
-                    <label for="varPesquisada">Variável Pesquisada:</label>
+                <p>
+                    <label>
+                        <input type="radio" name="radioTipo" value="A"/>
+                        <span>Amostra</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="radioTipo" value="P"/>
+                        <span>Populacao</span>
+                    </label>
+                </p>
+            </div>
+            <div style="display: none" id="hiddenInputs">
+                <div class="row">
+                    <div class="input-field col s10 offset-s1">
+                        <input id="varPesquisada" type="text">
+                        <label for="varPesquisada">Variável Pesquisada:</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s10 offset-s1">
+                        <div id="warningsVariaveis"></div>
+
+                        <i class="material-icons right tooltipped" data-tooltip="Ajuda" data-position="left" onclick="ExibeAjuda()" style="cursor:pointer">help</i>
+                        <p class="caption" style="text-align: left">Digite os dados abaixo.</p>
+                        <div class="chips input-field" style="text-align: left" id="divChips"></div>
+
+                        <a class="waves-effect waves-light btn right blue-grey darken-2 disabled" style="margin-bottom:10px;" id="btnEnviaDados">
+                            <i class="material-icons right">send</i>
+                            Enviar
+                        </a>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col s6 offset-s3">
-                    <div id="warningsVariaveis"></div>
-                    
-                    <i class="material-icons right tooltipped" data-tooltip="Ajuda" data-position="left" onclick="ExibeAjuda()" style="cursor:pointer">help</i>
-                    <p class="caption" style="text-align: left">Digite os dados abaixo.</p>
-                    <div class="chips input-field" style="text-align: left" id="divChips"></div>
-                    
-                    <a class="waves-effect waves-light btn right blue-grey darken-2 disabled" style="margin-bottom:10px;" id="btnEnviaDados">
-                        <i class="material-icons right">send</i>
-                        Enviar
-                    </a>
-                </div>
-        </div>
         </div>
     </form>
-    <div id="resultados" style="display: none"></div>
+</div>
+<div class="row center" style="padding: 0 10px">
+    <div id="resultados" class="col s8 offset-s2 areaDados" style="display: none;"></div>
 </div>
 
 @section Scripts{
     <script type="text/javascript">
         var primeiraVez = true;
+
         $("input[name=radioTipo]").change(function(){
            $("#hiddenInputs").slideDown("fast"); 
             if(primeiraVez){
@@ -48,30 +53,36 @@
                 primeiraVez = false;
             }
         });
+
         $("#varPesquisada, #divChips input")
             .keyup(HabilitaDesabilita)
             .change(HabilitaDesabilita)
             .blur(HabilitaDesabilita);
+
         $("#btnEnviaDados").click(function(){
-            var dadosColetados = [];
-            var instance = M.Chips.getInstance($(".chips")).chipsData;
+            var dadosColetados = [],
+                instance = M.Chips.getInstance($(".chips")).chipsData;
+
             instance.forEach(function(item){
                 dadosColetados.push(item.tag);
             });
+
             $.get("/Qualitativas/Rol",{
-                dadosColetados: JSON.stringify(dadosColetados)
+                jsonDadosColetados: JSON.stringify(dadosColetados)
             }).done(function(data){
                 $("#resultados").html(data).slideDown("fast");
             }).error(function(xhr){
-                M.Toast.dismissAll();    
+                M.Toast.dismissAll();  
                 M.toast({html: xhr.responseText, inDuration: 5000});
             });
         });
+
         function ExibeAjuda(){
             M.Toast.dismissAll();
             M.toast({html: "Use a tecla 'Enter' para inserir os dados", inDuration: 5000});
             M.toast({html: "Use pontos ou vírgulas para numeros decimais", inDuration: 5000});
         }
+
         function HabilitaDesabilita(){
             if($("#varPesquisada").val() && $("#divChips .chip").length > 0)
                 $("#btnEnviaDados").removeClass("disabled");

@@ -1,3 +1,9 @@
+.areaDados{
+    border: 2px solid black;
+    border-radius: 6px;
+    padding:10px 0;
+}
+
 .chips .input {
     width: 122px !important;
 }

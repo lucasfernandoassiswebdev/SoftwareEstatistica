@@ -10,8 +10,9 @@ namespace SoftwareEstatistica.Web.Controllers
         {
         }
 
-        public ActionResult Rol(IEnumerable<string> dadosColetados){
-            return View(dadosColetados);
+        public ActionResult Rol(string jsonDadosColetados){
+            ViewBag.Dados = jsonDadosColetados;
+            return View("Rol");
         }
     }
 }
