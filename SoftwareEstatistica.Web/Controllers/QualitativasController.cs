@@ -10,9 +10,15 @@ namespace SoftwareEstatistica.Web.Controllers
         {
         }
 
-        public ActionResult Rol(string jsonDadosColetados){
+        public ActionResult Rol(string jsonDadosColetados, string ordenar){
             ViewBag.Dados = jsonDadosColetados;
+            ViewBag.Ordenar = ordenar;
             return View("Rol");
+        }
+        
+        public ActionResult Ordinal(string jsonDadosColetados){
+            ViewBag.Dados = jsonDadosColetados;
+            return View();
         }
     }
 }

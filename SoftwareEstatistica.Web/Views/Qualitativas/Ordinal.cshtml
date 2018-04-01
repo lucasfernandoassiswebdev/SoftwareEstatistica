@@ -1,0 +1,80 @@
+@{ Layout = null; }
+
+<link type="text/css" rel="stylesheet" href="~/lib/jqueryui/css/jquery-ui.min.css">
+<link type="text/css" rel="stylesheet" href="~/lib/jqueryui/css/jquery-ui.structure.min.css">
+<link type="text/css" rel="stylesheet" href="~/lib/jqueryui/css/jquery-ui.theme.min.css">
+
+<i  class="material-icons right tooltipped" 
+    data-tooltip="Ajuda" 
+    data-position="left" 
+    onclick="ExibeAjudaOrdenacao()" 
+    style="cursor:pointer; margin-top: 10px;">help</i>
+<div class="row">
+    <div class="col s12">
+        <h4 style="text-align left">Ordenação</h4>    
+    </div>
+</div>
+<div class="row" style="padding: 0 50px;">
+    <ul id="sortable"></ul>
+</div>
+<div class="row">
+    <div class="col s12">
+        <a class="waves-effect waves-light btn right blue-grey darken-2" style="margin-bottom:10px;" id="btnContinuar">
+            <i class="material-icons right">send</i>
+            Continuar
+        </a>
+    </div>
+</div>
+<div class="row center" style="padding: 0 10px">
+    <div id="resultadosOrdenacao" class="col s8 offset-s2 areaDados" style="display: none;"></div>
+</div>
+
+<script type="text/javascript" src="~/lib/jqueryui/js/jquery-ui.min.js"></script>
+<script>
+    var dados = JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g,'"'))),
+        primeiraVez = true;
+
+    M.Tooltip.init($(".tooltipped"))
+
+    if(primeiraVez){
+        ExibeAjudaOrdenacao();
+        primeiraVez = false;
+    }
+
+    $("#btnContinuar").click(function(){
+        var dadosColetados = [];
+        
+        $("#sortable li span").each(function(){
+            dadosColetados.push($(this).html());
+        });
+
+        $.get("/Qualitativas/Rol", {
+                jsonDadosColetados: JSON.stringify(dadosColetados),
+                ordenar: "S"
+            }).done(function(data){
+                $("#resultadosOrdenacao").html(data).slideDown("fast");
+            }).error(function(xhr){
+                M.Toast.dismissAll();  
+                M.toast({ html: xhr.responseText });
+            });
+    });
+
+    dados.forEach(function(dado){
+        $("#sortable").append($("<li>", {
+            style: "height: 35px; padding-top: 5px",
+            class: "ui-state-default",
+            html: [$("<span>", {
+                style: "font-weight: normal",
+                html: dado
+            })]
+        }));
+    });
+
+    $("#sortable").sortable();
+
+    function ExibeAjudaOrdenacao(){
+        M.Toast.dismissAll();
+        M.toast({ html: "Arraste os itens para ordená-los" });
+        M.toast({ html: "Quando estiverem na ordem correta clique em continuar" });
+    }
+</script>
