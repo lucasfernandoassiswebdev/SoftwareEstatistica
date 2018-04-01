@@ -1,5 +1,10 @@
 <div class="row center">
     <form class="col s8 offset-s2">
+        <i  class="material-icons right tooltipped" 
+            data-tooltip="Ajuda" 
+            data-position="left" 
+            onclick="ExibeAjuda()" 
+            style="cursor:pointer; margin-top: 10px; margin-right: 10px">help</i>
         <div class="areaDados">
             <div class="row">
                 <p>
@@ -24,11 +29,6 @@
                     <div class="col s10 offset-s1">
                         <div id="warningsVariaveis"></div>
 
-                        <i  class="material-icons right tooltipped" 
-                            data-tooltip="Ajuda" 
-                            data-position="left" 
-                            onclick="ExibeAjuda()" 
-                            style="cursor:pointer; margin-top: 10px; margin-right: 10px">help</i>
                         <p class="caption" style="text-align: left">Digite os dados abaixo.</p>
                         <div class="chips input-field" style="text-align: left" id="divChips"></div>
 
@@ -77,6 +77,15 @@
                 jsonDadosColetados: JSON.stringify(dadosColetados)
             }).done(function(data){
                 $("#rol").html(data).slideDown("fast");
+            }).error(function(xhr){
+                M.Toast.dismissAll();  
+                M.toast({ html: xhr.responseText });
+            });
+
+            $.get("/QualitativasQuantitativas/Tabela",{
+                jsonDadosColetados: JSON.stringify(dadosColetados.sort(function(a, b){return a-b}))
+            }).done(function(data){
+                $("#tabela").html(data).slideDown("fast");
             }).error(function(xhr){
                 M.Toast.dismissAll();  
                 M.toast({ html: xhr.responseText });

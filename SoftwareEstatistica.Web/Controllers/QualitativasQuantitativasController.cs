@@ -15,5 +15,10 @@ namespace SoftwareEstatistica.Web.Controllers
         public ActionResult Quantitativas(){
             return View();
         }
+        
+        public ActionResult Tabela(string jsonDadosColetados){            
+            ViewBag.Dados = jsonDadosColetados;
+            return View();
+        }
     }
 }
