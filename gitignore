@@ -1,2 +1,5 @@
 project.assets.json
-obj/*
+[Oo]bj/
+[Bb]in/
+.vscode
+*.user
