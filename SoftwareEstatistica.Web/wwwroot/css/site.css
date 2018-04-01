@@ -15,7 +15,7 @@
     font-size: 30px;
 }
 
-td, th{
+table:not(.tabela) tr td, table:not(.tabela) tr th:not(.tabela){
     padding: 10px 10px !important;
     text-align: center !important;
     font-size: 30px;

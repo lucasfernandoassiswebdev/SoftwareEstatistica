@@ -74,7 +74,7 @@
             });
 
             $.get("/Quantitativas/Rol",{
-                jsonDadosColetados: JSON.stringify(dadosColetados)
+                jsonDadosColetados: JSON.stringify(dadosColetados.sort(function(a, b){return a-b}))
             }).done(function(data){
                 $("#rol").html(data).slideDown("fast");
             }).error(function(xhr){
