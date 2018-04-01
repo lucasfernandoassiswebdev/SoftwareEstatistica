@@ -6,6 +6,15 @@
     top: -9cd 0px !important;
 }
 
+.scope_quantitativa{
+    height: 100px;    
+}
+
+.dados{
+    margin: 0 40px;
+    font-size: 30px;
+}
+
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active{
     border: 1px solid #37474f !important;
     background: #455a64 !important;

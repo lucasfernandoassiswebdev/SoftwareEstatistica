@@ -13130,11 +13130,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\joyls\\Desktop\\Escola\\SoftwareEstatistica\\SoftwareEstatistica.Web\\SoftwareEstatistica.Web.csproj",
+      "projectUniqueName": "c:\\Users\\joyls\\Desktop\\Escola\\SoftwareEstatistica\\SoftwareEstatistica.Web\\SoftwareEstatistica.Web.csproj",
       "projectName": "SoftwareEstatistica.Web",
-      "projectPath": "C:\\Users\\joyls\\Desktop\\Escola\\SoftwareEstatistica\\SoftwareEstatistica.Web\\SoftwareEstatistica.Web.csproj",
+      "projectPath": "c:\\Users\\joyls\\Desktop\\Escola\\SoftwareEstatistica\\SoftwareEstatistica.Web\\SoftwareEstatistica.Web.csproj",
       "packagesPath": "C:\\Users\\joyls\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\joyls\\Desktop\\Escola\\SoftwareEstatistica\\SoftwareEstatistica.Web\\obj\\",
+      "outputPath": "c:\\Users\\joyls\\Desktop\\Escola\\SoftwareEstatistica\\SoftwareEstatistica.Web\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
