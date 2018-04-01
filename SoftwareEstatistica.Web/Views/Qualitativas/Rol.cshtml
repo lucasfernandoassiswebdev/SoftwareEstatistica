@@ -1,6 +1,6 @@
 @{ Layout = null; }
 
-<div class="col s10 offset-s1">
+<div class="col s10 offset-s1" style="max-height: 500px; overflow:auto;">
     <h5 class="left">Dados ordenados</h5>
     <table class="highlight" id="dadosOrdenados" style="margin-bottom: 30px"></table>
 </div>
@@ -27,7 +27,7 @@
     });
 
     $.get("/QualitativasQuantitativas/Tabela",{
-        dadosOrdenados: dadosOrdenados
+        jsonDadosColetados: JSON.stringify(dadosOrdenados)
     }).done(function(data){
         $("#resultados").parent().parent().append($("<div>",{
             class: "row center rowAdicionada",
@@ -38,6 +38,8 @@
                         html:  [data]
                     })]
         }));
+
+        $(".areaDados:last-child").slideDown("fast");
     }).error(function(xhr){
         M.Toast.dismissAll();  
         M.toast({ html: xhr.responseText });

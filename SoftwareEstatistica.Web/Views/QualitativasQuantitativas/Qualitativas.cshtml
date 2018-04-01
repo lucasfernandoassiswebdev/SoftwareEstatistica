@@ -80,14 +80,14 @@
             .blur(HabilitaDesabilita);
 
         $("#btnEnviaDados").click(function(){
-            var dadosColetados = [],
+            let dadosColetados = [],
                 instance = M.Chips.getInstance($(".chips")).chipsData;
 
             instance.forEach(function(item){
                 dadosColetados.push(item.tag);
             });
 
-            var url = $("input[name=radioTipoQualitativa]:checked").val() == "N" ? "/Qualitativas/Rol" : "/Qualitativas/Ordinal";
+            let url = $("input[name=radioTipoQualitativa]:checked").val() == "N" ? "/Qualitativas/Rol" : "/Qualitativas/Ordinal";
 
             $.get(url, {
                 jsonDadosColetados: JSON.stringify(dadosColetados),
