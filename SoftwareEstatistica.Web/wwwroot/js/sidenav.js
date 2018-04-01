@@ -6,3 +6,12 @@ $("#varQualitativa").click(function () {
         M.toast({ html: xhr.responseText });
     });
 });
+
+$("#varDiscreta").click(function () {
+    $.get("/QualitativasQuantitativas/Quantitativas").done(function (data) {
+        $("#corpoSite").html(data);
+    }).error(function (xhr) {
+        M.Toast.dismissAll();
+        M.toast({ html: xhr.responseText });
+    });
+});

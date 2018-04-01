@@ -10,3 +10,15 @@ C:\Users\LUCASFERNANDODEASSIS\Desktop\Projetos\ASP\SoftwareEstatistica\SoftwareE
 C:\Users\LUCASFERNANDODEASSIS\Desktop\Projetos\ASP\SoftwareEstatistica\SoftwareEstatistica.Web\obj\Debug\netcoreapp2.0\SoftwareEstatistica.Web.AssemblyInfo.cs
 C:\Users\LUCASFERNANDODEASSIS\Desktop\Projetos\ASP\SoftwareEstatistica\SoftwareEstatistica.Web\obj\Debug\netcoreapp2.0\SoftwareEstatistica.Web.dll
 C:\Users\LUCASFERNANDODEASSIS\Desktop\Projetos\ASP\SoftwareEstatistica\SoftwareEstatistica.Web\obj\Debug\netcoreapp2.0\SoftwareEstatistica.Web.pdb
+C:\Users\joyls\Desktop\Escola\SoftwareEstatistica\SoftwareEstatistica.Web\bin\Debug\netcoreapp2.0\app.db
+C:\Users\joyls\Desktop\Escola\SoftwareEstatistica\SoftwareEstatistica.Web\bin\Debug\netcoreapp2.0\SoftwareEstatistica.Web.deps.json
+C:\Users\joyls\Desktop\Escola\SoftwareEstatistica\SoftwareEstatistica.Web\bin\Debug\netcoreapp2.0\SoftwareEstatistica.Web.runtimeconfig.json
+C:\Users\joyls\Desktop\Escola\SoftwareEstatistica\SoftwareEstatistica.Web\bin\Debug\netcoreapp2.0\SoftwareEstatistica.Web.runtimeconfig.dev.json
+C:\Users\joyls\Desktop\Escola\SoftwareEstatistica\SoftwareEstatistica.Web\bin\Debug\netcoreapp2.0\SoftwareEstatistica.Web.dll
+C:\Users\joyls\Desktop\Escola\SoftwareEstatistica\SoftwareEstatistica.Web\bin\Debug\netcoreapp2.0\SoftwareEstatistica.Web.pdb
+C:\Users\joyls\Desktop\Escola\SoftwareEstatistica\SoftwareEstatistica.Web\obj\Debug\netcoreapp2.0\SoftwareEstatistica.Web.csproj.CoreCompileInputs.cache
+C:\Users\joyls\Desktop\Escola\SoftwareEstatistica\SoftwareEstatistica.Web\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+C:\Users\joyls\Desktop\Escola\SoftwareEstatistica\SoftwareEstatistica.Web\obj\Debug\netcoreapp2.0\SoftwareEstatistica.Web.AssemblyInfoInputs.cache
+C:\Users\joyls\Desktop\Escola\SoftwareEstatistica\SoftwareEstatistica.Web\obj\Debug\netcoreapp2.0\SoftwareEstatistica.Web.AssemblyInfo.cs
+C:\Users\joyls\Desktop\Escola\SoftwareEstatistica\SoftwareEstatistica.Web\obj\Debug\netcoreapp2.0\SoftwareEstatistica.Web.dll
+C:\Users\joyls\Desktop\Escola\SoftwareEstatistica\SoftwareEstatistica.Web\obj\Debug\netcoreapp2.0\SoftwareEstatistica.Web.pdb

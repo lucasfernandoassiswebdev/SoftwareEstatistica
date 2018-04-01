@@ -1,0 +1,26 @@
+@{ Layout = null; }
+
+<div class="col s10 offset-s1">
+    <h5 class="left">Rol</h5>
+    <table class="highlight" id="dadosOrdenados"></table>
+</div>
+
+<script>
+    var dadosOrdenados = JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g,'"'))).sort(function(a, b){return a-b}),
+        coluna = 0;
+
+    dadosOrdenados.forEach(function(dado,index){
+        if(index % 6 == 0 || index == 0){
+            $("#dadosOrdenados").append($("<tr>",{
+                html: [$("<td>"),$("<td>"),$("<td>"),$("<td>"),$("<td>"),$("<td>")]
+            }));
+
+            coluna = 0;
+        }
+
+        $("#dadosOrdenados tr:last-child td:eq("+coluna+")").html(dado);
+
+        if(coluna < 7)
+            coluna++;
+    });
+</script>
