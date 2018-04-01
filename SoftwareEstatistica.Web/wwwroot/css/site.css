@@ -1,3 +1,14 @@
+#divLoad{
+    padding-top: 23%;
+    top: 0;
+    display: none;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	background: rgba(0,0,0,0.2) ;
+	z-index: 1004;
+}
+
 .areaDados{
     border: 2px solid black;
     border-radius: 6px;
@@ -26,12 +37,12 @@
     border: 2px solid #37474f !important;
 }
 
-#corpoSite {
+#corpoSite, #divLoad {
     padding-left: 300px;
 }
 
 @media only screen and (max-width : 992px) {
-    #corpoSite {
+    #corpoSite, #divLoad {
       padding-left: 0;
     }
 }
