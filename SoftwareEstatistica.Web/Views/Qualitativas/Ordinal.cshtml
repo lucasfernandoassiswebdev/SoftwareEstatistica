@@ -25,9 +25,6 @@
         </a>
     </div>
 </div>
-<div class="row center" style="padding: 0 10px">
-    <div id="resultadosOrdenacao" class="col s8 offset-s2 areaDados" style="display: none;"></div>
-</div>
 
 <script type="text/javascript" src="~/lib/jqueryui/js/jquery-ui.min.js"></script>
 <script>
@@ -52,7 +49,22 @@
                 jsonDadosColetados: JSON.stringify(dadosColetados),
                 ordenar: "S"
             }).done(function(data){
-                $("#resultadosOrdenacao").html(data).slideDown("fast");
+                if($(".rowAdicionada").length == 0)
+                    $("#resultados").parent().parent().append($("<div>",{
+                        class: "row center rowAdicionada",
+                        style: "padding: 0 15px",
+                        html: [ $("<div>",{
+                                    class: "col s8 offset-s2 areaDados",
+                                    style: "display: none;",
+                                    html: [data]
+                                }) ]
+                    }));
+                else
+                    $(".rowAdicionada").slideUp("fast",function(){
+                        $(this).html(data).slideDown("fast");
+                    });
+
+                $(".areaDados:last-child").slideDown("fast");
             }).error(function(xhr){
                 M.Toast.dismissAll();  
                 M.toast({ html: xhr.responseText });
