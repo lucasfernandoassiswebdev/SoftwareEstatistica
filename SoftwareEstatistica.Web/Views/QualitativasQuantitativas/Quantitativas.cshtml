@@ -24,7 +24,11 @@
                     <div class="col s10 offset-s1">
                         <div id="warningsVariaveis"></div>
 
-                        <i class="material-icons right tooltipped" data-tooltip="Ajuda" data-position="left" onclick="ExibeAjuda()" style="cursor:pointer">help</i>
+                        <i  class="material-icons right tooltipped" 
+                            data-tooltip="Ajuda" 
+                            data-position="left" 
+                            onclick="ExibeAjuda()" 
+                            style="cursor:pointer; margin-top: 10px; margin-right: 10px">help</i>
                         <p class="caption" style="text-align: left">Digite os dados abaixo.</p>
                         <div class="chips input-field" style="text-align: left" id="divChips"></div>
 
@@ -49,7 +53,6 @@
         var primeiraVez = true;
 
         $("input[name=radioTipo]").change(function(){
-            alert("lucas gay");
            $("#hiddenInputs").slideDown("fast"); 
             if(primeiraVez){
                 ExibeAjuda()    ;
