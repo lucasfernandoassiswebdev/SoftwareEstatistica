@@ -9,7 +9,7 @@ namespace SoftwareEstatistica.Web.Controllers
         {
         }
 
-        protected ActionResult Content(HttpStatusCode status, string value = "")
+        protected ActionResult Content(HttpStatusCode status, string value)
         {
             Response.StatusCode = (int)status;
             return Content(value);
