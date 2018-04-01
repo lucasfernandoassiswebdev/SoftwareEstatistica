@@ -73,14 +73,14 @@
                 $("#resultados").html(data).slideDown("fast");
             }).error(function(xhr){
                 M.Toast.dismissAll();  
-                M.toast({html: xhr.responseText, inDuration: 5000});
+                M.toast({ html: xhr.responseText });
             });
         });
 
         function ExibeAjuda(){
             M.Toast.dismissAll();
-            M.toast({html: "Use a tecla 'Enter' para inserir os dados", inDuration: 5000});
-            M.toast({html: "Use pontos ou vírgulas para numeros decimais", inDuration: 5000});
+            M.toast({ html: "Use a tecla 'Enter' para inserir os dados" });
+            M.toast({ html: "Use pontos ou vírgulas para numeros decimais" });
         }
 
         function HabilitaDesabilita(){
