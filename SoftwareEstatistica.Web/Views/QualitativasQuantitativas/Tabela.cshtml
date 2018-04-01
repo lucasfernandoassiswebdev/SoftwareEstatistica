@@ -1,0 +1,24 @@
+@{ Layout = null; }
+
+<div class="col s10 offset-s1">
+    <h5 class="left">Tabela</h5>
+    <table class="highlight" id="dadosOrdenados"></table>
+</div>    
+<script>
+    let dadosOrdenados = JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g,'"')));
+    let objTabela = [];
+
+    for(let i = 0; i < dadosOrdenados.length; i++){
+        if(i == 0 || objTabela[objTabela.length - 1]['Vet'] != dadosOrdenados[i]){
+            objTabela.push({'Vet': dadosOrdenados[i], 'Fr': 1, 'FrP': 100, 'FrA': 1, 'FrAP': 100});
+        }else{
+            objTabela[objTabela.length - 1]['Fr']++;
+        }
+    }
+
+    objTabela.forEach(function(item){
+        let FrP = (item['Fr']*100)/dadosOrdenados.length;
+        console.log(dadosOrdenados.length);
+        console.log('Vetor: ' + item['Vet'] + ' Frequencia: ' + item['Fr'] + ' Frequencia %: ' + FrP.toFixed() + ' Frequencia Acumulada: ' + item['FrA'] + ' Frequencia Acumulda %: ' + item['FrAP']);
+    })
+</script>  

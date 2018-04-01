@@ -6,7 +6,7 @@
 </div>
 
 <script>
-    var dadosOrdenados = JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g,'"'))).sort(function(a, b){return a-b}),
+    var dadosOrdenados = JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g,'"'))),
         coluna = 0;
 
     dadosOrdenados.forEach(function(dado,index){
