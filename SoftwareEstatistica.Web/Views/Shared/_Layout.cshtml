@@ -8,16 +8,15 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="~/lib/materialize/css/materialize.min.css"  media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="~/css/site.css"/>
-    <link type="text/css" rel="stylesheet" href="~/css/site2.css"/>
 </head>
 <body>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
     <script type="text/javascript" src="~/lib/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="~/lib/materialize/js/materialize.js"></script>
-    <script type="text/javascript" src="~/js/inicializacoes.js"></script>
     <script type="text/javascript" src="~/js/loading.js"></script>
     
     @RenderBody()
+        <script type="text/javascript" src="~/js/inicializacoes.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
