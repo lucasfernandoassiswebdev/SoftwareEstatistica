@@ -25,4 +25,21 @@
         if(coluna < 7)
             coluna++;
     });
+
+    $.get("/QualitativasQuantitativas/Tabela",{
+        dadosOrdenados: dadosOrdenados
+    }).done(function(data){
+        $("#resultados").parent().parent().append($("<div>",{
+            class: "row center rowAdicionada",
+            style: "padding: 0 15px",
+            html:  [ $("<div>",{
+                        class: "col s8 offset-s2 areaDados",
+                        style: "display: none;",
+                        html:  [data]
+                    })]
+        }));
+    }).error(function(xhr){
+        M.Toast.dismissAll();  
+        M.toast({ html: xhr.responseText });
+    });
 </script>
