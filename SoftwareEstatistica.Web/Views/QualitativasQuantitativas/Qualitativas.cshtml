@@ -1,5 +1,10 @@
 <div class="row center">
     <form class="col s8 offset-s2">
+        <i  class="material-icons right tooltipped" 
+            data-tooltip="Ajuda" 
+            data-position="left" 
+            onclick="ExibeAjuda()" 
+            style="cursor:pointer; margin-top: 10px; margin-right: 10px">help</i>
         <div class="areaDados">
             <div class="row">
                 <p>
@@ -23,11 +28,24 @@
                 <div class="row">
                     <div class="col s10 offset-s1">
                         <div id="warningsVariaveis"></div>
-
-                        <i class="material-icons right tooltipped" data-tooltip="Ajuda" data-position="left" onclick="ExibeAjuda()" style="cursor:pointer">help</i>
                         <p class="caption" style="text-align: left">Digite os dados abaixo.</p>
                         <div class="chips input-field" style="text-align: left" id="divChips"></div>
-
+                    </div>
+                </div>
+                <div class="row">
+                    <p>
+                        <label>
+                            <input type="radio" name="radioTipoQualitativa" value="N" checked/>
+                            <span>Nominal</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="radioTipoQualitativa" value="O"/>
+                            <span>Ordinal</span>
+                        </label>
+                    </p>
+                </div>
+                <div class="row">
+                    <div class="col s10 offset-s1">
                         <a class="waves-effect waves-light btn right blue-grey darken-2 disabled" style="margin-bottom:10px;" id="btnEnviaDados">
                             <i class="material-icons right">send</i>
                             Enviar
@@ -38,7 +56,7 @@
         </div>
     </form>
 </div>
-<div class="row center" style="padding: 0 10px">
+<div class="row center" style="padding: 0 15px">
     <div id="resultados" class="col s8 offset-s2 areaDados" style="display: none;"></div>
 </div>
 
@@ -67,8 +85,11 @@
                 dadosColetados.push(item.tag);
             });
 
-            $.get("/Qualitativas/Rol",{
-                jsonDadosColetados: JSON.stringify(dadosColetados)
+            var url = $("input[name=radioTipoQualitativa]:checked").val() == "N" ? "/Qualitativas/Rol" : "/Qualitativas/Ordinal";
+
+            $.get(url, {
+                jsonDadosColetados: JSON.stringify(dadosColetados),
+                ordenar: ""
             }).done(function(data){
                 $("#resultados").html(data).slideDown("fast");
             }).error(function(xhr){
