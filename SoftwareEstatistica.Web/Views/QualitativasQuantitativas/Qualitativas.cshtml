@@ -91,7 +91,7 @@
 
             $.get(url, {
                 jsonDadosColetados: JSON.stringify(dadosColetados),
-                ordenar: ""
+                ordenar: $("input[name=radioTipoQualitativa]:checked").val() == "N" ? "S" : ""
             }).done(function(data){
                 $(".rowAdicionada").remove();
                 

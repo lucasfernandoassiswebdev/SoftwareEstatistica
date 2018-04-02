@@ -3,39 +3,38 @@
 <div class="col s10 offset-s1">
     <h5 class="left">Tabela</h5>
     <table class="tabela highlight" id="dadosOrdenados">
-        <th>
-            <td>VaP</td>
-            <td>Fr</td>
-            <td>FrP</td>
-            <td>FrA</td>
-            <td>FrAP</td>
-        </th>
+        <thead>
+            <tr>
+                <td>VaP</td>
+                <td>Fr</td>
+                <td>FrP</td>
+                <td>FrA</td>
+                <td>FrAP</td>
+            </tr>
+        </thead>
         <tbody></tbody>
     </table>
 </div>    
 <script>
-    let dadosOrdenados = JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g,'"')));
-    let objTabela = [];
+    var dadosOrdenados = JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g,'"'))),
+        objTabela = [],
+        FrA = 0;
 
-    for(let i = 0; i < dadosOrdenados.length; i++){
-        if(i == 0 || objTabela[objTabela.length - 1]['Var'] != dadosOrdenados[i]){
+    for(let i = 0; i < dadosOrdenados.length; i++)
+        if(i == 0 || objTabela[objTabela.length - 1].Var != dadosOrdenados[i])
             objTabela.push({'Var': dadosOrdenados[i], 'Fr': 1, 'FrP': 100, 'FrA': 1, 'FrAP': 100});
-        }else{
+        else
             objTabela[objTabela.length - 1]['Fr']++;
-        }
-    }
-
-    let FrA = 0;
 
     objTabela.forEach(function(item){
-        item['FrP'] = ((item['Fr']*100)/dadosOrdenados.length).toFixed(2);
-        FrA += item['Fr'];
-        item['FrA'] = FrA;
-        item['FrAP'] = ((FrA*100)/dadosOrdenados.length).toFixed(2);
+        item.FrP = ((item.Fr * 100)/dadosOrdenados.length).toFixed(2);
+        FrA += item.Fr;
+        item.FrA = FrA;
+        item.FrAP = ((FrA*100)/dadosOrdenados.length).toFixed(2);
 
         $("#dadosOrdenados tbody").append($("<tr>",{
             html: [ $("<td>",{
-                        html: [item.Vap]
+                        html: [item.Var]
                     }),
                     $("<td>",{
                         html: [item.Fr]
@@ -48,7 +47,7 @@
                     }),
                     $("<td>",{
                         html: [item.FrAP]
-                    })]
+                    }) ]
         }));
     });
 </script>  

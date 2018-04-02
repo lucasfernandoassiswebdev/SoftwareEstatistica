@@ -39,7 +39,7 @@
     }
 
     $("#btnContinuar").click(function(){
-        var dadosColetados = [];
+        let dadosColetados = [];
         
         $("#sortable li span").each(function(){
             dadosColetados.push($(this).html());
@@ -59,10 +59,6 @@
                                     html:  [data]
                                 }) ]
                     }));
-                else
-                    $(".rowAdicionada").slideUp("fast",function(){
-                        $(this).html(data).slideDown("fast");
-                    });
 
                 $(".areaDados:last-child").slideDown("fast");
             }).error(function(xhr){
