@@ -2,7 +2,7 @@
 
 <div class="col s10 offset-s1">
     <h5 class="left">Tabela</h5>
-    <table class="tabela highlight" id="dadosOrdenados">
+    <table class="tabela highlight" id="dadosOrdenados" style="margin-bottom: 30px">
         <thead>
             <tr>
                 <td>VaP</td>
@@ -27,10 +27,10 @@
             objTabela[objTabela.length - 1]['Fr']++;
 
     objTabela.forEach(function(item){
-        item.FrP = ((item.Fr * 100)/dadosOrdenados.length).toFixed(2);
+        item.FrP = (((item.Fr * 100)/dadosOrdenados.length).toFixed(2)).toString() + '%';
         FrA += item.Fr;
         item.FrA = FrA;
-        item.FrAP = ((FrA*100)/dadosOrdenados.length).toFixed(2);
+        item.FrAP = (((FrA*100)/dadosOrdenados.length).toFixed(2)).toString() + '%';
 
         $("#dadosOrdenados tbody").append($("<tr>",{
             html: [ $("<td>",{
@@ -40,7 +40,7 @@
                         html: [item.Fr]
                     }),
                     $("<td>",{
-                        html: [item.FrP]
+                        html: [item.FrP]  
                     }),
                     $("<td>",{
                         html: [item.FrA]
