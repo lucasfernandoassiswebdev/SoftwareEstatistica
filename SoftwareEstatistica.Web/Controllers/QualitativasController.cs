@@ -20,5 +20,9 @@ namespace SoftwareEstatistica.Web.Controllers
             ViewBag.Dados = jsonDadosColetados;
             return View();
         }
+
+        public ActionResult Grafico(string jsonDados){
+            return View();
+        }
     }
 }

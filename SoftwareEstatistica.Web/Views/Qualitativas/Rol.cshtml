@@ -6,6 +6,7 @@
 </div>
 
 <script>
+    debugger;
     var dadosOrdenados = '@ViewBag.Ordenar' != "" 
                             ? JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g,'"'))).sort() 
                             : JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g,'"')));
@@ -38,6 +39,17 @@
                         html:  [data]
                     })]
         }));
+
+       $.get("/Qualitativas/Grafico",{
+            jsonDados: JSON.stringify(dadosOrdenados);
+        }).success(function(dataGrafico){
+            $("#resultados").append($("<div>",{
+                html: [dataGrafico]
+            }));
+        }).error(function(xhr){
+            M.Toast.dismissAll();  
+            M.toast({ html: xhr.responseText });
+        });
 
         $(".areaDados:last-child").slideDown("fast");
     }).error(function(xhr){
