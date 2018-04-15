@@ -97,7 +97,7 @@
                 
                 $("#resultados").slideUp("fast",function(){
                     $(this).html(data).slideDown("fast");
-                }) 
+                });
             }).error(function(xhr){
                 M.Toast.dismissAll();  
                 M.toast({ html: xhr.responseText });

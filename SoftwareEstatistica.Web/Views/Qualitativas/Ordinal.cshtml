@@ -47,7 +47,6 @@
 
         $.get("/Qualitativas/Rol", {
                 jsonDadosColetados: JSON.stringify(dadosColetados),
-                ordenar: "S"
             }).done(function(data){
                 if($(".rowAdicionada").length == 0)
                     $("#resultados").parent().parent().append($("<div>",{

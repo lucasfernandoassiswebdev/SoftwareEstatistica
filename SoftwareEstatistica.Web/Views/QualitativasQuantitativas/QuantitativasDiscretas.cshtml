@@ -48,6 +48,7 @@
 <div class="row center" style="padding: 0 10px">
     <div id="tabela" class="col s8 offset-s2 areaDados" style="display: none; max-height: 500px; overflow:auto;"></div>   
 </div>
+
 @section Scripts{
     <script type="text/javascript">
         var primeiraVez = true;
@@ -91,10 +92,13 @@
                 M.toast({ html: xhr.responseText });
             });
 
-            $.get("/Quantitativas/Grafico").success(function(data){
+            $.get("/Quantitativas/Grafico",{
+                
+            }).success(function(data){
 
             }).error(function(xhr){
-
+                M.Toast.dismissAll();
+                M.toast({ html: "Erro ao montar o gráfico!" });
             });
 
             $.get("/QualitativasQuantitativas/MediaModaMediana", {
