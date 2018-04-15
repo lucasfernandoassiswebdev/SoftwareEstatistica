@@ -6,7 +6,6 @@
 </div>
 
 <script>
-    debugger;
     var dadosOrdenados = '@ViewBag.Ordenar' != "" 
                             ? JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g,'"'))).sort() 
                             : JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g,'"')));
@@ -41,10 +40,15 @@
         }));
 
        $.get("/Qualitativas/Grafico",{
-            jsonDados: JSON.stringify(dadosOrdenados);
+            jsonDados: JSON.stringify(dadosOrdenados)
         }).success(function(dataGrafico){
-            $("#resultados").append($("<div>",{
-                html: [dataGrafico]
+            $("#resultados").parent().append($("<div>",{
+                class: "row center rowAdicionada",
+                html: [ $("<div>",{
+                            class: "col s8 offset-s2 areaDados",
+                            style: "padding: 0 15px; margin-top: 20px;",
+                            html: [dataGrafico]
+                        })]
             }));
         }).error(function(xhr){
             M.Toast.dismissAll();  

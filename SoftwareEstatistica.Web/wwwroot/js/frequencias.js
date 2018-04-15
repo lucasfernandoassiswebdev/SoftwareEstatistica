@@ -2,7 +2,7 @@ function calculaFrequencias(jsonDados) {
     var dados = JSON.parse(jsonDados),
         objTabela = [],
         FrA = 0,
-        retorno;
+        retorno = [];
 
     for (let i = 0; i < dados.length; i++)
         if (i == 0 || objTabela[objTabela.length - 1].Var != dados[i])
