@@ -11,7 +11,8 @@ namespace SoftwareEstatistica.Web.Controllers
 
         public ActionResult Grafico(string jsonDadosColetados, string tipo){
             ViewBag.Dados = jsonDadosColetados;
-            return View(tipo == "D" ? "GraficoDiscretas" : "GraficoContinuas");
+            ViewBag.Tipo = tipo == "D" ? "GraficoDiscretas" : "GraficoContinuas";
+            return View();
         }
     }
 }
