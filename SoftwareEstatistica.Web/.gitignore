@@ -1,0 +1,7 @@
+project.assets.json
+[Pp]ackages/
+[Bb]in/
+[Oo]bj/
+.vscode
+*.user
+*.suo
