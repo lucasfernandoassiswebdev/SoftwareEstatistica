@@ -37,17 +37,24 @@ function calculaMediaModaMediana(jsonDados) {
         numero: dado,
         quantidade: 1
       });
-    else
+    else {
+      let adicionar = true;
+
       arrayModa.forEach(function(item) {
-        if (item.numero == dado) item.numero++;
-        else
-          arrayModa.push({
-            numero: dado,
-            quantidade: 1
-          });
+        if (item.numero == dado) {
+          item.numero++;
+          adicionar = false;
+        }
       });
 
-    var acm = 0;
+      if (adicionar)
+        arrayModa.push({
+          numero: dado,
+          quantidade: 1
+        });
+    }
+
+    let acm = 0;
     arrayModa.forEach(function(item, index) {
       if (index == 0) moda = item;
       else if (item > moda) moda = item;
@@ -55,7 +62,7 @@ function calculaMediaModaMediana(jsonDados) {
       if (item == moda) acm++;
     });
 
-    if (acm == arrayModa.length) modal = "Não tem moda";
+    if (acm == arrayModa.length) moda = "Não tem moda";
   });
 
   //Media
