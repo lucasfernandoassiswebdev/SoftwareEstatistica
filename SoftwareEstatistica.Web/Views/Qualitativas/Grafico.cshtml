@@ -4,16 +4,32 @@
     <script>
         var ctx = document.getElementById("myChart").getContext("2d"),
         dados = JSON.parse('@ViewBag.Dados'.replace(/&quot;/g,'"')),
-        colors = ['rgba(255, 99, 132, 0.2)',     'rgba(54, 162, 235, 0.2)',  'rgba(255, 206, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',     'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
-        borderColors = ['rgba(255,99,132,1)',    'rgba(54, 162, 235, 1)',    'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)',   'rgba(255, 159, 64, 1)'],
-        coresSorteadas = [], bordasSorteadas = [];
+        coresSorteadas = [], ultimaCor;
 
-        dados.Quantidades.forEach(function(){
-            let aleatorio = Math.floor(Math.random() * (5 - 0)) + 0;
-            coresSorteadas.push(colors[aleatorio]); 
-            bordasSorteadas.push(colors[aleatorio]);
+        dados.Variaveis.forEach(function(item,index){
+            let num = Math.round(0xffffff * Math.random()),
+                r = num >> 16,
+                g = num >> 8 & 255,
+                b = num & 255;
+            if(index != 0)
+                do{
+                    num = Math.round(0xffffff * Math.random());
+                    r = num >> 16;
+                    g = num >> 8 & 255;
+                    b = num & 255;
+                }while(r == ultimaCor.r && g == ultimaCor.g && b == ultimaCor.b);
+
+            coresSorteadas.push("rgba(" + r + ", " + g + ", " + b + ",0.4)");
+
+            ultimaCor = {
+                r: r,
+                g: g,
+                b: b
+            };
+        });
+
+        dados.Quantidades.forEach(function(item, index){
+            coresSorteadas.push(coresSorteadas[index]); 
         });
 
         var myChart = new Chart(ctx, {
@@ -24,7 +40,7 @@
                     label: '# of Votes',
                     data: dados.Quantidades,
                     backgroundColor: coresSorteadas,
-                    borderColor: bordasSorteadas,
+                    borderColor: coresSorteadas,
                     borderWidth: 1
                 }]
             },
