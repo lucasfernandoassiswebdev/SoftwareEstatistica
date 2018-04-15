@@ -90,11 +90,29 @@
                 M.Toast.dismissAll();  
                 M.toast({ html: xhr.responseText });
             });
+
+            $.get("/Quantitativas/Grafico").success(function(data){
+
+            }).error(function(xhr){
+
+            });
+
+            $.get("/QualitativasQuantitativas/MediaModaMediana", {
+                jsonDadosColetados: JSON.stringify(dadosColetados),
+                tipo: "D"
+            }).success(function(data){
+                $("#resultados").append($("<div>",{
+                    html: [data]
+                }));
+            }).error(function(xhr){
+                M.Toast.dismissAll();
+                M.toast({ html: "Erro ao calcular média moda e mediana!" });
+            });
         });
 
-        function ExibeAjuda(){
-            M.Toast.dismissAll();
+        function ExibeAjuda(){M.Toast.dismissAll();
             M.toast({ html: "Use a tecla 'Enter' para inserir os dados" });
+            
             M.toast({ html: "Use pontos ou vírgulas para numeros decimais" });
         }
 

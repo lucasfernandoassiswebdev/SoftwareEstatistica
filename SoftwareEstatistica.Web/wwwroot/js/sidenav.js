@@ -8,7 +8,7 @@ $("#varQualitativa").click(function () {
 });
 
 $("#varDiscreta").click(function () {
-    $.get("/QualitativasQuantitativas/Quantitativas").done(function (data) {
+    $.get("/QualitativasQuantitativas/QuantitativasDiscretas").done(function (data) {
         $("#corpoSite").html(data);
     }).error(function (xhr) {
         M.Toast.dismissAll();

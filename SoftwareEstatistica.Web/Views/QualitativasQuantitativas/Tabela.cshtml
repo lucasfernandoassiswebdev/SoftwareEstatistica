@@ -2,7 +2,7 @@
 
 <div class="col s10 offset-s1">
     <h5 class="left">Tabela</h5>
-    <table class="tabela highlight" id="dadosOrdenados">
+    <table class="tabela highlight" id="dadosOrdenados" style="margin-bottom: 30px">
         <thead>
             <tr>
                 <td>VaP</td>
@@ -14,40 +14,26 @@
         </thead>
         <tbody></tbody>
     </table>
-</div>    
-<script>
-    var dadosOrdenados = JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g,'"'))),
-        objTabela = [],
-        FrA = 0;
+</div>   
 
-    for(let i = 0; i < dadosOrdenados.length; i++)
-        if(i == 0 || objTabela[objTabela.length - 1].Var != dadosOrdenados[i])
-            objTabela.push({'Var': dadosOrdenados[i], 'Fr': 1, 'FrP': 100, 'FrA': 1, 'FrAP': 100});
-        else
-            objTabela[objTabela.length - 1]['Fr']++;
-
-    objTabela.forEach(function(item){
-        item.FrP = ((item.Fr * 100)/dadosOrdenados.length).toFixed(2);
-        FrA += item.Fr;
-        item.FrA = FrA;
-        item.FrAP = ((FrA*100)/dadosOrdenados.length).toFixed(2);
-
-        $("#dadosOrdenados tbody").append($("<tr>",{
-            html: [ $("<td>",{
-                        html: [item.Var]
-                    }),
-                    $("<td>",{
-                        html: [item.Fr]
-                    }),
-                    $("<td>",{
-                        html: [item.FrP]
-                    }),
-                    $("<td>",{
-                        html: [item.FrA]
-                    }),
-                    $("<td>",{
-                        html: [item.FrAP]
-                    }) ]
-        }));
-    });
-</script>  
+    <script>
+        calculaFrequencias(String('@ViewBag.Dados'.replace(/&quot;/g,'"'))).forEach(function(item){
+            $("#dadosOrdenados tbody").append($("<tr>",{
+                html: [ $("<td>",{
+                            html: [item.Var]
+                        }),
+                        $("<td>",{
+                            html: [item.Fr]
+                        }),
+                        $("<td>",{
+                            html: [item.FrP]  
+                        }),
+                        $("<td>",{
+                            html: [item.FrA]
+                        }),
+                        $("<td>",{
+                            html: [item.FrAP]
+                        }) ]
+            }));
+        });
+    </script>  

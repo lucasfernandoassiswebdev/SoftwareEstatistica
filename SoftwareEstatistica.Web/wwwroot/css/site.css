@@ -1,3 +1,14 @@
+.alinhaVerticalmente{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.height{
+    height: 100% !important;
+}
+
 #sortable{
     overflow:auto; 
 }
