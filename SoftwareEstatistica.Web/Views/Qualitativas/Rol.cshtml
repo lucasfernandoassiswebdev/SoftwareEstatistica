@@ -40,7 +40,7 @@
         }));
 
        $.get("/Qualitativas/Grafico",{
-            jsonDadosColetados: JSON.stringify(montaInformacoesGrafico(dadosOrdenados)).replace(/&quot;/g,'"')
+            jsonDadosColetados: JSON.stringify(montaInformacoesGrafico(dadosOrdenados))
         }).success(function(dataGrafico){
             $("#resultados").parent().append($("<div>",{
                 class: "row center rowAdicionada",
