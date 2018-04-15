@@ -1,0 +1,9 @@
+<canvas id="graficoBarrasEspacadas"></canvas>
+
+@section Scripts{
+    <script>
+        var dadosGrafico = montaInformacoesGrafico(JSON.parse('@ViewBag.Dados'.replace(/&quot;/g,'"'))),
+
+        montaGrafico('bar', dadosGrafico, document.getElementById("graficoBarrasEspacadas").getContext("2d"));
+    </script>
+}

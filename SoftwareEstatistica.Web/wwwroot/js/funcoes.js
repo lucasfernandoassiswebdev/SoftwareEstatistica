@@ -89,12 +89,12 @@ function calculaMediaModaMediana(jsonDados) {
   };
 }
 
-function montaInformacoesGrafico(jsonDados) {
+function montaInformacoesGrafico(dados) {
   let objDados = [],
     variaveis = [],
     quantidades = [];
 
-  jsonDados.forEach(function(item, index) {
+  dados.forEach(function(item, index) {
     if (index == 0)
       objDados.push({
         valor: item,
@@ -127,4 +127,61 @@ function montaInformacoesGrafico(jsonDados) {
     Variaveis: variaveis,
     Quantidades: quantidades
   };
+}
+
+function sorteiaCor(ultimaCor) {
+  let num = Math.round(0xffffff * Math.random()),
+    r = num >> 16,
+    g = (num >> 8) & 255,
+    b = num & 255;
+
+  num = Math.round(0xffffff * Math.random());
+  r = num >> 16;
+  g = (num >> 8) & 255;
+  b = num & 255;
+
+  if (ultimaCor != undefined)
+    do {
+      num = Math.round(0xffffff * Math.random());
+      r = num >> 16;
+      g = (num >> 8) & 255;
+      b = num & 255;
+    } while (r == ultimaCor.r && g == ultimaCor.g && b == ultimaCor.b);
+
+  return { r: r, g: g, b: b };
+}
+
+function montaGrafico(type, dados, ctx) { 
+  let ultimaCor, coresSorteadas = [];
+
+  dados.Variaveis.forEach(function(item,index){
+    let corSorteada = sorteiaCor(ultimaCor);
+
+    coresSorteadas.push("rgba(" + corSorteada.r + ", " + corSorteada.g + ", " + corSorteada.b + ",0.4)");
+
+    ultimaCor = { r: corSorteada.r, g: corSorteada.g, b: corSorteada.b };
+  });
+
+  return new Chart(ctx, {
+    type: type,
+    data: {
+        labels: dados.Variaveis,
+        datasets: [{
+            label: '# of Votes',
+            data: dados.Quantidades,
+            backgroundColor: coresSorteadas,
+            borderColor: coresSorteadas,
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+  });
 }
