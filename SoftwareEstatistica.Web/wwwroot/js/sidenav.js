@@ -15,3 +15,12 @@ $("#varDiscreta").click(function () {
         M.toast({ html: xhr.responseText });
     });
 });
+
+$("#varContinua").click(function () {
+    $.get("/QualitativasQuantitativas/QuantitativasContinuas").done(function (data) {
+        $("#corpoSite").html(data);
+    }).error(function (xhr) {
+        M.Toast.dismissAll();
+        M.toast({ html: xhr.responseText });
+    });
+});
