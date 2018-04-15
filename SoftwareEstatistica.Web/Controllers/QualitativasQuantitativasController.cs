@@ -14,6 +14,9 @@ namespace SoftwareEstatistica.Web.Controllers
 
         public ActionResult Quantitativas(string tipo){
             ViewBag.Tipo = tipo;
+
+            if(string.IsNullOrEmpty(tipo))
+                return Error("O tipo não foi informado!");
             return View();
         }
 
@@ -21,7 +24,7 @@ namespace SoftwareEstatistica.Web.Controllers
             ViewBag.Dados = jsonDadosColetados;
 
             if(string.IsNullOrEmpty(jsonDadosColetados))
-                return Error("Não foi fornecido nenhum dado!");
+                return Error("Nenhum dado foi fornecido!");
 
             return View();
         }
@@ -31,7 +34,7 @@ namespace SoftwareEstatistica.Web.Controllers
             ViewBag.Tipo = tipo;
 
             if(string.IsNullOrEmpty(jsonDadosColetados))
-                return Error("Não foi fornecido nenhum dado!");
+                return Error("Nenhum dado foi fornecido!");
 
             return View();
         }

@@ -15,7 +15,7 @@ namespace SoftwareEstatistica.Web.Controllers
             ViewBag.Ordenar = ordenar;
 
             if(string.IsNullOrEmpty(jsonDadosColetados))
-                return Error("Não foi fornecido nenhum dado!");
+                return Error("Nenhum dado foi fornecido!");
 
             return View("Rol");
         }
@@ -24,14 +24,14 @@ namespace SoftwareEstatistica.Web.Controllers
             ViewBag.Dados = jsonDadosColetados;
 
             if(string.IsNullOrEmpty(jsonDadosColetados))
-                return Error("Não foi fornecido nenhum dado!");
+                return Error("Nenhum dado foi fornecido!");
 
             return View();
         }
 
         public ActionResult Grafico(string jsonDadosColetados){
             if(string.IsNullOrEmpty(jsonDadosColetados))
-                return Error("Não foi fornecido nenhum dado!");
+                return Error("Nenhum dado foi fornecido!");
 
             ViewBag.Dados = jsonDadosColetados;
             return View();
