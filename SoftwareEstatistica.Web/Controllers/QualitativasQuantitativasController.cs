@@ -12,14 +12,11 @@ namespace SoftwareEstatistica.Web.Controllers
             return View();
         }
 
-        public ActionResult QuantitativasDiscretas(){
+        public ActionResult Quantitativas(string tipo){
+            ViewBag.Tipo = tipo;
             return View();
         }
 
-        public ActionResult QuantitativasContinuas(){
-            return View();
-        }
-        
         public ActionResult Tabela(string jsonDadosColetados){            
             ViewBag.Dados = jsonDadosColetados;
 

@@ -8,5 +8,10 @@ namespace SoftwareEstatistica.Web.Controllers
             ViewBag.Dados = jsonDadosColetados;
             return View();
         }
+
+        public ActionResult Grafico(string jsonDadosColetados, string tipo){
+            ViewBag.Dados = jsonDadosColetados;
+            return View(tipo == "D" ? "GraficoDiscretas" : "GraficoContinuas");
+        }
     }
 }

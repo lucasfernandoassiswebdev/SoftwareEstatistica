@@ -8,7 +8,9 @@ $("#varQualitativa").click(function () {
 });
 
 $("#varDiscreta").click(function () {
-    $.get("/QualitativasQuantitativas/QuantitativasDiscretas").done(function (data) {
+    $.get("/QualitativasQuantitativas/Quantitativas",{
+        tipo: "D"
+    }).done(function (data) {
         $("#corpoSite").html(data);
     }).error(function (xhr) {
         M.Toast.dismissAll();
@@ -17,7 +19,9 @@ $("#varDiscreta").click(function () {
 });
 
 $("#varContinua").click(function () {
-    $.get("/QualitativasQuantitativas/QuantitativasContinuas").done(function (data) {
+    $.get("/QualitativasQuantitativas/Quantitativas",{
+        tipo: "C"
+    }).done(function (data) {
         $("#corpoSite").html(data);
     }).error(function (xhr) {
         M.Toast.dismissAll();

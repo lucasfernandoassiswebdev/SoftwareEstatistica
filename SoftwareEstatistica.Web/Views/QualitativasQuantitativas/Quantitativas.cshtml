@@ -6,6 +6,7 @@
             onclick="ExibeAjuda()" 
             style="cursor:pointer; margin-top: 10px; margin-right: 10px">help</i>
         <div class="areaDados">
+            <input type="hidden" id="tipoVariavel" value="@ViewBag.Tipo"/>
             <div class="row">
                 <p>
                     <label>
@@ -48,6 +49,7 @@
 <div class="row center" style="padding: 0 10px">
     <div id="tabela" class="col s8 offset-s2 areaDados" style="display: none; max-height: 500px; overflow:auto;"></div>   
 </div>
+
 @section Scripts{
     <script type="text/javascript">
         var primeiraVez = true;
@@ -91,15 +93,19 @@
                 M.toast({ html: xhr.responseText });
             });
 
-            $.get("/Quantitativas/Grafico").success(function(data){
+            $.get("/Quantitativas/Grafico",{
+                jsonDadosColetados: JSON.stringify(dadosColetados.sort(function(a, b){return a-b})),
+                tipo: $("#tipoVariavel").val()
+            }).success(function(data){
 
             }).error(function(xhr){
-
+                M.Toast.dismissAll();
+                M.toast({ html: "Erro ao montar o gráfico!" });
             });
 
             $.get("/QualitativasQuantitativas/MediaModaMediana", {
                 jsonDadosColetados: JSON.stringify(dadosColetados),
-                tipo: "D"
+                tipo: $("#tipoVariavel").val()
             }).success(function(data){
                 $("#resultados").append($("<div>",{
                     html: [data]
