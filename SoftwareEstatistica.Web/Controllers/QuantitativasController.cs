@@ -20,7 +20,7 @@ namespace SoftwareEstatistica.Web.Controllers
                 return Error("Nenhum dado foi fornecido!");
             
             if(string.IsNullOrEmpty(tipo))
-                return Error("Nenhum dado foi fornecido!");
+                return Error("O tipo do gráfico não foi informado!");
 
             return View(tipo == "D" ? "GraficoDiscretas" : "GraficoContinuas");
         }
