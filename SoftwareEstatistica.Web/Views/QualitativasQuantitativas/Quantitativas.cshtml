@@ -69,7 +69,7 @@
             var dadosColetados = [];
 
             M.Chips.getInstance($(".chips")).chipsData.forEach(function(item){
-                dadosColetados.push(parseInt(item.tag));
+                dadosColetados.push(parseFloat(item.tag));
             });
             
             $(".rowAdicionada").remove();
@@ -90,8 +90,22 @@
                 M.toast({ html: xhr.responseText });
             });
 
+            let frequencia = [];
+            if('@ViewBag.Tipo' == 'C'){
+                frequencia = calculaFrequenciasContinua(dadosColetados.sort(function(a, b){return a-b}));
+                dadosPGrafico = [];
+                frequencia.forEach(function(dado){
+                    for(var i = 0; i <= dado.Fr; i++){
+                        dadosPGrafico.push(dado.Var);
+                    }
+                });
+                dadosColetados = dadosPGrafico;
+            }
+            else 
+                frequencia = calculaFrequencias(dadosColetados.sort(function(a, b){return a-b}));  
+            console.log(dadosColetados);
             $.get("/QualitativasQuantitativas/Tabela",{
-                jsonDadosColetados: JSON.stringify(calculaFrequencias(dadosColetados.sort(function(a, b){return a-b})))
+                jsonDadosColetados: JSON.stringify(frequencia)
             }).done(function(data){
                 $("#resultados").parent().append($("<div>",{
                     class: "row center rowAdicionada",

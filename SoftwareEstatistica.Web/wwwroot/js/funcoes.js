@@ -1,5 +1,5 @@
 function calculaFrequencias(dados) {
-    let objTabela = [],
+  let objTabela = [],
     FrA = 0,
     retorno = [];
 
@@ -8,7 +8,7 @@ function calculaFrequencias(dados) {
       objTabela.push({ Var: dados[i], Fr: 1, FrP: 100, FrA: 1, FrAP: 100 });
     else objTabela[objTabela.length - 1]["Fr"]++;
 
-  objTabela.forEach(function(item, index) {
+  objTabela.forEach(function (item, index) {
     item.FrP = (item.Fr * 100 / dados.length).toFixed(2).toString() + "%";
     FrA += item.Fr;
     item.FrA = FrA;
@@ -20,6 +20,59 @@ function calculaFrequencias(dados) {
   return retorno;
 }
 
+function calculaFrequenciasContinua(dados) {
+  let objTabela = calculaFrequencias(dados);
+  let maior = objTabela[objTabela.length - 1].Var, menor = objTabela[0].Var;
+  /*for (var i = 0; i <= objTabela.length; i++) {
+    if (i == 0) {
+      maior = objTabela[i]; menor = objTabela[i];
+    } else {
+      if(objTabela[i].Var > maior)
+        maior = objTabela[i].Var;
+      if(objTabela[i] < menor)
+        menor = objTabela[i].Var;  
+    }
+  }*/
+  let quatLinhas = Math.ceil(Math.sqrt(objTabela[objTabela.length - 1].FrA));
+  let intervalo = 0;
+  let At = maior - menor + 1;
+  do{
+    checkI = false;
+    if(At%quatLinhas == 0){
+      intervalo = Math.ceil((At) / quatLinhas);
+      checkI = true;
+    }else if(At%(quatLinhas - 1) == 0){
+      intervalo = Math.ceil((At) / (quatLinhas - 1));
+      checkI = true;
+    }else if(At%(quatLinhas + 1) == 0){
+      intervalo = Math.ceil((At) / (quatLinhas + 1));
+      checkI = true;
+    }
+    At++;
+  }while(!(checkI))
+  let objContinua = [{
+    Var: menor + "|---" +(menor + intervalo), Fr: 0, FrP: 0, FrA: 0, FrAP: 0,
+    Pontos:[menor, (menor + intervalo)]
+  }];
+  while (objContinua[objContinua.length - 1].Pontos[1] <= maior) {
+    objContinua.push({
+      Var: objContinua[objContinua.length - 1].Pontos[1] + "|---" + (objContinua[objContinua.length - 1].Pontos[1] + intervalo), Fr: 0, FrP: 0, FrA: 0, FrAP: 0,
+      Pontos: [objContinua[objContinua.length - 1].Pontos[1], objContinua[objContinua.length - 1].Pontos[1] + intervalo]
+    });
+  }
+  objContinua.forEach(function (dadoD) {
+    objTabela.forEach(function (dado) {
+      if (dado.Var >= dadoD.Pontos[0] && dado.Var < dadoD.Pontos[1]) {
+        dadoD.Fr += parseFloat(dado.Fr);
+        dadoD.FrP = (parseFloat(dadoD.FrP) + parseFloat(dado.FrP)).toFixed(2).toString() + "%";
+        dadoD.FrA = dado.FrA;
+        dadoD.FrAP = dado.FrAP;
+      }
+    })
+  });
+  return objContinua;
+}
+
 function calculaMediaModaMediana(jsonDados) {
   let dadosColetados = calculaFrequencias(jsonDados),
     moda,
@@ -28,7 +81,7 @@ function calculaMediaModaMediana(jsonDados) {
     mediana;
 
   //Moda
-  dadosColetados.forEach(function(dado) {
+  dadosColetados.forEach(function (dado) {
     media += dado;
 
     if (arrayModa.length == 0)
@@ -39,7 +92,7 @@ function calculaMediaModaMediana(jsonDados) {
     else {
       let adicionar = true;
 
-      arrayModa.forEach(function(item) {
+      arrayModa.forEach(function (item) {
         if (item.numero == dado) {
           item.numero++;
           adicionar = false;
@@ -54,7 +107,7 @@ function calculaMediaModaMediana(jsonDados) {
     }
 
     let acm = 0;
-    arrayModa.forEach(function(item, index) {
+    arrayModa.forEach(function (item, index) {
       if (index == 0) moda = item;
       else if (item > moda) moda = item;
 
@@ -93,7 +146,7 @@ function montaInformacoesGrafico(dados) {
     variaveis = [],
     quantidades = [];
 
-  dados.forEach(function(item, index) {
+  dados.forEach(function (item, index) {
     if (index == 0)
       objDados.push({
         valor: item,
@@ -102,7 +155,7 @@ function montaInformacoesGrafico(dados) {
     else {
       let add = true;
 
-      objDados.forEach(function(dado) {
+      objDados.forEach(function (dado) {
         if (item == dado.valor) {
           dado.quantidade++;
           add = false;
@@ -117,7 +170,7 @@ function montaInformacoesGrafico(dados) {
     }
   });
 
-  objDados.forEach(function(item) {
+  objDados.forEach(function (item) {
     variaveis.push(item.valor);
     quantidades.push(item.quantidade);
   });
@@ -150,10 +203,10 @@ function sorteiaCor(ultimaCor) {
   return { r: r, g: g, b: b };
 }
 
-function montaGrafico(type, dados, ctx, titulo) { 
+function montaGrafico(type, dados, ctx, titulo) {
   let ultimaCor, coresSorteadas = [];
 
-  dados.Variaveis.forEach(function(item,index){
+  dados.Variaveis.forEach(function (item, index) {
     let corSorteada = sorteiaCor(ultimaCor);
 
     coresSorteadas.push("rgba(" + corSorteada.r + ", " + corSorteada.g + ", " + corSorteada.b + ",0.4)");
@@ -164,23 +217,23 @@ function montaGrafico(type, dados, ctx, titulo) {
   return new Chart(ctx, {
     type: type,
     data: {
-        labels: dados.Variaveis,
-        datasets: [{
-            label: titulo,
-            data: dados.Quantidades,
-            backgroundColor: coresSorteadas,
-            borderColor: coresSorteadas,
-            borderWidth: 1
-        }]
+      labels: dados.Variaveis,
+      datasets: [{
+        label: titulo,
+        data: dados.Quantidades,
+        backgroundColor: coresSorteadas,
+        borderColor: coresSorteadas,
+        borderWidth: 1
+      }]
     },
     options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        }
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
     }
   });
 }
