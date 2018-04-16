@@ -17,6 +17,7 @@ namespace SoftwareEstatistica.Web.Controllers
 
             if(string.IsNullOrEmpty(tipo))
                 return Error("O tipo não foi informado!");
+                
             return View();
         }
 

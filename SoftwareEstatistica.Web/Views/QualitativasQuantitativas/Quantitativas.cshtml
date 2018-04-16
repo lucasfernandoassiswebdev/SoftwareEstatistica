@@ -43,11 +43,9 @@
         </div>
     </form>
 </div>
-<div class="row center" style="padding: 0 10px">
-    <div id="rol" class="col s8 offset-s2 areaDados" style="display: none;"></div> 
-</div>
-<div class="row center" style="padding: 0 10px">
-    <div id="tabela" class="col s8 offset-s2 areaDados" style="display: none; max-height: 500px; overflow:auto;"></div>   
+
+<div class="row center" style="padding: 0 15px">
+    <div id="resultados" class="col s8 offset-s2 areaDados" style="display: none;"></div>
 </div>
 
 @section Scripts{
@@ -68,17 +66,25 @@
             .blur(HabilitaDesabilita);
 
         $("#btnEnviaDados").click(function(){
-            var dadosColetados = [],
-                instance = M.Chips.getInstance($(".chips")).chipsData;
+            var dadosColetados = [];
 
-            instance.forEach(function(item){
+            M.Chips.getInstance($(".chips")).chipsData.forEach(function(item){
                 dadosColetados.push(parseInt(item.tag));
             });
-
+            
+            $(".rowAdicionada").remove();
+            
             $.get("/Quantitativas/Rol",{
                 jsonDadosColetados: JSON.stringify(dadosColetados.sort(function(a, b){return a-b}))
             }).done(function(data){
-                $("#rol").html(data).slideDown("fast");
+                $("#resultados").parent().append($("<div>",{
+                    class: "row center rowAdicionada",
+                    html: [ $("<div>",{
+                            class: "col s8 offset-s2 areaDados",
+                            style: "padding: 15px 15px; margin-top: 20px;",
+                            html: [data]
+                        })]
+                }));
             }).error(function(xhr){
                 M.Toast.dismissAll();  
                 M.toast({ html: xhr.responseText });
@@ -87,7 +93,14 @@
             $.get("/QualitativasQuantitativas/Tabela",{
                 jsonDadosColetados: JSON.stringify(dadosColetados.sort(function(a, b){return a-b}))
             }).done(function(data){
-                $("#tabela").html(data).slideDown("fast");
+                $("#resultados").parent().append($("<div>",{
+                    class: "row center rowAdicionada",
+                    html: [ $("<div>",{
+                            class: "col s8 offset-s2 areaDados",
+                            style: "padding: 15px 15px; margin-top: 20px;",
+                            html: [data]
+                        })]
+                }));
             }).error(function(xhr){
                 M.Toast.dismissAll();  
                 M.toast({ html: xhr.responseText });
@@ -97,23 +110,39 @@
                 jsonDadosColetados: JSON.stringify(dadosColetados.sort(function(a, b){return a-b})),
                 tipo: $("#tipoVariavel").val()
             }).success(function(data){
-
+                $("#resultados").parent().append($("<div>",{
+                    class: "row center rowAdicionada",
+                    html: [ $("<div>",{
+                            class: "col s8 offset-s2 areaDados",
+                            style: "padding: 15px 15px; margin-top: 20px;",
+                            html: [$("<h4>",{
+                                        style: "text-align: left",
+                                        html: ["Gráfico"]
+                                    }),
+                                    data]
+                        })]
+                }));
             }).error(function(xhr){
                 M.Toast.dismissAll();
                 M.toast({ html: "Erro ao montar o gráfico!" });
             });
 
-            $.get("/QualitativasQuantitativas/MediaModaMediana", {
+            /*$.get("/QualitativasQuantitativas/MediaModaMediana", {
                 jsonDadosColetados: JSON.stringify(dadosColetados),
                 tipo: $("#tipoVariavel").val()
             }).success(function(data){
-                $("#resultados").append($("<div>",{
-                    html: [data]
+                $("#resultados").parent().append($("<div>",{
+                    class: "row center rowAdicionada",
+                    html: [ $("<div>",{
+                            class: "col s8 offset-s2 areaDados",
+                            style: "padding: 15px 15px; margin-top: 20px;",
+                            html: [data]
+                        })]
                 }));
             }).error(function(xhr){
                 M.Toast.dismissAll();
                 M.toast({ html: "Erro ao calcular média moda e mediana!" });
-            });
+            });*/
         });
 
         function ExibeAjuda(){M.Toast.dismissAll();

@@ -80,10 +80,9 @@
             .blur(HabilitaDesabilita);
 
         $("#btnEnviaDados").click(function(){
-            let dadosColetados = [],
-                instance = M.Chips.getInstance($(".chips")).chipsData;
+            let dadosColetados = [];
 
-            instance.forEach(function(item){
+            M.Chips.getInstance($(".chips")).chipsData.forEach(function(item){
                 dadosColetados.push(item.tag);
             });
 

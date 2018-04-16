@@ -4,6 +4,6 @@
     <script>
         var dados = JSON.parse('@ViewBag.Dados'.replace(/&quot;/g,'"'));
 
-        montaGrafico('pie', dados, document.getElementById("graficoPizza").getContext("2d"));
+        montaGrafico('pie', dados, document.getElementById("graficoPizza").getContext("2d"), $("#varPesquisada").val());
     </script>
 }

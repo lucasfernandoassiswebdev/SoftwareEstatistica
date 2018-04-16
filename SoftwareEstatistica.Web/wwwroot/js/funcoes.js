@@ -151,7 +151,7 @@ function sorteiaCor(ultimaCor) {
   return { r: r, g: g, b: b };
 }
 
-function montaGrafico(type, dados, ctx) { 
+function montaGrafico(type, dados, ctx, titulo) { 
   let ultimaCor, coresSorteadas = [];
 
   dados.Variaveis.forEach(function(item,index){
@@ -167,7 +167,7 @@ function montaGrafico(type, dados, ctx) {
     data: {
         labels: dados.Variaveis,
         datasets: [{
-            label: '# of Votes',
+            label: titulo,
             data: dados.Quantidades,
             backgroundColor: coresSorteadas,
             borderColor: coresSorteadas,
