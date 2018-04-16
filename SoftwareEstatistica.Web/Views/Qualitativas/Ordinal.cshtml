@@ -38,6 +38,30 @@
         primeiraVez = false;
     }
 
+    //separando as variaveis pesquisadas
+    var dadosIsolados = [];
+    dados.forEach(function(dado){
+        var check = true;
+        dadosIsolados.forEach(function(dadoT){
+            if(dadoT == dado){
+                check = false;
+            }
+        });
+        if(check)
+            dadosIsolados.push(dado);
+    });
+
+    dadosIsolados.forEach(function(dado){
+        $("#sortable").append($("<li>", {
+            style: "height: 35px; padding-top: 5px",
+            class: "ui-state-default",
+            html: [$("<span>", {
+                style: "font-weight: normal",
+                html: dado
+            })]
+        }));
+    });
+
     $("#btnContinuar").click(function(){
         let dadosColetados = [];
         
@@ -64,18 +88,7 @@
                 M.Toast.dismissAll();  
                 M.toast({ html: xhr.responseText });
             });
-    });
-
-    dados.forEach(function(dado){
-        $("#sortable").append($("<li>", {
-            style: "height: 35px; padding-top: 5px",
-            class: "ui-state-default",
-            html: [$("<span>", {
-                style: "font-weight: normal",
-                html: dado
-            })]
-        }));
-    });
+    });    
 
     $("#sortable").sortable();
 
