@@ -17,7 +17,7 @@
 </div>   
 
     <script>
-        calculaFrequencias(String('@ViewBag.Dados'.replace(/&quot;/g,'"'))).forEach(function(item){
+        JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g,'"'))).forEach(function(item){
             $("#dadosOrdenados tbody").append($("<tr>",{
                 html: [ $("<td>",{
                             html: [item.Var]

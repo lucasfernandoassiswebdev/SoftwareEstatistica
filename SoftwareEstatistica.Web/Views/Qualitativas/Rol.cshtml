@@ -27,7 +27,7 @@
     });
 
     $.get("/QualitativasQuantitativas/Tabela",{
-        jsonDadosColetados: JSON.stringify(dadosOrdenados)
+        jsonDadosColetados: JSON.stringify(calculaFrequencias(dadosOrdenados))
     }).done(function(data){
         $("#resultados").parent().parent().append($("<div>",{
             class: "row center rowAdicionada",

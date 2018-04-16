@@ -1,6 +1,5 @@
-function calculaFrequencias(jsonDados) {
-  let dados = JSON.parse(jsonDados),
-    objTabela = [],
+function calculaFrequencias(dados) {
+    let objTabela = [],
     FrA = 0,
     retorno = [];
 

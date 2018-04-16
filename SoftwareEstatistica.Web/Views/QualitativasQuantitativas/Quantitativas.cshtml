@@ -91,7 +91,7 @@
             });
 
             $.get("/QualitativasQuantitativas/Tabela",{
-                jsonDadosColetados: JSON.stringify(dadosColetados.sort(function(a, b){return a-b}))
+                jsonDadosColetados: JSON.stringify(calculaFrequencias(dadosColetados.sort(function(a, b){return a-b})))
             }).done(function(data){
                 $("#resultados").parent().append($("<div>",{
                     class: "row center rowAdicionada",

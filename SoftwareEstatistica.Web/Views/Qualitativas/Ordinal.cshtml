@@ -64,11 +64,18 @@
 
     $("#btnContinuar").click(function(){
         let dadosColetados = [];
-        
+        let ordinal = []
         $("#sortable li span").each(function(){
-            dadosColetados.push($(this).html());
+            ordinal.push($(this).html());
         });
 
+        ordinal.forEach(function(dadoI){
+            dados.forEach(function(dado){
+                if(dado == dadoI)
+                    dadosColetados.push(dado);
+            });
+        });
+        console.log(dadosColetados);
         $.get("/Qualitativas/Rol", {
                 jsonDadosColetados: JSON.stringify(dadosColetados),
             }).done(function(data){
