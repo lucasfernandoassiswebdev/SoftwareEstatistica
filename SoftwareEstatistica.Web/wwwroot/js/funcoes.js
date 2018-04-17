@@ -23,20 +23,20 @@ function calculaFrequencias(dados) {
 function calculaFrequenciasContinua(dados) {
   let objTabela = calculaFrequencias(dados),
     maior = objTabela[objTabela.length - 1].Var, menor = objTabela[0].Var,
-    quatLinhas = Math.ceil(Math.sqrt(objTabela[objTabela.length - 1].FrA)),
+    quatLinhas = Math.trunc(Math.sqrt(objTabela[objTabela.length - 1].FrA)),
     intervalo = 0,
     At = maior - menor + 1;
 
   do {
     checkI = false;
     if (At % quatLinhas == 0) {
-      intervalo = Math.ceil((At) / quatLinhas);
+      intervalo = Math.trunc((At) / quatLinhas);
       checkI = true;
     } else if (At % (quatLinhas - 1) == 0) {
-      intervalo = Math.ceil((At) / (quatLinhas - 1));
+      intervalo = Math.trunc((At) / (quatLinhas - 1));
       checkI = true;
     } else if (At % (quatLinhas + 1) == 0) {
-      intervalo = Math.ceil((At) / (quatLinhas + 1));
+      intervalo = Math.trunc((At) / (quatLinhas + 1));
       checkI = true;
     }
     At++;
@@ -99,12 +99,10 @@ function medidasEstatisticasDiscreta(dados) {
         break;
       }
     }
-    console.log(pontoMedio);
   }else{
     let pontoMedio1 = (dadosColetados[dadosColetados.length - 1].FrA)/2, 
     pontoMedio2 = pontoMedio1+1,
     checkPM1 = false, checkPM2 = false;
-    console.log(pontoMedio1 + "  " + pontoMedio2);
     for(var i = 0; i < dadosColetados.length; i++){
       if(dadosColetados[i].FrA >= pontoMedio1 && !(checkPM1)){
         mediana += parseFloat(dadosColetados[i].Var);
