@@ -63,69 +63,62 @@ function calculaFrequenciasContinua(dados) {
       }
     })
   });
-  
+
   return objContinua;
 }
 
-function calculaMediaModaMediana(jsonDados) {
-  let dadosColetados = calculaFrequencias(jsonDados),
-    moda,
-    arrayModa,
-    media,
-    mediana;
+function medidasEstatisticasDiscreta(dados) {
+  let dadosColetados = calculaFrequencias(dados),
+    moda = [],
+    maiorFr = 0,
+    media = 0,
+    mediana = 0;
 
   //Moda
-  dadosColetados.forEach(function (dado) {
-    media += dado;
-
-    if (arrayModa.length == 0)
-      arrayModa.push({
-        numero: dado,
-        quantidade: 1
-      });
-    else {
-      let adicionar = true;
-
-      arrayModa.forEach(function (item) {
-        if (item.numero == dado) {
-          item.numero++;
-          adicionar = false;
-        }
-      });
-
-      if (adicionar)
-        arrayModa.push({
-          numero: dado,
-          quantidade: 1
-        });
-    }
-
-    let acm = 0;
-    arrayModa.forEach(function (item, index) {
-      if (index == 0) moda = item;
-      else if (item > moda) moda = item;
-
-      if (item == moda) acm++;
-    });
-
-    if (acm == arrayModa.length) moda = "Não tem moda";
+  dadosColetados.forEach(function (dado, index) {
+    media += (parseFloat(dado.Fr) * parseFloat(dado.Var));
+    if (index == 0 || parseInt(dado.Fr) >= maiorFr)
+      maiorFr = parseInt(dado.Fr);
   });
+  dadosColetados.forEach(function (dado) {
+    if(parseInt(dado.Fr) == maiorFr)
+      moda.push(dado.Var);
+  });
+  if(moda.length == dadosColetados.length)
+    moda = null;
 
   //Media
-  media = media / dadosColetados.length;
+  media = (media / parseInt(dadosColetados[dadosColetados.length - 1].FrA)).toFixed(2);
 
   //Mediana
-  if ("@ViewBag.tipo" == "C") {
-  } else {
-    var ve = arrayModa.length;
-
-    if (ve % 2 == 0) {
-      var posicao = dadosColetados[dadosColetados.length - 1].FrA / 2,
-        vlr1 = dadosColetados[posicao],
-        vlr2 = vlr1 + 1;
-
-      mediana = vlr1 + vlr2;
+  if(dadosColetados[dadosColetados.length - 1].FrA%2 != 0){
+    let pontoMedio = (dadosColetados[dadosColetados.length - 1].FrA + 1)/2;
+    for(var i = 0; i < dadosColetados.length; i++){
+      if(dadosColetados[i].FrA >= pontoMedio){
+        mediana = (dadosColetados[i].Var).toFixed(2);
+        break;
+      }
     }
+    console.log(pontoMedio);
+  }else{
+    let pontoMedio1 = (dadosColetados[dadosColetados.length - 1].FrA)/2, 
+    pontoMedio2 = pontoMedio1+1,
+    checkPM1 = false, checkPM2 = false;
+    console.log(pontoMedio1 + "  " + pontoMedio2);
+    for(var i = 0; i < dadosColetados.length; i++){
+      if(dadosColetados[i].FrA >= pontoMedio1 && !(checkPM1)){
+        mediana += parseFloat(dadosColetados[i].Var);
+        checkPM1 = true;
+      }
+      if(dadosColetados[i].FrA >= pontoMedio2 && !(checkPM2)){
+        mediana += parseFloat(dadosColetados[i].Var);
+        checkPM2 = true;
+      }
+      if(checkPM1 && checkPM2)
+        break;
+    }
+    console.log(mediana);
+    mediana = (mediana/2).toFixed(2);
   }
 
   return {
@@ -221,6 +214,19 @@ function montaGrafico(type, dados, ctx, titulo) {
       }]
     },
     options: {
+      tooltips: {
+        callbacks: {
+          label: function (tooltipItem, data) {
+            var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+            if (label) {
+              label += ': ';
+            }
+            label += Math.round(tooltipItem.yLabel * 100) / 100;
+            return label;
+          }
+        }
+      },
       scales: {
         yAxes: [{
           ticks: {

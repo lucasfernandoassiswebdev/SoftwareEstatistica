@@ -101,9 +101,10 @@
                 });
                 dadosColetados = dadosPGrafico;
             }
-            else 
-                frequencia = calculaFrequencias(dadosColetados.sort(function(a, b){return a-b}));  
-            console.log(dadosColetados);
+            else {
+                frequencia = calculaFrequencias(dadosColetados.sort(function(a, b){return a-b})); 
+                console.log(medidasEstatisticasDiscreta(dadosColetados.sort(function(a, b){return a-b})));
+            } 
             $.get("/QualitativasQuantitativas/Tabela",{
                 jsonDadosColetados: JSON.stringify(frequencia)
             }).done(function(data){
