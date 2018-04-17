@@ -21,45 +21,38 @@ function calculaFrequencias(dados) {
 }
 
 function calculaFrequenciasContinua(dados) {
-  let objTabela = calculaFrequencias(dados);
-  let maior = objTabela[objTabela.length - 1].Var, menor = objTabela[0].Var;
-  /*for (var i = 0; i <= objTabela.length; i++) {
-    if (i == 0) {
-      maior = objTabela[i]; menor = objTabela[i];
-    } else {
-      if(objTabela[i].Var > maior)
-        maior = objTabela[i].Var;
-      if(objTabela[i] < menor)
-        menor = objTabela[i].Var;  
-    }
-  }*/
-  let quatLinhas = Math.ceil(Math.sqrt(objTabela[objTabela.length - 1].FrA));
-  let intervalo = 0;
-  let At = maior - menor + 1;
-  do{
+  let objTabela = calculaFrequencias(dados),
+    maior = objTabela[objTabela.length - 1].Var, menor = objTabela[0].Var,
+    quatLinhas = Math.ceil(Math.sqrt(objTabela[objTabela.length - 1].FrA)),
+    intervalo = 0,
+    At = maior - menor + 1;
+
+  do {
     checkI = false;
-    if(At%quatLinhas == 0){
+    if (At % quatLinhas == 0) {
       intervalo = Math.ceil((At) / quatLinhas);
       checkI = true;
-    }else if(At%(quatLinhas - 1) == 0){
+    } else if (At % (quatLinhas - 1) == 0) {
       intervalo = Math.ceil((At) / (quatLinhas - 1));
       checkI = true;
-    }else if(At%(quatLinhas + 1) == 0){
+    } else if (At % (quatLinhas + 1) == 0) {
       intervalo = Math.ceil((At) / (quatLinhas + 1));
       checkI = true;
     }
     At++;
-  }while(!(checkI))
+  } while (!(checkI))
   let objContinua = [{
-    Var: menor + "|---" +(menor + intervalo), Fr: 0, FrP: 0, FrA: 0, FrAP: 0,
-    Pontos:[menor, (menor + intervalo)]
+    Var: menor + "|---" + (menor + intervalo), Fr: 0, FrP: 0, FrA: 0, FrAP: 0,
+    Pontos: [menor, (menor + intervalo)]
   }];
+
   while (objContinua[objContinua.length - 1].Pontos[1] <= maior) {
     objContinua.push({
       Var: objContinua[objContinua.length - 1].Pontos[1] + "|---" + (objContinua[objContinua.length - 1].Pontos[1] + intervalo), Fr: 0, FrP: 0, FrA: 0, FrAP: 0,
       Pontos: [objContinua[objContinua.length - 1].Pontos[1], objContinua[objContinua.length - 1].Pontos[1] + intervalo]
     });
   }
+
   objContinua.forEach(function (dadoD) {
     objTabela.forEach(function (dado) {
       if (dado.Var >= dadoD.Pontos[0] && dado.Var < dadoD.Pontos[1]) {
@@ -70,6 +63,7 @@ function calculaFrequenciasContinua(dados) {
       }
     })
   });
+  
   return objContinua;
 }
 
