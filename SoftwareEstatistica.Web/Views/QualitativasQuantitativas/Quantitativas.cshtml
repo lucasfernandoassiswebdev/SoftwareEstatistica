@@ -55,7 +55,7 @@
         $("input[name=radioTipo]").change(function(){
            $("#hiddenInputs").slideDown("fast"); 
             if(primeiraVez){
-                ExibeAjuda()    ;
+                ExibeAjuda();
                 primeiraVez = false;
             }
         });
@@ -91,20 +91,21 @@
             });
 
             let frequencia = [];
+
             if('@ViewBag.Tipo' == 'C'){
                 frequencia = calculaFrequenciasContinua(dadosColetados.sort(function(a, b){return a-b}));
                 dadosPGrafico = [];
+
                 frequencia.forEach(function(dado){
-                    for(var i = 0; i < dado.Fr; i++){
+                    for(var i = 0; i < dado.Fr; i++)
                         dadosPGrafico.push(dado.Var);
-                    }
                 });
+
                 dadosColetados = dadosPGrafico;
             }
-            else {
+            else 
                 frequencia = calculaFrequencias(dadosColetados.sort(function(a, b){return a-b})); 
-                console.log(medidasEstatisticasDiscreta(dadosColetados.sort(function(a, b){return a-b})));
-            } 
+            
             $.get("/QualitativasQuantitativas/Tabela",{
                 jsonDadosColetados: JSON.stringify(frequencia)
             }).done(function(data){
@@ -141,26 +142,10 @@
                 M.Toast.dismissAll();
                 M.toast({ html: "Erro ao montar o gráfico!" });
             });
-
-            /*$.get("/QualitativasQuantitativas/MediaModaMediana", {
-                jsonDadosColetados: JSON.stringify(dadosColetados),
-                tipo: $("#tipoVariavel").val()
-            }).success(function(data){
-                $("#resultados").parent().append($("<div>",{
-                    class: "row center rowAdicionada",
-                    html: [ $("<div>",{
-                            class: "col s8 offset-s2 areaDados",
-                            style: "padding: 15px 15px; margin-top: 20px;",
-                            html: [data]
-                        })]
-                }));
-            }).error(function(xhr){
-                M.Toast.dismissAll();
-                M.toast({ html: "Erro ao calcular média moda e mediana!" });
-            });*/
         });
 
-        function ExibeAjuda(){M.Toast.dismissAll();
+        function ExibeAjuda(){
+            M.Toast.dismissAll();
             M.toast({ html: "Use a tecla 'Enter' para inserir os dados" });
             M.toast({ html: "Use pontos ou vírgulas para numeros decimais" });
         }

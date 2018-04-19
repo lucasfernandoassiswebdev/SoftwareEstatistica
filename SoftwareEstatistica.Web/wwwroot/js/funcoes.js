@@ -1,7 +1,7 @@
 function calculaFrequencias(dados) {
   let objTabela = [],
-    FrA = 0,
-    retorno = [];
+      FrA = 0,
+      retorno = [];
 
   for (let i = 0; i < dados.length; i++)
     if (i == 0 || objTabela[objTabela.length - 1].Var != dados[i])
@@ -22,13 +22,14 @@ function calculaFrequencias(dados) {
 
 function calculaFrequenciasContinua(dados) {
   let objTabela = calculaFrequencias(dados),
-    maior = objTabela[objTabela.length - 1].Var, menor = objTabela[0].Var,
-    quatLinhas = Math.trunc(Math.sqrt(objTabela[objTabela.length - 1].FrA)),
-    intervalo = 0,
-    At = maior - menor + 1;
+      maior = objTabela[objTabela.length - 1].Var, menor = objTabela[0].Var,
+      quatLinhas = Math.trunc(Math.sqrt(objTabela[objTabela.length - 1].FrA)),
+      intervalo = 0,
+      At = maior - menor + 1;
 
   do {
     checkI = false;
+    
     if (At % quatLinhas == 0) {
       intervalo = Math.trunc((At) / quatLinhas);
       checkI = true;
@@ -39,11 +40,12 @@ function calculaFrequenciasContinua(dados) {
       intervalo = Math.trunc((At) / (quatLinhas + 1));
       checkI = true;
     }
+
     At++;
   } while (!(checkI))
-  let objContinua = [{
-    Var: menor + "|---" + (menor + intervalo), Fr: 0, FrP: 0, FrA: 0, FrAP: 0,
-    Pontos: [menor, (menor + intervalo)]
+    let objContinua = [{
+        Var: menor + "|---" + (menor + intervalo), Fr: 0, FrP: 0, FrA: 0, FrAP: 0,
+        Pontos: [menor, (menor + intervalo)]
   }];
 
   while (objContinua[objContinua.length - 1].Pontos[1] <= maior) {
@@ -61,29 +63,33 @@ function calculaFrequenciasContinua(dados) {
         dadoD.FrA = dado.FrA;
         dadoD.FrAP = dado.FrAP;
       }
-    })
+    });
   });
 
   return objContinua;
 }
 
-function medidasEstatisticasDiscreta(dados) {
+function medidasEstatisticasDiscreta(dados, amostra) {
   let dadosColetados = calculaFrequencias(dados),
-    moda = [],
-    maiorFr = 0,
-    media = 0,
-    mediana = 0;
+      moda = [],
+      maiorFr = 0,
+      media = 0,
+      mediana = 0,
+      desvioPadrao = 0;
 
   //Moda
   dadosColetados.forEach(function (dado, index) {
     media += (parseFloat(dado.Fr) * parseFloat(dado.Var));
+    
     if (index == 0 || parseInt(dado.Fr) >= maiorFr)
       maiorFr = parseInt(dado.Fr);
   });
+
   dadosColetados.forEach(function (dado) {
     if(parseInt(dado.Fr) == maiorFr)
       moda.push(dado.Var);
   });
+
   if(moda.length == dadosColetados.length)
     moda = null;
 
@@ -93,43 +99,55 @@ function medidasEstatisticasDiscreta(dados) {
   //Mediana
   if(dadosColetados[dadosColetados.length - 1].FrA%2 != 0){
     let pontoMedio = (dadosColetados[dadosColetados.length - 1].FrA + 1)/2;
-    for(var i = 0; i < dadosColetados.length; i++){
+  
+    for(var i = 0; i < dadosColetados.length; i++)
       if(dadosColetados[i].FrA >= pontoMedio){
         mediana = (dadosColetados[i].Var).toFixed(2);
         break;
       }
-    }
   }else{
     let pontoMedio1 = (dadosColetados[dadosColetados.length - 1].FrA)/2, 
-    pontoMedio2 = pontoMedio1+1,
-    checkPM1 = false, checkPM2 = false;
+        pontoMedio2 = pontoMedio1+1,
+        checkPM1 = false, checkPM2 = false;
+    
     for(var i = 0; i < dadosColetados.length; i++){
       if(dadosColetados[i].FrA >= pontoMedio1 && !(checkPM1)){
         mediana += parseFloat(dadosColetados[i].Var);
         checkPM1 = true;
       }
+
       if(dadosColetados[i].FrA >= pontoMedio2 && !(checkPM2)){
         mediana += parseFloat(dadosColetados[i].Var);
         checkPM2 = true;
       }
+
       if(checkPM1 && checkPM2)
         break;
     }
-    console.log(mediana);
     mediana = (mediana/2).toFixed(2);
   }
+  
+  dadosColetados.forEach(function(dado){
+    desvioPadrao += Math.pow(parseFloat(dado.Var) - media, 2)*parseFloat(dado.Fr);
+  });
+
+  if(!(amostra))
+    desvioPadrao = Math.sqrt(desvioPadrao/dadosColetados[dadosColetados.length - 1].FrA).toFixed(2);
+  else
+    desvioPadrao = Math.sqrt(desvioPadrao/(dadosColetados[dadosColetados.length - 1].FrA - 1)).toFixed(2);
 
   return {
     Media: media,
     Moda: moda,
-    Mediana: mediana
+    Mediana: mediana,
+    DesvioPadrao: desvioPadrao
   };
 }
 
 function montaInformacoesGrafico(dados) {
   let objDados = [],
-    variaveis = [],
-    quantidades = [];
+      variaveis = [],
+      quantidades = [];
 
   dados.forEach(function (item, index) {
     if (index == 0)
@@ -168,9 +186,9 @@ function montaInformacoesGrafico(dados) {
 
 function sorteiaCor(ultimaCor) {
   let num = Math.round(0xffffff * Math.random()),
-    r = num >> 16,
-    g = (num >> 8) & 255,
-    b = num & 255;
+      r = num >> 16,
+      g = (num >> 8) & 255,
+      b = num & 255;
 
   num = Math.round(0xffffff * Math.random());
   r = num >> 16;
