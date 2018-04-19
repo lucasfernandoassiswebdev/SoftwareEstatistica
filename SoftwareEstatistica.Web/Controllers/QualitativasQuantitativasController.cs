@@ -29,15 +29,5 @@ namespace SoftwareEstatistica.Web.Controllers
 
             return View();
         }
-
-        public ActionResult MediaModaMediana(string jsonDadosColetados, string tipo){
-            ViewBag.Dados = jsonDadosColetados;
-            ViewBag.Tipo = tipo;
-
-            if(string.IsNullOrEmpty(jsonDadosColetados))
-                return Error("Nenhum dado foi fornecido!");
-
-            return View();
-        }
     }
 }

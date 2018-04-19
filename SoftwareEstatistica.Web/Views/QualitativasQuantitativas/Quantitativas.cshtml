@@ -92,7 +92,7 @@
 
             let frequencia = [];
 
-            if('@ViewBag.Tipo' == 'C'){
+            if('@ViewBag.Tipo' == "C"){
                 frequencia = calculaFrequenciasContinua(dadosColetados.sort(function(a, b){return a-b}));
                 dadosPGrafico = [];
 
@@ -109,6 +109,23 @@
             $.get("/QualitativasQuantitativas/Tabela",{
                 jsonDadosColetados: JSON.stringify(frequencia)
             }).done(function(data){
+                $("#resultados").parent().append($("<div>",{
+                    class: "row center rowAdicionada",
+                    html: [ $("<div>",{
+                            class: "col s8 offset-s2 areaDados",
+                            style: "padding: 15px 15px; margin-top: 20px;",
+                            html: [data]
+                        })]
+                }));
+            }).error(function(xhr){
+                M.Toast.dismissAll();  
+                M.toast({ html: xhr.responseText });
+            });
+
+            $.get("/Quantitativas/MediaModaMediana",{
+                jsonDadosColetados: JSON.stringify(dadosColetados),
+                amostra: $("input[name=radioTipo]:checked").val()
+            }).success(function(data){
                 $("#resultados").parent().append($("<div>",{
                     class: "row center rowAdicionada",
                     html: [ $("<div>",{

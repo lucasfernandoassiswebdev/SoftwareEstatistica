@@ -1,0 +1,40 @@
+<div class="col s10 offset-s1">
+    <h5 class="left">Dados</h5>
+    <table class="tabela highlight" id="dadosMediaModaMediana" style="margin-bottom: 30px">
+        <thead>
+            <td>Desvio Padrão</td>
+            <td>Media</td>
+            <td>Mediana</td>
+            <td>Moda</td>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+@section Scripts{
+    <script>
+        var objeto = medidasEstatisticasDiscreta(String('@ViewBag.Dados'.replace(/&quot;/g,'"')),'@ViewBag.Amostra'),
+            modaConcatenada = "";
+
+        objeto.Moda.forEach(function(item){
+            modaConcatenada +=  item + " / ";
+        }); 
+
+        modaConcatenada = modaConcatenada.substring(0, modaConcatenada.length - 2);
+
+        $("#dadosMediaModaMediana tbody").append($("<tr>",{
+                                                     html: [$("<td>",{
+                                                                html: [objeto.DesvioPadrao]
+                                                            }),
+                                                            $("<td>",{
+                                                                html: [objeto.Media]
+                                                            }),
+                                                            $("<td>",{
+                                                                html: [objeto.Mediana]
+                                                            }),
+                                                            $("<td>",{
+                                                                html: [modaConcatenada]
+                                                            })]
+                                                 }));
+    </script>
+}

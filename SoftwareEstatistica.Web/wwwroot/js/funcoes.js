@@ -70,7 +70,7 @@ function calculaFrequenciasContinua(dados) {
 }
 
 function medidasEstatisticasDiscreta(dados, amostra) {
-  let dadosColetados = calculaFrequencias(dados),
+  let dadosColetados = calculaFrequencias(JSON.parse(dados)),
       moda = [],
       maiorFr = 0,
       media = 0,
@@ -131,7 +131,7 @@ function medidasEstatisticasDiscreta(dados, amostra) {
     desvioPadrao += Math.pow(parseFloat(dado.Var) - media, 2)*parseFloat(dado.Fr);
   });
 
-  if(!(amostra))
+  if(!(amostra == "D"))
     desvioPadrao = Math.sqrt(desvioPadrao/dadosColetados[dadosColetados.length - 1].FrA).toFixed(2);
   else
     desvioPadrao = Math.sqrt(desvioPadrao/(dadosColetados[dadosColetados.length - 1].FrA - 1)).toFixed(2);
