@@ -67,9 +67,10 @@
         var primeiraVez = true;
 
         $("input[name=radioTipo]").change(function(){
-           $("#hiddenInputs").slideDown("fast"); 
+            $("#hiddenInputs").slideDown("fast"); 
+
             if(primeiraVez){
-                ExibeAjuda()    ;
+                ExibeAjuda();
                 primeiraVez = false;
             }
         });

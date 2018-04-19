@@ -43,14 +43,20 @@ function calculaFrequenciasContinua(dados) {
 
     At++;
   } while (!(checkI))
+  
   let objContinua = [{
     Var: menor + "|---" + (menor + intervalo), Fr: 0, FrP: 0, FrA: 0, FrAP: 0,
     Pontos: [menor, (menor + intervalo)]
   }];
 
   while (objContinua[objContinua.length - 1].Pontos[1] <= maior) {
+    debugger;
     objContinua.push({
-      Var: objContinua[objContinua.length - 1].Pontos[1] + "|---" + (objContinua[objContinua.length - 1].Pontos[1] + intervalo), Fr: 0, FrP: 0, FrA: 0, FrAP: 0,
+      Var: objContinua[objContinua.length - 1].Pontos[1] + "|---" + (objContinua[objContinua.length - 1].Pontos[1] + intervalo), 
+      Fr: 0, 
+      FrP: 0, 
+      FrA: 0, 
+      FrAP: 0,
       Pontos: [objContinua[objContinua.length - 1].Pontos[1], objContinua[objContinua.length - 1].Pontos[1] + intervalo]
     });
   }
@@ -70,21 +76,13 @@ function calculaFrequenciasContinua(dados) {
 }
 
 function medidasEstatisticasDiscreta(dados, amostra) {
-<<<<<<< HEAD
-  let dadosColetados = calculaFrequencias(JSON.parse(dados)),
-      moda = [],
-      maiorFr = 0,
-      media = 0,
-      mediana = 0,
-      desvioPadrao = 0;
-=======
+  debugger;
   let dadosColetados = calculaFrequencias(dados),
     moda = [],
     maiorFr = 0,
     media = 0,
     mediana = 0,
     desvioPadrao = 0;
->>>>>>> 7eba4e0ec26797c89f11696a8c67ee61ec3dc726
 
   //Moda
   dadosColetados.forEach(function (dado, index) {
@@ -111,7 +109,7 @@ function medidasEstatisticasDiscreta(dados, amostra) {
 
     for (var i = 0; i < dadosColetados.length; i++)
       if (dadosColetados[i].FrA >= pontoMedio) {
-        mediana = (dadosColetados[i].Var).toFixed(2);
+        mediana = dadosColetados[i].Var.toFixed(2);
         break;
       }
   } else {
@@ -140,13 +138,8 @@ function medidasEstatisticasDiscreta(dados, amostra) {
     desvioPadrao += Math.pow(parseFloat(dado.Var) - media, 2) * parseFloat(dado.Fr);
   });
 
-<<<<<<< HEAD
-  if(!(amostra == "D"))
+  if(!amostra == "A")
     desvioPadrao = Math.sqrt(desvioPadrao/dadosColetados[dadosColetados.length - 1].FrA).toFixed(2);
-=======
-  if (!(amostra))
-    desvioPadrao = Math.sqrt(desvioPadrao / dadosColetados[dadosColetados.length - 1].FrA).toFixed(2);
->>>>>>> 7eba4e0ec26797c89f11696a8c67ee61ec3dc726
   else
     desvioPadrao = Math.sqrt(desvioPadrao / (dadosColetados[dadosColetados.length - 1].FrA - 1)).toFixed(2);
 
