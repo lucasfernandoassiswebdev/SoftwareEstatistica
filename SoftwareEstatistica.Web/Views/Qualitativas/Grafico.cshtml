@@ -2,6 +2,6 @@
 
 @section Scripts{
     <script>
-        montaGrafico('pie', JSON.parse('@ViewBag.Dados'.replace(/&quot;/g,'"')), document.getElementById("graficoPizza").getContext("2d"), $("#varPesquisada").val());
+        montaGrafico("pie", JSON.parse('@ViewBag.Dados'.replace(/&quot;/g,'"')), document.getElementById("graficoPizza").getContext("2d"), $("#varPesquisada").val());
     </script>
 }

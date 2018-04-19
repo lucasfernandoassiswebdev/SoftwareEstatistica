@@ -5,24 +5,19 @@ namespace SoftwareEstatistica.Web.Controllers
     public class QuantitativasController : BaseController
     {
         public ActionResult Rol(string jsonDadosColetados){
-            ViewBag.Dados = jsonDadosColetados;
-
-            if(string.IsNullOrEmpty(jsonDadosColetados))
-                return Error("Nenhum dado foi fornecido!");
-
-            return View();
-        }
-
-        public ActionResult Grafico(string jsonDadosColetados, string tipo){
-            ViewBag.Dados = jsonDadosColetados;
-
             if(string.IsNullOrEmpty(jsonDadosColetados))
                 return Error("Nenhum dado foi fornecido!");
             
-            if(string.IsNullOrEmpty(tipo))
-                return Error("O tipo do gráfico não foi informado!");
+            ViewBag.Dados = jsonDadosColetados;
+            return View();
+        }
 
-            return View(tipo == "D" ? "GraficoDiscretas" : "GraficoContinuas");
+        public ActionResult Grafico(string jsonDadosColetados){
+            if(string.IsNullOrEmpty(jsonDadosColetados))
+                return Error("Nenhum dado foi fornecido!");
+            
+            ViewBag.Dados = jsonDadosColetados;
+            return View();
         }
     }
 }

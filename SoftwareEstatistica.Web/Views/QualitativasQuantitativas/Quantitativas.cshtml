@@ -67,7 +67,8 @@
             .blur(HabilitaDesabilita);
 
         $("#btnEnviaDados").click(function(){
-            let dadosColetados = [];
+            let dadosColetados = [],
+                frequencia = [];
 
             M.Chips.getInstance($(".chips")).chipsData.forEach(function(item){
                 dadosColetados.push(parseFloat(item.tag));
@@ -88,9 +89,7 @@
                 }));
             }).error(erro);
 
-            let frequencia = [];
-
-            if('@ViewBag.Tipo' == 'C'){
+            if('@ViewBag.Tipo' == "C"){
                 frequencia = calculaFrequenciasContinua(dadosColetados.sort(function(a, b){return a-b}));
                 dadosPGrafico = [];
 
@@ -118,8 +117,7 @@
             }).error(erro);
 
             $.get("/Quantitativas/Grafico",{
-                jsonDadosColetados: JSON.stringify(dadosColetados.sort(function(a, b){return a-b})),
-                tipo: $("#tipoVariavel").val()
+                jsonDadosColetados: JSON.stringify(dadosColetados.sort(function(a, b){return a-b}))
             }).success(function(data){
                 $("#resultados").parent().append($("<div>",{
                     class: "row center rowAdicionada",
