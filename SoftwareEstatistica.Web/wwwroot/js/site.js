@@ -8,3 +8,8 @@ $(document).on("ajaxSend", function () {
     if (xhr.status == 401)
         location.reload();
 });
+
+function erro(xhr){
+    M.Toast.dismissAll();  
+    M.toast({ html: xhr.responseText });
+}

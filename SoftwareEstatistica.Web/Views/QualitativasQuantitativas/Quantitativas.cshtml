@@ -53,7 +53,8 @@
         var primeiraVez = true;
 
         $("input[name=radioTipo]").change(function(){
-           $("#hiddenInputs").slideDown("fast"); 
+            $("#hiddenInputs").slideDown("fast"); 
+
             if(primeiraVez){
                 ExibeAjuda();
                 primeiraVez = false;
@@ -66,7 +67,8 @@
             .blur(HabilitaDesabilita);
 
         $("#btnEnviaDados").click(function(){
-            var dadosColetados = [];
+            let dadosColetados = [],
+                frequencia = [];
 
             M.Chips.getInstance($(".chips")).chipsData.forEach(function(item){
                 dadosColetados.push(parseFloat(item.tag));
@@ -85,12 +87,7 @@
                             html: [data]
                         })]
                 }));
-            }).error(function(xhr){
-                M.Toast.dismissAll();  
-                M.toast({ html: xhr.responseText });
-            });
-
-            let frequencia = [];
+            }).error(erro);
 
             if('@ViewBag.Tipo' == "C"){
                 frequencia = calculaFrequenciasContinua(dadosColetados.sort(function(a, b){return a-b}));
@@ -117,10 +114,7 @@
                             html: [data]
                         })]
                 }));
-            }).error(function(xhr){
-                M.Toast.dismissAll();  
-                M.toast({ html: xhr.responseText });
-            });
+            }).error(erro);
 
             $.get("/Quantitativas/MediaModaMediana",{
                 jsonDadosColetados: JSON.stringify(dadosColetados),
@@ -140,8 +134,7 @@
             });
 
             $.get("/Quantitativas/Grafico",{
-                jsonDadosColetados: JSON.stringify(dadosColetados.sort(function(a, b){return a-b})),
-                tipo: $("#tipoVariavel").val()
+                jsonDadosColetados: JSON.stringify(dadosColetados.sort(function(a, b){return a-b}))
             }).success(function(data){
                 $("#resultados").parent().append($("<div>",{
                     class: "row center rowAdicionada",
@@ -155,10 +148,7 @@
                                     data]
                         })]
                 }));
-            }).error(function(xhr){
-                M.Toast.dismissAll();
-                M.toast({ html: "Erro ao montar o gráfico!" });
-            });
+            }).error(erro);
         });
 
         function ExibeAjuda(){

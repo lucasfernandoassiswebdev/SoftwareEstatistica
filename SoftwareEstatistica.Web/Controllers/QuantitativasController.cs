@@ -4,27 +4,20 @@ namespace SoftwareEstatistica.Web.Controllers
 {
     public class QuantitativasController : BaseController
     {
-        public ActionResult Rol(string jsonDadosColetados)
-        {
-            ViewBag.Dados = jsonDadosColetados;
-
-            if (string.IsNullOrEmpty(jsonDadosColetados))
+        public ActionResult Rol(string jsonDadosColetados){
+            if(string.IsNullOrEmpty(jsonDadosColetados))
                 return Error("Nenhum dado foi fornecido!");
 
+            ViewBag.Dados = jsonDadosColetados;
             return View();
         }
 
-        public ActionResult Grafico(string jsonDadosColetados, string tipo)
-        {
-            ViewBag.Dados = jsonDadosColetados;
-
-            if (string.IsNullOrEmpty(jsonDadosColetados))
+        public ActionResult Grafico(string jsonDadosColetados){
+            if(string.IsNullOrEmpty(jsonDadosColetados))
                 return Error("Nenhum dado foi fornecido!");
-
-            if (string.IsNullOrEmpty(tipo))
-                return Error("O tipo do gráfico não foi informado!");
-
-            return View(tipo == "D" ? "GraficoDiscretas" : "GraficoContinuas");
+            
+            ViewBag.Dados = jsonDadosColetados;
+            return View();
         }
 
         public ActionResult MediaModaMediana(string jsonDadosColetados, string amostra)
