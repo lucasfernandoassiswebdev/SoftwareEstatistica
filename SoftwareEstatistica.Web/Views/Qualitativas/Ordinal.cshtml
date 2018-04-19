@@ -31,7 +31,7 @@
     var dados = JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g,'"'))),
         primeiraVez = true;
 
-    M.Tooltip.init($(".tooltipped"))
+    M.Tooltip.init($(".tooltipped"));
 
     if(primeiraVez){
         ExibeAjudaOrdenacao();
@@ -40,13 +40,15 @@
 
     //separando as variaveis pesquisadas
     var dadosIsolados = [];
+
     dados.forEach(function(dado){
-        var check = true;
+        let check = true;
+
         dadosIsolados.forEach(function(dadoT){
-            if(dadoT == dado){
+            if(dadoT == dado)
                 check = false;
-            }
         });
+
         if(check)
             dadosIsolados.push(dado);
     });
@@ -63,8 +65,9 @@
     });
 
     $("#btnContinuar").click(function(){
-        let dadosColetados = [];
-        let ordinal = []
+        let dadosColetados = [],
+            ordinal = [];
+
         $("#sortable li span").each(function(){
             ordinal.push($(this).html());
         });
@@ -75,7 +78,7 @@
                     dadosColetados.push(dado);
             });
         });
-        console.log(dadosColetados);
+
         $.get("/Qualitativas/Rol", {
                 jsonDadosColetados: JSON.stringify(dadosColetados),
             }).done(function(data){
@@ -91,10 +94,7 @@
                     }));
 
                 $(".areaDados:last-child").slideDown("fast");
-            }).error(function(xhr){
-                M.Toast.dismissAll();  
-                M.toast({ html: xhr.responseText });
-            });
+            }).error(erro);
     });    
 
     $("#sortable").sortable();

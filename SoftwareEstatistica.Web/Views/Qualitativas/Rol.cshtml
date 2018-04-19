@@ -41,7 +41,7 @@
 
        $.get("/Qualitativas/Grafico",{
             jsonDadosColetados: JSON.stringify(montaInformacoesGrafico(dadosOrdenados))
-        }).success(function(dataGrafico){
+        }).success(function(viewGrafico){
             $("#resultados").parent().append($("<div>",{
                 class: "row center rowAdicionada",
                 html: [ $("<div>",{
@@ -51,17 +51,11 @@
                                         style: "text-align: left",
                                         html: ["Gráfico"]
                                     }),
-                                    dataGrafico]
+                                    viewGrafico]
                         })]
             }));
-        }).error(function(xhr){
-            M.Toast.dismissAll();  
-            M.toast({ html: xhr.responseText });
-        });
+        }).error(erro);
 
         $(".areaDados:last-child").slideDown("fast");
-    }).error(function(xhr){
-        M.Toast.dismissAll();  
-        M.toast({ html: xhr.responseText });
-    });
+    }).error(erro);
 </script>

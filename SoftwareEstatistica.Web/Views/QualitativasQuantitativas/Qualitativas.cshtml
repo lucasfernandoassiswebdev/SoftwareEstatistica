@@ -86,9 +86,7 @@
                 dadosColetados.push(item.tag);
             });
 
-            let url = $("input[name=radioTipoQualitativa]:checked").val() == "N" ? "/Qualitativas/Rol" : "/Qualitativas/Ordinal";
-
-            $.get(url, {
+            $.get($("input[name=radioTipoQualitativa]:checked").val() == "N" ? "/Qualitativas/Rol" : "/Qualitativas/Ordinal", {
                 jsonDadosColetados: JSON.stringify(dadosColetados),
                 ordenar: $("input[name=radioTipoQualitativa]:checked").val() == "N" ? "S" : ""
             }).done(function(data){
@@ -97,10 +95,7 @@
                 $("#resultados").slideUp("fast",function(){
                     $(this).html(data).slideDown("fast");
                 });
-            }).error(function(xhr){
-                M.Toast.dismissAll();  
-                M.toast({ html: xhr.responseText });
-            });
+            }).error(erro);
         });
 
         function ExibeAjuda(){

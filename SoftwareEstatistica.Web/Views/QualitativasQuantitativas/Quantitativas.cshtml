@@ -53,7 +53,8 @@
         var primeiraVez = true;
 
         $("input[name=radioTipo]").change(function(){
-           $("#hiddenInputs").slideDown("fast"); 
+            $("#hiddenInputs").slideDown("fast"); 
+
             if(primeiraVez){
                 ExibeAjuda();
                 primeiraVez = false;
@@ -66,7 +67,7 @@
             .blur(HabilitaDesabilita);
 
         $("#btnEnviaDados").click(function(){
-            var dadosColetados = [];
+            let dadosColetados = [];
 
             M.Chips.getInstance($(".chips")).chipsData.forEach(function(item){
                 dadosColetados.push(parseFloat(item.tag));
@@ -85,10 +86,7 @@
                             html: [data]
                         })]
                 }));
-            }).error(function(xhr){
-                M.Toast.dismissAll();  
-                M.toast({ html: xhr.responseText });
-            });
+            }).error(erro);
 
             let frequencia = [];
 
@@ -117,10 +115,7 @@
                             html: [data]
                         })]
                 }));
-            }).error(function(xhr){
-                M.Toast.dismissAll();  
-                M.toast({ html: xhr.responseText });
-            });
+            }).error(erro);
 
             $.get("/Quantitativas/Grafico",{
                 jsonDadosColetados: JSON.stringify(dadosColetados.sort(function(a, b){return a-b})),
@@ -138,10 +133,7 @@
                                     data]
                         })]
                 }));
-            }).error(function(xhr){
-                M.Toast.dismissAll();
-                M.toast({ html: "Erro ao montar o gráfico!" });
-            });
+            }).error(erro);
         });
 
         function ExibeAjuda(){
