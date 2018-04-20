@@ -82,7 +82,8 @@ function medidasEstatisticasDiscreta(dados, amostra) {
     maiorFr = 0,
     media = 0,
     mediana = 0,
-    desvioPadrao = 0;
+    desvioPadrao = 0,
+    coeficienteDeVariacao = 0;
 
   //Moda
   dadosColetados.forEach(function (dado, index) {
@@ -142,12 +143,14 @@ function medidasEstatisticasDiscreta(dados, amostra) {
     desvioPadrao = Math.sqrt(desvioPadrao/dadosColetados[dadosColetados.length - 1].FrA).toFixed(2);
   else
     desvioPadrao = Math.sqrt(desvioPadrao / (dadosColetados[dadosColetados.length - 1].FrA - 1)).toFixed(2);
-
+  
+  coeficienteDeVariacao = (desvioPadrao/media)*100;
   return {
     Media: media,
     Moda: moda,
     Mediana: mediana,
-    DesvioPadrao: desvioPadrao
+    DesvioPadrao: desvioPadrao,
+    CoeficienteDeVariacao: coeficienteDeVariacao
   };
 }
 
