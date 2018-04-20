@@ -97,6 +97,7 @@
                     for(var i = 0; i < dado.Fr; i++)
                         dadosPGrafico.push(dado.Var);
                 });
+                console.log(medidasEstatisticasContinua(dadosColetados.sort(function(a, b){return a-b}),"A"));
             }
             else{ 
                 frequencia = calculaFrequencias(dadosColetados.sort(function(a, b){return a-b})); 

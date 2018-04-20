@@ -43,7 +43,7 @@ function calculaFrequenciasContinua(dados) {
 
     At++;
   } while (!(checkI))
-  
+
   let objContinua = [{
     Var: menor + "|---" + (menor + intervalo), Fr: 0, FrP: 0, FrA: 0, FrAP: 0,
     Pontos: [menor, (menor + intervalo)]
@@ -51,10 +51,10 @@ function calculaFrequenciasContinua(dados) {
 
   while (objContinua[objContinua.length - 1].Pontos[1] <= maior) {
     objContinua.push({
-      Var: objContinua[objContinua.length - 1].Pontos[1] + "|---" + (objContinua[objContinua.length - 1].Pontos[1] + intervalo), 
-      Fr: 0, 
-      FrP: 0, 
-      FrA: 0, 
+      Var: objContinua[objContinua.length - 1].Pontos[1] + "|---" + (objContinua[objContinua.length - 1].Pontos[1] + intervalo),
+      Fr: 0,
+      FrP: 0,
+      FrA: 0,
       FrAP: 0,
       Pontos: [objContinua[objContinua.length - 1].Pontos[1], objContinua[objContinua.length - 1].Pontos[1] + intervalo]
     });
@@ -74,7 +74,7 @@ function calculaFrequenciasContinua(dados) {
   return objContinua;
 }
 
-function medidasEstatisticasDiscreta(dados, amostra) {
+function medidasEstatisticasDiscreta(dados, tipo) {
   let dadosColetados = calculaFrequencias(dados),
     moda = [],
     maiorFr = 0,
@@ -133,16 +133,17 @@ function medidasEstatisticasDiscreta(dados, amostra) {
     mediana = (mediana / 2).toFixed(2);
   }
 
+  //Desvio Padrao
   dadosColetados.forEach(function (dado) {
     desvioPadrao += Math.pow(parseFloat(dado.Var) - media, 2) * parseFloat(dado.Fr);
   });
 
-  if(!amostra == "A")
-    desvioPadrao = Math.sqrt(desvioPadrao/dadosColetados[dadosColetados.length - 1].FrA).toFixed(2);
+  if (!tipo == "A")
+    desvioPadrao = Math.sqrt(desvioPadrao / dadosColetados[dadosColetados.length - 1].FrA).toFixed(2);
   else
     desvioPadrao = Math.sqrt(desvioPadrao / (dadosColetados[dadosColetados.length - 1].FrA - 1)).toFixed(2);
-  
-  coeficienteDeVariacao = (desvioPadrao/media)*100;
+
+  coeficienteDeVariacao = parseFloat((desvioPadrao / media) * 100).toFixed(2).toString() + "%";
   return {
     Media: media,
     Moda: moda,
@@ -150,6 +151,121 @@ function medidasEstatisticasDiscreta(dados, amostra) {
     DesvioPadrao: desvioPadrao,
     CoeficienteDeVariacao: coeficienteDeVariacao
   };
+}
+
+function medidasEstatisticasContinua(dados, tipo) {
+  let dadosColetados = calculaFrequenciasContinua(dados);
+  media = 0,
+    modas = { modaPearson: 0, modaKing: [], modaCzuber: [] },
+    mediana = 0,
+    maiorFr = 0,
+    desvioPadrao = 0,
+    coeficienteDeVariacao = 0;
+
+  //media
+  dadosColetados.forEach(function (dado) {
+    media = (dado.Pontos[0] + ((dado.Pontos[0] - dado.Pontos[1]) / 2)) * dado.Fr;
+  });
+  media = (media / dadosColetados[dadosColetados.length - 1].FrA).toFixed(2);
+
+  //mediana 
+  if (dadosColetados[dadosColetados.length - 1].FrA % 2 != 0) {
+    let pontoMedio = (dadosColetados[dadosColetados.length - 1].FrA + 1) / 2;
+
+    for (var i = 0; i < dadosColetados.length; i++)
+      if (dadosColetados[i].FrA >= pontoMedio) {
+        mediana = dadosColetados[i].Pontos[0] + (((
+          (dadosColetados[dadosColetados.length - 1].FrA / 2)
+          - dadosColetados[i - 1].FrA) / dadosColetados[i].Fr)
+          * (dadosColetados[i].Pontos[1] - dadosColetados[i].Pontos[0]));
+        break;
+      }
+  } else {
+    let pontoMedio1 = (dadosColetados[dadosColetados.length - 1].FrA) / 2,
+      pontoMedio2 = pontoMedio1 + 1,
+      checkPM1 = false, checkPM2 = false;
+
+    for (var i = 0; i < dadosColetados.length; i++) {
+      if (dadosColetados[i].FrA >= pontoMedio1 && !(checkPM1)) {
+        mediana += dadosColetados[i].Pontos[0] + (((
+          (dadosColetados[dadosColetados.length - 1].FrA / 2)
+          - dadosColetados[i - 1].FrA) / dadosColetados[i].Fr)
+          * (dadosColetados[i].Pontos[1] - dadosColetados[i].Pontos[0]));
+        console.log(mediana);
+        checkPM1 = true;
+      }
+
+      if (dadosColetados[i].FrA >= pontoMedio2 && !(checkPM2)) {
+        mediana += dadosColetados[i].Pontos[0] + (((
+          (dadosColetados[dadosColetados.length - 1].FrA / 2)
+          - dadosColetados[i - 1].FrA) / dadosColetados[i].Fr)
+          * (dadosColetados[i].Pontos[1] - dadosColetados[i].Pontos[0]));
+        console.log(mediana);
+        checkPM2 = true;
+      }
+
+      if (checkPM1 && checkPM2)
+        break;
+    }
+    mediana = (mediana / 2).toFixed(2);
+  }
+
+  //moda pearson
+  modas.modaPearson = (3 * mediana) - (2 * media);
+
+  //moda king
+  dadosColetados.forEach(function (dado, index) {
+    if (index != 0 && (index != dadosColetados.length - 1)) {
+      if (dado.Fr > maiorFr) {
+        maiorFr = dado.Fr
+        console.log(index - 1);
+        console.log(dadosColetados[index - 1].Fr);
+        modas.modaKing = [dado.Pontos[0] + ((
+          (dadosColetados[index + 1].Fr)
+          / (dadosColetados[index + 1].Fr + dadosColetados[index - 1].Fr)
+        ) * (dado.Pontos[1] - dado.Pontos[0])
+        )];
+      } else if (dado.Fr == maiorFr) {
+        modas.modaKing.push(dado.Pontos[0] + ((
+          (dadosColetados[index + 1].Fr)
+          / (dadosColetados[index + 1].Fr + dadosColetados[index - 1].Fr)
+        ) * (dado.Pontos[1] - dado.Pontos[0])
+        ));
+      }
+    }
+  });
+
+  //Moda Czuber
+  dadosColetados.forEach(function (dado, index) {
+    if (index != 0 && (index != dadosColetados.length - 1)) {
+      if (dado.Fr == maiorFr) {
+        modas.modaCzuber.push(dado.Pontos[0] + (
+          (dado.Fr - dadosColetados[index + 1].Fr)
+          / ((dado.Fr - dadosColetados[index - 1].Fr) + (dado.Fr - dadosColetados[index + 1].Fr))
+        ));
+      }
+    }
+  });
+
+
+  //Desvio Padrao
+  dadosColetados.forEach(function (dado) {
+    desvioPadrao += Math.pow((dado.Pontos[1] - dado.Pontos[0]) - media, 2) * parseFloat(dado.Fr);
+  });
+
+  if (!tipo == "A")
+    desvioPadrao = Math.sqrt(desvioPadrao / dadosColetados[dadosColetados.length - 1].FrA).toFixed(2);
+  else
+    desvioPadrao = Math.sqrt(desvioPadrao / (dadosColetados[dadosColetados.length - 1].FrA - 1)).toFixed(2);
+
+  coeficienteDeVariacao = parseFloat((desvioPadrao / media) * 100).toFixed(2).toString() + "%";
+  return {
+    Media: media,
+    Modas: modas,
+    Mediana: mediana,
+    DesvioPadrao: desvioPadrao,
+    CoeficienteDeVariacao: coeficienteDeVariacao
+  }
 }
 
 function montaInformacoesGrafico(dados) {
