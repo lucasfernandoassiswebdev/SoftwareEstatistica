@@ -50,7 +50,6 @@ function calculaFrequenciasContinua(dados) {
   }];
 
   while (objContinua[objContinua.length - 1].Pontos[1] <= maior) {
-    debugger;
     objContinua.push({
       Var: objContinua[objContinua.length - 1].Pontos[1] + "|---" + (objContinua[objContinua.length - 1].Pontos[1] + intervalo), 
       Fr: 0, 
@@ -76,7 +75,6 @@ function calculaFrequenciasContinua(dados) {
 }
 
 function medidasEstatisticasDiscreta(dados, amostra) {
-  debugger;
   let dadosColetados = calculaFrequencias(dados),
     moda = [],
     maiorFr = 0,
@@ -91,7 +89,7 @@ function medidasEstatisticasDiscreta(dados, amostra) {
     if (index == 0 || parseInt(dado.Fr) >= maiorFr)
       maiorFr = parseInt(dado.Fr);
   });
-  debugger;
+
   dadosColetados.forEach(function (dado) {
     if (parseInt(dado.Fr) == maiorFr)
       moda.push(dado.Var);
