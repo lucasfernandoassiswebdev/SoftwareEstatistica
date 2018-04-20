@@ -91,7 +91,7 @@ function medidasEstatisticasDiscreta(dados, amostra) {
     if (index == 0 || parseInt(dado.Fr) >= maiorFr)
       maiorFr = parseInt(dado.Fr);
   });
-
+  debugger;
   dadosColetados.forEach(function (dado) {
     if (parseInt(dado.Fr) == maiorFr)
       moda.push(dado.Var);
@@ -109,7 +109,7 @@ function medidasEstatisticasDiscreta(dados, amostra) {
 
     for (var i = 0; i < dadosColetados.length; i++)
       if (dadosColetados[i].FrA >= pontoMedio) {
-        mediana = dadosColetados[i].Var.toFixed(2);
+        mediana = dadosColetados[i].Var;
         break;
       }
   } else {

@@ -13,7 +13,7 @@
 
 @section Scripts{
     <script>
-        var objeto = medidasEstatisticasDiscreta(String('@ViewBag.Dados'.replace(/&quot;/g,'"')),'@ViewBag.Amostra'),
+        var objeto = medidasEstatisticasDiscreta(JSON.parse('@ViewBag.Dados'.replace(/&quot;/g,'"')),'@ViewBag.Amostra'),
             modaConcatenada = "";
 
         objeto.Moda.forEach(function(item){

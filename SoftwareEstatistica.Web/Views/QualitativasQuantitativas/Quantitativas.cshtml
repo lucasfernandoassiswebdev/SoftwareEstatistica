@@ -88,20 +88,20 @@
                         })]
                 }));
             }).error(erro);
-
+            
+            dadosPGrafico = [];
             if('@ViewBag.Tipo' == "C"){
                 frequencia = calculaFrequenciasContinua(dadosColetados.sort(function(a, b){return a-b}));
-                dadosPGrafico = [];
-
+                debugger;
                 frequencia.forEach(function(dado){
                     for(var i = 0; i < dado.Fr; i++)
                         dadosPGrafico.push(dado.Var);
                 });
-
-                dadosColetados = dadosPGrafico;
             }
-            else 
+            else{ 
                 frequencia = calculaFrequencias(dadosColetados.sort(function(a, b){return a-b})); 
+                dadosPGrafico = dadosColetados;
+            }
             
             $.get("/QualitativasQuantitativas/Tabela",{
                 jsonDadosColetados: JSON.stringify(frequencia)
@@ -134,7 +134,7 @@
             });
 
             $.get("/Quantitativas/Grafico",{
-                jsonDadosColetados: JSON.stringify(dadosColetados.sort(function(a, b){return a-b}))
+                jsonDadosColetados: JSON.stringify(dadosPGrafico.sort(function(a, b){return a-b}))
             }).success(function(data){
                 $("#resultados").parent().append($("<div>",{
                     class: "row center rowAdicionada",
