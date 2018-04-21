@@ -156,7 +156,7 @@ function medidasEstatisticasDiscreta(dados, tipo) {
 function medidasEstatisticasContinua(dados, tipo) {
   let dadosColetados = calculaFrequenciasContinua(dados);
   media = 0,
-    modas = { modaPearson: 0, modaKing: [], modaCzuber: [] },
+    modas = { modaCovencional: [], modaPearson: 0, modaKing: [], modaCzuber: [] },
     mediana = 0,
     maiorFr = 0,
     desvioPadrao = 0,
@@ -209,20 +209,23 @@ function medidasEstatisticasContinua(dados, tipo) {
     mediana = (mediana / 2).toFixed(2);
   }
 
+  //moda convencional
+  dadosColetados.forEach(function (dado) {
+    if (dado.Fr > maiorFr){
+      maiorFr = dado.Fr;
+      modas.modaCovencional = [dado.Pontos[0] + ((dado.Pontos[1] - dado.Pontos[0])/2)];
+    }else if(dado.Fr == maiorFr){
+      moda.modaCovencional.push(dado.Pontos[0] + ((dado.Pontos[1] - dado.Pontos[0])/2));
+    }
+  });
+
   //moda pearson
   modas.modaPearson = (3 * mediana) - (2 * media);
 
   //moda king
   dadosColetados.forEach(function (dado, index) {
     if (index != 0 && (index != dadosColetados.length - 1)) {
-      if (dado.Fr > maiorFr) {
-        maiorFr = dado.Fr
-        modas.modaKing = [dado.Pontos[0] + ((
-          (dadosColetados[index + 1].Fr)
-          / (dadosColetados[index + 1].Fr + dadosColetados[index - 1].Fr)
-        ) * (dado.Pontos[1] - dado.Pontos[0])
-        )];
-      } else if (dado.Fr == maiorFr) {
+      if (dado.Fr == maiorFr) {
         modas.modaKing.push(dado.Pontos[0] + ((
           (dadosColetados[index + 1].Fr)
           / (dadosColetados[index + 1].Fr + dadosColetados[index - 1].Fr)
@@ -247,7 +250,7 @@ function medidasEstatisticasContinua(dados, tipo) {
 
   //Desvio Padrao
   dadosColetados.forEach(function (dado) {
-    desvioPadrao += Math.pow((dado.Pontos[0] + ((dado.Pontos[1] - dado.Pontos[0])/2)) - parseFloat(media), 2) * parseFloat(dado.Fr);
+    desvioPadrao += Math.pow((dado.Pontos[0] + ((dado.Pontos[1] - dado.Pontos[0]) / 2)) - parseFloat(media), 2) * parseFloat(dado.Fr);
   });
 
   if (!tipo == "A")
@@ -255,7 +258,7 @@ function medidasEstatisticasContinua(dados, tipo) {
   else
     desvioPadrao = Math.sqrt(desvioPadrao / (dadosColetados[dadosColetados.length - 1].FrA - 1)).toFixed(2);
 
-  coeficienteDeVariacao = parseFloat((desvioPadrao / parseFloat(media)) * 100).toFixed(2)+ "%";
+  coeficienteDeVariacao = parseFloat((desvioPadrao / parseFloat(media)) * 100).toFixed(2) + "%";
   return {
     Media: media,
     Modas: modas,
