@@ -1,3 +1,7 @@
+body{
+    overflow: hidden;
+}
+
 .alinhaVerticalmente{
     height: 100%;
     display: flex;
@@ -78,7 +82,7 @@ table:not(.tabela) tr td, table:not(.tabela) tr th:not(.tabela){
     border: 2px solid #37474f !important;
 }
 
-#corpoSite, #divLoad {
+#divLoad {
     padding-left: 300px;
 }
 
@@ -90,6 +94,64 @@ table:not(.tabela) tr td, table:not(.tabela) tr th:not(.tabela){
     margin: 0 40px;
     font-size: 30px;
 }
+
+.botoes-navegacao{
+    display: flex;
+    justify-content: flex-start;
+}
+
+.botoes-navegacao a{
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #37474f;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    margin: 10px 0;
+}
+
+.botoes-navegacao .menu{    
+    margin: 10px 25px;
+}
+
+.botoes-navegacao .retorno{
+    padding: 0 40px;
+}
+.scroll{
+    margin:10px 0;
+}
+
+#roladicionado .rol .scroll{
+    height: 463px;
+    overflow-y: scroll;
+    padding-right: 15px;
+}
+
+#frequenciaadcionada .frequencia .scroll{  
+    height: 488px;
+    overflow-y: scroll;
+    padding-right: 10px;
+}
+
+.qualitativa #roladicionado .rol .scroll{
+    height: 488px;
+}
+
+.grafico{
+    margin: 10px;
+}
+
+#ordinal{
+    display: none;
+}
+
+#resultado{
+    display: none;
+}
+
 
 @media only screen and (max-width : 992px) {
     #corpoSite, #divLoad {

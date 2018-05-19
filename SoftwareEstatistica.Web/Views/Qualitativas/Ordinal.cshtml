@@ -65,6 +65,7 @@
     });
 
     $("#btnContinuar").click(function(){
+        $("#ordinal").hide();
         let dadosColetados = [],
             ordinal = [];
 
@@ -82,18 +83,10 @@
         $.get("/Qualitativas/Rol", {
                 jsonDadosColetados: JSON.stringify(dadosColetados),
             }).done(function(data){
-                if($(".rowAdicionada").length == 0)
-                    $("#resultados").parent().parent().append($("<div>",{
-                        class: "row center rowAdicionada",
-                        style: "padding: 0 15px",
-                        html: [ $("<div>",{
-                                    class: "col s8 offset-s2 areaDados",
-                                    style: "display: none; max-height: 500px; overflow:auto;",
-                                    html:  [data]
-                                }) ]
-                    }));
-
-                $(".areaDados:last-child").slideDown("fast");
+                $("#roladicionado").append($("<div>",{
+                    class: "col s12 areaDados",
+                    html: [data]
+                }));
             }).error(erro);
     });    
 

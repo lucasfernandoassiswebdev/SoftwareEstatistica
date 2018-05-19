@@ -1,61 +1,47 @@
 @{ Layout = null; }
 
-<div class="col s10 offset-s1" style="max-height: 500px; overflow:auto;">
-    <h5 class="left">Dados ordenados</h5>
-    <table class="highlight" id="dadosOrdenados" style="margin-bottom: 30px"></table>
+<div class="rol">
+    <h5 >Dados ordenados</h5>
+    <div class="scroll"><table class="highlight" id="dadosOrdenados" style="margin-bottom: 30px"></table></div>
 </div>
 
 <script>
     var dadosOrdenados = '@ViewBag.Ordenar' != "" 
                             ? JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g,'"'))).sort() 
                             : JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g,'"')));
-        coluna = 0;
-
+    coluna = 0;
     dadosOrdenados.forEach(function(dado,index){
-        if(index % 6 == 0 || index == 0){
+        if(index % 2 == 0 || index == 0){
             $("#dadosOrdenados").append($("<tr>",{
-                html: [$("<td>"),$("<td>"),$("<td>"),$("<td>"),$("<td>"),$("<td>")]
+                html: [$("<td>"),$("<td>")]
             }));
 
             coluna = 0;
         }
 
         $("#dadosOrdenados tr:last-child td:eq("+coluna+")").html(dado);
-
-        if(coluna < 7)
-            coluna++;
+        coluna++;
     });
 
     $.get("/QualitativasQuantitativas/Tabela",{
         jsonDadosColetados: JSON.stringify(calculaFrequencias(dadosOrdenados))
     }).done(function(data){
-        $("#resultados").parent().parent().append($("<div>",{
-            class: "row center rowAdicionada",
-            style: "padding: 0 15px",
-            html:  [ $("<div>",{
-                        class: "col s8 offset-s2 areaDados",
-                        style: "display: none;",
-                        html:  [data]
-                    })]
+        $("#frequenciaadcionada").append($("<div>",{
+            class: "col s12 areaDados",
+            html: [data]
         }));
-
-       $.get("/Qualitativas/Grafico",{
-            jsonDadosColetados: JSON.stringify(montaInformacoesGrafico(dadosOrdenados))
-        }).success(function(viewGrafico){
-            $("#resultados").parent().append($("<div>",{
-                class: "row center rowAdicionada",
-                html: [ $("<div>",{
-                            class: "col s8 offset-s2 areaDados",
-                            style: "padding: 15px 15px; margin-top: 20px;",
-                            html: [$("<h4>",{
-                                        style: "text-align: left",
-                                        html: ["Gráfico"]
-                                    }),
-                                    viewGrafico]
-                        })]
-            }));
-        }).error(erro);
-
-        $(".areaDados:last-child").slideDown("fast");
     }).error(erro);
+    $.get("/Qualitativas/Grafico",{
+        jsonDadosColetados: JSON.stringify(montaInformacoesGrafico(dadosOrdenados))
+    }).success(function(data){
+        $("#graficoadicionado").append($("<div>",{
+            class: "col s12 areaDados",
+            html: [$("<h4>",{
+                style: "text-align: left",
+                html: ["Gráfico"]
+            }),data]
+    }));
+    }).error(erro);
+    $("#resultados").show();
+    $("#retornar").show();
 </script>

@@ -9,7 +9,7 @@ namespace SoftwareEstatistica.Web.Controllers
                 return Error("Nenhum dado foi fornecido!");
 
             ViewBag.Dados = jsonDadosColetados;
-            return View();
+            return PartialView("Rol");
         }
 
         public ActionResult Grafico(string jsonDadosColetados){
@@ -17,7 +17,7 @@ namespace SoftwareEstatistica.Web.Controllers
                 return Error("Nenhum dado foi fornecido!");
             
             ViewBag.Dados = jsonDadosColetados;
-            return View();
+            return PartialView("Grafico");
         }
 
         public ActionResult MediaModaMediana(string jsonDadosColetados, string amostra)
@@ -28,7 +28,7 @@ namespace SoftwareEstatistica.Web.Controllers
             if (string.IsNullOrEmpty(jsonDadosColetados))
                 return Error("Nenhum dado foi fornecido!");
 
-            return View();
+            return PartialView("MediaModaMediana");
         }
     }
 }

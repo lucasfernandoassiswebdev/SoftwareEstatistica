@@ -12,7 +12,7 @@ namespace SoftwareEstatistica.Web.Controllers
 
             ViewBag.Dados = jsonDadosColetados;
             ViewBag.Ordenar = ordenar;
-            return View("Rol");
+            return PartialView("Rol");
         }
         
         public ActionResult Ordinal(string jsonDadosColetados){
@@ -20,7 +20,7 @@ namespace SoftwareEstatistica.Web.Controllers
                 return Error("Nenhum dado foi fornecido!");
             
             ViewBag.Dados = jsonDadosColetados;
-            return View();
+            return PartialView("Ordinal");
         }
 
         public ActionResult Grafico(string jsonDadosColetados){
@@ -28,7 +28,7 @@ namespace SoftwareEstatistica.Web.Controllers
                 return Error("Nenhum dado foi fornecido!");
 
             ViewBag.Dados = jsonDadosColetados;
-            return View();
+            return PartialView("Grafico");
         }
     }
 }

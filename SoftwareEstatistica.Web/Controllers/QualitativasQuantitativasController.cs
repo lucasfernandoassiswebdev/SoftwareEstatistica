@@ -21,16 +21,7 @@ namespace SoftwareEstatistica.Web.Controllers
                 return Error("Nenhum dado foi fornecido!");
 
             ViewBag.Dados = jsonDadosColetados;
-            return View();
-        }
-
-        public ActionResult MediaModaMediana(string jsonDadosColetados, string tipo){
-            if(string.IsNullOrEmpty(jsonDadosColetados))
-                return Error("Nenhum dado foi fornecido!");
-
-            ViewBag.Dados = jsonDadosColetados;
-            ViewBag.Tipo = tipo;
-            return View();
+            return PartialView("Tabela");
         }
     }
 }

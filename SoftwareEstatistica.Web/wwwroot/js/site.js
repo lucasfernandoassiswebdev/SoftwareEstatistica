@@ -13,3 +13,15 @@ function erro(xhr){
     M.Toast.dismissAll();  
     M.toast({ html: xhr.responseText });
 }
+
+$(".sidenav-overlay").click(function(){
+    $("body").css("overflow","hidden");
+});
+
+$("#retornar").click(function(){
+    $(this).hide();
+    $("#fomulario-dados").show();
+    $("#resultados").hide();
+    $("#resultados div div").remove();
+    $("#ordinal div div").remove();
+});

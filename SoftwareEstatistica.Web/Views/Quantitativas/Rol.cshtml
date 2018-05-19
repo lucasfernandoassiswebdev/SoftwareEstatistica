@@ -1,8 +1,8 @@
 @{ Layout = null; }
 
-<div class="col s10 offset-s1">
+<div class="rol">
     <h5 class="left">Dados ordenados</h5>
-    <table class="highlight" id="dadosOrdenados" style="margin-bottom: 30px"></table>
+    <div class="scroll"><table class="highlight" id="dadosOrdenados" style="margin-bottom: 30px"></table></div>
 </div>
 
 <script>
@@ -10,17 +10,15 @@
         coluna = 0;
 
     dadosOrdenados.forEach(function(dado,index){
-        if(index % 6 == 0 || index == 0){
+        if(index % 2 == 0 || index == 0){
             $("#dadosOrdenados").append($("<tr>",{
-                html: [$("<td>"),$("<td>"),$("<td>"),$("<td>"),$("<td>"),$("<td>")]
+                html: [$("<td>"),$("<td>")]
             }));
 
             coluna = 0;
         }
 
         $("#dadosOrdenados tr:last-child td:eq("+coluna+")").html(dado);
-
-        if(coluna < 7)
-            coluna++;
+        coluna++;
     });
 </script>

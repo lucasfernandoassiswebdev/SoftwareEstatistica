@@ -1,5 +1,5 @@
 <div>
-    <div class="row center">
+    <div id="fomulario-dados" class="row center">
         <form class="col s8 offset-s2">
             <i  class="material-icons right tooltipped" 
                 data-tooltip="Ajuda" 
@@ -57,13 +57,23 @@
             </div>
         </form>
     </div>
-    <div class="row center" style="padding: 0 15px">
-        <div id="resultados" class="col s8 offset-s2 areaDados" style="display: none;"></div>
+    <div  id="ordinal" class="row center" style="padding: 0 15px">
+        <div class="col s8 offset-s2 areaDados"></div>
+    </div>
+    <div id="resultados" class="row center qualitativa" style="padding: 0 15px">
+        <div id="roladicionado" class="row col s3"></div>
+        <div id="frequenciaadcionada" class="row col s4"></div> 
+        <div id="graficoadicionado" class="row col s5"></div> 
     </div>
 </div>
 
 @section Scripts{
     <script type="text/javascript">
+        $(document).ready(function(){
+            $("#slide-out").css("transform", "translateX(-105%)");
+            $("#retornar").hide();
+        });
+
         var primeiraVez = true;
 
         $("input[name=radioTipo]").change(function(){
@@ -81,22 +91,36 @@
             .blur(HabilitaDesabilita);
 
         $("#btnEnviaDados").click(function(){
+            $("#fomulario-dados").hide();
             let dadosColetados = [];
 
             M.Chips.getInstance($(".chips")).chipsData.forEach(function(item){
                 dadosColetados.push(item.tag);
             });
 
-            $.get($("input[name=radioTipoQualitativa]:checked").val() == "N" ? "/Qualitativas/Rol" : "/Qualitativas/Ordinal", {
-                jsonDadosColetados: JSON.stringify(dadosColetados),
-                ordenar: $("input[name=radioTipoQualitativa]:checked").val() == "N" ? "S" : ""
-            }).done(function(data){
-                $(".rowAdicionada").remove();
-                
-                $("#resultados").slideUp("fast",function(){
-                    $(this).html(data).slideDown("fast");
-                });
-            }).error(erro);
+            if($("input[name=radioTipoQualitativa]:checked").val() == "N"){
+                $("#ordinal").hide();
+                $.get("/Qualitativas/Rol", {
+                    jsonDadosColetados: JSON.stringify(dadosColetados),
+                    ordenar: "S" 
+                }).done(function(data){                
+                    $("#roladicionado").append($("<div>",{
+                        class: "col s12 areaDados",
+                        html: [data]
+                    }));
+                }).error(erro);
+            }else{                
+                $("#ordinal").show();
+                $.get("/Qualitativas/Ordinal", {
+                    jsonDadosColetados: JSON.stringify(dadosColetados),
+                    ordenar: "" 
+                }).done(function(data){                
+                    $("#ordinal div").append($("<div>",{
+                        class: "col s12",
+                        html: [data]
+                    }));
+                }).error(erro);
+            }
         });
 
         function ExibeAjuda(){
