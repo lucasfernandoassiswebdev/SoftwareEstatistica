@@ -192,7 +192,6 @@ function medidasEstatisticasContinua(dados, tipo) {
       pontoMedio2 = pontoMedio1 + 1,
       checkPM1 = false, checkPM2 = false;
     for (var i = 0; i < dadosColetados.length; i++) {
-      debugger;
       if (dadosColetados[i].FrA >= pontoMedio1 && !(checkPM1)) {
         if (i != 0) {
           mediana += dadosColetados[i].Pontos[0] + (((
