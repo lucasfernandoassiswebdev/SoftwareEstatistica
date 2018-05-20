@@ -8,7 +8,7 @@ function calculaFrequencias(dados) {
             objTabela.push({ Var: dados[i], Fr: 1, FrP: 100, FrA: 1, FrAP: 100 });
         else objTabela[objTabela.length - 1].Fr++;
 
-    objTabela.forEach(function (item, index) {
+    objTabela.forEach(function (item) {
         item.FrP = (item.Fr * 100 / dados.length).toFixed(2).toString() + "%";
         FrA += item.Fr;
         item.FrA = FrA;
@@ -347,10 +347,10 @@ function sorteiaCor(ultimaCor) {
     };
 }
 
-function montaGrafico(type, dados, ctx, titulo) {
+function montaGrafico(type, dados, context, titulo) {
     let ultimaCor, coresSorteadas = [];
 
-    dados.Variaveis.forEach(function (item, index) {
+    dados.Variaveis.forEach(function () {
         const corSorteada = sorteiaCor(ultimaCor);
 
         coresSorteadas.push("rgba(" + corSorteada.r + ", " + corSorteada.g + ", " + corSorteada.b + ",0.4)");
@@ -362,7 +362,7 @@ function montaGrafico(type, dados, ctx, titulo) {
         };
     });
 
-    return new Chart(ctx, {
+    return new Chart(context, {
         type: type,
         data: {
             labels: dados.Variaveis,

@@ -1,6 +1,5 @@
 <canvas id="graficoPizza" class="grafico"></canvas>
 
-
 <script>
-    montaGrafico("pie", JSON.parse('@ViewBag.Dados'.replace(/&quot;/g,'"')), document.getElementById("graficoPizza").getContext("2d"), $("#varPesquisada").val());
+    montaGrafico("doughnut", JSON.parse('@ViewBag.Dados'.replace(/&quot;/g,'"')), "graficoPizza", $("#varPesquisada").val());
 </script>
