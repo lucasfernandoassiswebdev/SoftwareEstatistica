@@ -21,30 +21,33 @@ function calculaFrequencias(dados) {
 }
 
 function calculaFrequenciasContinua(dados) {
-    let objTabela = calculaFrequencias(dados),
-        maior = objTabela[objTabela.length - 1].Var, menor = objTabela[0].Var,
-        quatLinhas = Math.trunc(Math.sqrt(objTabela[objTabela.length - 1].FrA)),
-        intervalo = 0,
-        At = maior - menor + 1;
+    const objTabela = calculaFrequencias(dados),
+        maior = objTabela[objTabela.length - 1].Var,
+        menor = objTabela[0].Var,
+        quatLinhas = Math.trunc(Math.sqrt(objTabela[objTabela.length - 1].FrA));
+
+    let intervalo = 0,
+        at = maior - menor + 1,
+        checkI;
 
     do {
         checkI = false;
 
-        if (At % quatLinhas == 0) {
-            intervalo = Math.trunc((At) / quatLinhas);
+        if (at % quatLinhas == 0) {
+            intervalo = Math.trunc((at) / quatLinhas);
             checkI = true;
-        } else if (At % (quatLinhas - 1) == 0) {
-            intervalo = Math.trunc((At) / (quatLinhas - 1));
+        } else if (at % (quatLinhas - 1) == 0) {
+            intervalo = Math.trunc((at) / (quatLinhas - 1));
             checkI = true;
-        } else if (At % (quatLinhas + 1) == 0) {
-            intervalo = Math.trunc((At) / (quatLinhas + 1));
+        } else if (at % (quatLinhas + 1) == 0) {
+            intervalo = Math.trunc((at) / (quatLinhas + 1));
             checkI = true;
         }
 
-        At++;
+        at++;
     } while (!(checkI))
 
-    let objContinua = [{
+    const objContinua = [{
         Var: menor + "|---" + (menor + intervalo), Fr: 0, FrP: 0, FrA: 0, FrAP: 0,
         Pontos: [menor, (menor + intervalo)]
     }];
@@ -145,6 +148,7 @@ function medidasEstatisticasDiscreta(dados, tipo) {
         desvioPadrao = Math.sqrt(desvioPadrao / (dadosColetados[dadosColetados.length - 1].FrA - 1)).toFixed(2);
 
     coeficienteDeVariacao = ((parseFloat(desvioPadrao) / parseFloat(media)) * 100).toFixed(2) + "%";
+
     return {
         Media: media,
         Moda: moda,
@@ -155,8 +159,8 @@ function medidasEstatisticasDiscreta(dados, tipo) {
 }
 
 function medidasEstatisticasContinua(dados, tipo) {
-    let dadosColetados = calculaFrequenciasContinua(dados);
-    media = 0,
+    let dadosColetados = calculaFrequenciasContinua(dados),
+        media = 0,
         modas = { modaCovencional: [], modaPearson: 0, modaKing: [], modaCzuber: [] },
         mediana = 0,
         maiorFr = 0,
@@ -191,6 +195,7 @@ function medidasEstatisticasContinua(dados, tipo) {
         let pontoMedio1 = (dadosColetados[dadosColetados.length - 1].FrA) / 2,
             pontoMedio2 = pontoMedio1 + 1,
             checkPM1 = false, checkPM2 = false;
+
         for (var i = 0; i < dadosColetados.length; i++) {
             if (dadosColetados[i].FrA >= pontoMedio1 && !(checkPM1)) {
                 if (i != 0) {
@@ -232,7 +237,7 @@ function medidasEstatisticasContinua(dados, tipo) {
             maiorFr = dado.Fr;
             modas.modaCovencional = [dado.Pontos[0] + ((dado.Pontos[1] - dado.Pontos[0]) / 2)];
         } else if (dado.Fr == maiorFr)
-            moda.modaCovencional.push((dado.Pontos[0] + ((dado.Pontos[1] - dado.Pontos[0]) / 2)));
+            modas.modaCovencional.push((dado.Pontos[0] + ((dado.Pontos[1] - dado.Pontos[0]) / 2)));
     });
 
     //moda pearson
@@ -327,11 +332,6 @@ function sorteiaCor(ultimaCor) {
         g = (num >> 8) & 255,
         b = num & 255;
 
-    num = Math.round(0xffffff * Math.random());
-    r = num >> 16;
-    g = (num >> 8) & 255;
-    b = num & 255;
-
     if (ultimaCor != undefined)
         do {
             num = Math.round(0xffffff * Math.random());
@@ -340,18 +340,26 @@ function sorteiaCor(ultimaCor) {
             b = num & 255;
         } while (r == ultimaCor.r && g == ultimaCor.g && b == ultimaCor.b);
 
-    return { r: r, g: g, b: b };
+    return {
+        r: r,
+        g: g,
+        b: b
+    };
 }
 
 function montaGrafico(type, dados, ctx, titulo) {
     let ultimaCor, coresSorteadas = [];
 
     dados.Variaveis.forEach(function (item, index) {
-        let corSorteada = sorteiaCor(ultimaCor);
+        const corSorteada = sorteiaCor(ultimaCor);
 
         coresSorteadas.push("rgba(" + corSorteada.r + ", " + corSorteada.g + ", " + corSorteada.b + ",0.4)");
 
-        ultimaCor = { r: corSorteada.r, g: corSorteada.g, b: corSorteada.b };
+        ultimaCor = {
+            r: corSorteada.r,
+            g: corSorteada.g,
+            b: corSorteada.b
+        };
     });
 
     return new Chart(ctx, {
