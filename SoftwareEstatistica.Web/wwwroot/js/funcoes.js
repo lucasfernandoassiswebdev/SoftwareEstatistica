@@ -109,7 +109,7 @@ function medidasEstatisticasDiscreta(dados, tipo) {
     if (dadosColetados[dadosColetados.length - 1].FrA % 2 != 0) {
         let pontoMedio = (dadosColetados[dadosColetados.length - 1].FrA + 1) / 2;
 
-        for (var i = 0; i < dadosColetados.length; i++)
+        for (let i = 0; i < dadosColetados.length; i++)
             if (dadosColetados[i].FrA >= pontoMedio) {
                 mediana = dadosColetados[i].Var;
                 break;
@@ -119,7 +119,7 @@ function medidasEstatisticasDiscreta(dados, tipo) {
             pontoMedio2 = pontoMedio1 + 1,
             checkPM1 = false, checkPM2 = false;
 
-        for (var i = 0; i < dadosColetados.length; i++) {
+        for (let i = 0; i < dadosColetados.length; i++) {
             if (dadosColetados[i].FrA >= pontoMedio1 && !(checkPM1)) {
                 mediana += parseFloat(dadosColetados[i].Var);
                 checkPM1 = true;
@@ -178,7 +178,7 @@ function medidasEstatisticasContinua(dados, tipo) {
     if (dadosColetados[dadosColetados.length - 1].FrA % 2 != 0) {
         let pontoMedio = (dadosColetados[dadosColetados.length - 1].FrA + 1) / 2;
 
-        for (var i = 0; i < dadosColetados.length; i++)
+        for (let i = 0; i < dadosColetados.length; i++)
             if (dadosColetados[i].FrA >= pontoMedio && i != 0) {
                 if (i != 0) {
                     mediana = dadosColetados[i].Pontos[0] + (((
@@ -196,7 +196,7 @@ function medidasEstatisticasContinua(dados, tipo) {
             pontoMedio2 = pontoMedio1 + 1,
             checkPM1 = false, checkPM2 = false;
 
-        for (var i = 0; i < dadosColetados.length; i++) {
+        for (let i = 0; i < dadosColetados.length; i++) {
             if (dadosColetados[i].FrA >= pontoMedio1 && !(checkPM1)) {
                 if (i != 0) {
                     mediana += dadosColetados[i].Pontos[0] + (((
@@ -382,4 +382,17 @@ function montaGrafico(type, dados, context, titulo) {
             }]
         }
     });
+}
+
+function distribuicaoBinomial(n, k, p, q) {
+    return (fatorial(n) / fatorial(k) * fatorial(n - k)) * Math.pow(p, k) * Math.pow(q, n - k);
+}
+
+function fatorial(n) {
+    if (n < 0)
+        return -1;
+    else if (n == 0)
+        return 1;
+    else
+        return (n * fatorial(n - 1));
 }

@@ -1,85 +1,81 @@
-<div>
-    <div id="fomulario-dados" class="row center">
-        <form class="col s8 offset-s2">
-            <i  class="material-icons right tooltipped" 
-                data-tooltip="Ajuda" 
-                data-position="left" 
-                onclick="ExibeAjuda()" 
-                style="cursor:pointer; margin-top: 10px; margin-right: 10px">help</i>
-            <div class="areaDados">
+<div id="fomulario-dados" class="row center">
+    <form class="col s8 offset-s2">
+        <i class="material-icons right tooltipped"
+           data-tooltip="Ajuda"
+           data-position="left"
+           onclick="ExibeAjuda()"
+           style="cursor:pointer; margin-top: 10px; margin-right: 10px">help</i>
+        <div class="areaDados">
+            <div class="row">
+                <p>
+                    <label>
+                        <input type="radio" name="radioTipo" value="A" />
+                        <span>Amostra</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="radioTipo" value="P" />
+                        <span>Populacao</span>
+                    </label>
+                </p>
+            </div>
+            <div style="display: none" id="hiddenInputs">
+                <div class="row">
+                    <div class="input-field col s10 offset-s1">
+                        <input id="varPesquisada" type="text">
+                        <label for="varPesquisada">Variável Pesquisada:</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s10 offset-s1">
+                        <div id="warningsVariaveis"></div>
+                        <p class="caption" style="text-align: left">Digite os dados abaixo.</p>
+                        <div class="chips input-field" style="text-align: left" id="divChips"></div>
+                    </div>
+                </div>
                 <div class="row">
                     <p>
                         <label>
-                            <input type="radio" name="radioTipo" value="A"/>
-                            <span>Amostra</span>
+                            <input type="radio" name="radioTipoQualitativa" value="N" checked />
+                            <span>Nominal</span>
                         </label>
                         <label>
-                            <input type="radio" name="radioTipo" value="P"/>
-                            <span>Populacao</span>
+                            <input type="radio" name="radioTipoQualitativa" value="O" />
+                            <span>Ordinal</span>
                         </label>
                     </p>
                 </div>
-                <div style="display: none" id="hiddenInputs">
-                    <div class="row">
-                        <div class="input-field col s10 offset-s1">
-                            <input id="varPesquisada" type="text">
-                            <label for="varPesquisada">Variável Pesquisada:</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s10 offset-s1">
-                            <div id="warningsVariaveis"></div>
-                            <p class="caption" style="text-align: left">Digite os dados abaixo.</p>
-                            <div class="chips input-field" style="text-align: left" id="divChips"></div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <p>
-                            <label>
-                                <input type="radio" name="radioTipoQualitativa" value="N" checked/>
-                                <span>Nominal</span>
-                            </label>
-                            <label>
-                                <input type="radio" name="radioTipoQualitativa" value="O"/>
-                                <span>Ordinal</span>
-                            </label>
-                        </p>
-                    </div>
-                    <div class="row">
-                        <div class="col s10 offset-s1">
-                            <a class="waves-effect waves-light btn right blue-grey darken-2 disabled" style="margin-bottom:10px;" id="btnEnviaDados">
-                                <i class="material-icons right">send</i>
-                                Enviar
-                            </a>
-                        </div>
+                <div class="row">
+                    <div class="col s10 offset-s1">
+                        <a class="waves-effect waves-light btn right blue-grey darken-2 disabled" style="margin-bottom:10px;" id="btnEnviaDados">
+                            <i class="material-icons right">send</i>
+                            Enviar
+                        </a>
                     </div>
                 </div>
             </div>
-        </form>
-    </div>
-    <div  id="ordinal" class="row center" style="padding: 0 15px">
-        <div class="col s8 offset-s2 areaDados"></div>
-    </div>
-    <div id="resultados" class="row center qualitativa" style="padding: 0 15px">
-        <div id="roladicionado" class="row col s3"></div>
-        <div id="frequenciaadcionada" class="row col s4"></div> 
-        <div id="graficoadicionado" class="row col s5"></div> 
-    </div>
+        </div>
+    </form>
+</div>
+<div id="ordinal" class="row center" style="padding: 0 15px">
+    <div class="col s8 offset-s2 areaDados"></div>
+</div>
+<div id="resultados" class="row center qualitativa" style="padding: 0 15px">
+    <div id="roladicionado" class="row col s3"></div>
+    <div id="frequenciaadcionada" class="row col s4"></div>
+    <div id="graficoadicionado" class="row col s5"></div>
 </div>
 
 @section Scripts{
     <script type="text/javascript">
-        $(document).ready(function(){
-            $("#slide-out").css("transform", "translateX(-105%)");
-            $("#retornar").hide();
-        });
-
         var primeiraVez = true;
 
-        $("input[name=radioTipo]").change(function(){
-            $("#hiddenInputs").slideDown("fast"); 
+        $("#slide-out").css("transform", "translateX(-105%)");
+        $("#retornar").hide();
 
-            if(primeiraVez){
+        $("input[name=radioTipo]").change(function () {
+            $("#hiddenInputs").slideDown("fast");
+
+            if (primeiraVez) {
                 ExibeAjuda();
                 primeiraVez = false;
             }
@@ -90,32 +86,34 @@
             .change(HabilitaDesabilita)
             .blur(HabilitaDesabilita);
 
-        $("#btnEnviaDados").click(function(){
+        $("#btnEnviaDados").click(function () {
             $("#fomulario-dados").hide();
             let dadosColetados = [];
 
-            M.Chips.getInstance($(".chips")).chipsData.forEach(function(item){
+            M.Chips.getInstance($(".chips")).chipsData.forEach(function (item) {
                 dadosColetados.push(item.tag);
             });
 
-            if($("input[name=radioTipoQualitativa]:checked").val() == "N"){
+            if ($("input[name=radioTipoQualitativa]:checked").val() == "N") {
                 $("#ordinal").hide();
+
                 $.get("/Qualitativas/Rol", {
                     jsonDadosColetados: JSON.stringify(dadosColetados),
-                    ordenar: "S" 
-                }).done(function(data){                
-                    $("#roladicionado").append($("<div>",{
+                    ordenar: "S"
+                }).done(function (data) {
+                    $("#roladicionado").append($("<div>", {
                         class: "col s12 areaDados",
                         html: [data]
                     }));
                 }).error(erro);
-            }else{                
+            } else {
                 $("#ordinal").show();
+
                 $.get("/Qualitativas/Ordinal", {
                     jsonDadosColetados: JSON.stringify(dadosColetados),
-                    ordenar: "" 
-                }).done(function(data){                
-                    $("#ordinal div").append($("<div>",{
+                    ordenar: ""
+                }).done(function (data) {
+                    $("#ordinal div").append($("<div>", {
                         class: "col s12",
                         html: [data]
                     }));
@@ -123,17 +121,17 @@
             }
         });
 
-        function ExibeAjuda(){
+        function ExibeAjuda() {
             M.Toast.dismissAll();
             M.toast({ html: "Use a tecla 'Enter' para inserir os dados" });
             M.toast({ html: "Use pontos ou vírgulas para numeros decimais" });
         }
 
-        function HabilitaDesabilita(){
-            if($("#varPesquisada").val() && $("#divChips .chip").length > 0)
+        function HabilitaDesabilita() {
+            if ($("#varPesquisada").val() && $("#divChips .chip").length > 0)
                 $("#btnEnviaDados").removeClass("disabled");
             else
-                $("#btnEnviaDados").addClass("disabled");    
+                $("#btnEnviaDados").addClass("disabled");
         }
     </script>
 }

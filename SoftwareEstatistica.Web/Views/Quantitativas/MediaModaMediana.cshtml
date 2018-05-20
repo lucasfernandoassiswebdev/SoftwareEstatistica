@@ -2,29 +2,32 @@
     <h5 class="left">Dados</h5>
     <table class="tabela highlight" id="dadosMediaModaMediana" style="margin-bottom: 30px">
         <thead>
-            <td>C.V.</td>
-            <td>Desvio Padrão</td>
-            <td>Media</td>
-            <td>Mediana</td>
-            <td>Moda</td>
+            <tr>
+                <th>C.V.</th>
+                <th>Desvio Padrão</th>
+                <th>Media</th>
+                <th>Mediana</th>
+                <th>Moda</th>
+            </tr>
         </thead>
         <tbody></tbody>
     </table>
 </div>
 
 
-    <script>
+<script>
         var objeto = medidasEstatisticasDiscreta(JSON.parse('@ViewBag.Dados'.replace(/&quot;/g,'"')),'@ViewBag.Amostra'),
             modaConcatenada = "";
 
-        if(objeto.Moda != null){
-            objeto.Moda.forEach(function(item){
-                modaConcatenada +=  item + " / ";
-            }); 
+        if (objeto.Moda != null) {
+            objeto.Moda.forEach(function(item) {
+                modaConcatenada += item + " - ";
+            });
+
             modaConcatenada = modaConcatenada.substring(0, modaConcatenada.length - 2);
-        }else{
-            modaConcatenada = "NÃO TEM MODA"
-        }
+        } else
+            modaConcatenada = "NÃO TEM MODA";
+
         $("#dadosMediaModaMediana tbody").append($("<tr>",{
                                                      html: [$("<td>",{
                                                                 html: [objeto.CoeficienteDeVariacao]
@@ -41,4 +44,4 @@
                                                                 html: [modaConcatenada]
                                                             })]
                                                  }));
-    </script>
+</script>

@@ -5,7 +5,7 @@ $("#varQualitativa").click(function () {
 });
 
 $("#varDiscreta").click(function () {
-    $.get("/QualitativasQuantitativas/Quantitativas",{
+    $.get("/QualitativasQuantitativas/Quantitativas", {
         tipo: "D"
     }).done(function (data) {
         $("#corpoSite").html(data);
@@ -13,9 +13,15 @@ $("#varDiscreta").click(function () {
 });
 
 $("#varContinua").click(function () {
-    $.get("/QualitativasQuantitativas/Quantitativas",{
+    $.get("/QualitativasQuantitativas/Quantitativas", {
         tipo: "C"
     }).done(function (data) {
+        $("#corpoSite").html(data);
+    }).error(erro);
+});
+
+$("#distribuicaoBinomial").click(function () {
+    $.get("/QualitativasQuantitativas/DistribuicaoBinomial").done(function (data) {
         $("#corpoSite").html(data);
     }).error(erro);
 });

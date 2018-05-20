@@ -1,15 +1,18 @@
 @{ Layout = null; }
 
 <div class="rol">
-    <h5 >Dados ordenados</h5>
-    <div class="scroll"><table class="highlight" id="dadosOrdenados" style="margin-bottom: 30px"></table></div>
+    <h5>Dados ordenados</h5>
+    <div class="scroll">
+        <table class="highlight" id="dadosOrdenados" style="margin-bottom: 30px"></table>
+    </div>
 </div>
 
 <script>
-    var dadosOrdenados = '@ViewBag.Ordenar' != "" 
-                            ? JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g,'"'))).sort() 
-                            : JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g,'"')));
-    coluna = 0;
+    var dadosOrdenados = '@ViewBag.Ordenar' != ""
+                            ? JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g,'"'))).sort()
+                            : JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g,'"'))),
+        coluna = 0;
+
     dadosOrdenados.forEach(function(dado,index){
         if(index % 2 == 0 || index == 0){
             $("#dadosOrdenados").append($("<tr>",{
@@ -30,7 +33,8 @@
             class: "col s12 areaDados",
             html: [data]
         }));
-    }).error(erro);
+        }).error(erro);
+
     $.get("/Qualitativas/Grafico",{
         jsonDadosColetados: JSON.stringify(montaInformacoesGrafico(dadosOrdenados))
     }).success(function(data){
@@ -40,8 +44,8 @@
                 style: "text-align: left",
                 html: ["Gráfico"]
             }),data]
-    }));
+        }));
     }).error(erro);
-    $("#resultados").show();
-    $("#retornar").show();
+
+    $("#resultados, #retornar").show();
 </script>
