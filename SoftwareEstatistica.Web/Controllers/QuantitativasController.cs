@@ -4,18 +4,20 @@ namespace SoftwareEstatistica.Web.Controllers
 {
     public class QuantitativasController : BaseController
     {
-        public ActionResult Rol(string jsonDadosColetados){
-            if(string.IsNullOrEmpty(jsonDadosColetados))
+        public ActionResult Rol(string jsonDadosColetados)
+        {
+            if (string.IsNullOrEmpty(jsonDadosColetados))
                 return Error("Nenhum dado foi fornecido!");
 
             ViewBag.Dados = jsonDadosColetados;
             return PartialView("Rol");
         }
 
-        public ActionResult Grafico(string jsonDadosColetados){
-            if(string.IsNullOrEmpty(jsonDadosColetados))
+        public ActionResult Grafico(string jsonDadosColetados)
+        {
+            if (string.IsNullOrEmpty(jsonDadosColetados))
                 return Error("Nenhum dado foi fornecido!");
-            
+
             ViewBag.Dados = jsonDadosColetados;
             return PartialView("Grafico");
         }

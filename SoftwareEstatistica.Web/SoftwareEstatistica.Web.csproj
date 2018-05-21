@@ -4,6 +4,11 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <UserSecretsId>aspnet-SoftwareEstatistica.Web-FD3DAD25-C4A7-4EEB-84AC-75A65FD6E4BD</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Models\DadosDistribuicaoBinomial.cs" />
+    <Compile Remove="Models\ErrorViewModel.cs" />
+  </ItemGroup>
   <ItemGroup>
     <None Update="app.db" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>

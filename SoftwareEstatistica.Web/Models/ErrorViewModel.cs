@@ -1,5 +1,3 @@
-using System;
-
 namespace SoftwareEstatistica.Web.Models
 {
     public class ErrorViewModel

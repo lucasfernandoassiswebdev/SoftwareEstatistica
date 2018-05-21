@@ -384,8 +384,13 @@ function montaGrafico(type, dados, context, titulo) {
     });
 }
 
-function distribuicaoBinomial(n, k, p, q) {
-    return (fatorial(n) / fatorial(k) * fatorial(n - k)) * Math.pow(p, k) * Math.pow(q, n - k);
+function distribuicaoBinomial(quantidaden, sucessop, quantidadex, opcaoDistribuicao) {
+    const porcentagemSucesso = (quantidaden - sucessop) / 10,
+        porcentagemFracasso = quantidadex / 10;
+
+    const porcentagem = (fatorial(quantidaden) / fatorial(sucessop) * fatorial(quantidaden - sucessop)) * Math.pow(porcentagemSucesso, sucessop) * Math.pow(porcentagemFracasso, quantidaden - sucessop) * 100;
+
+    return opcaoDistribuicao == "s" ? porcentagem : 100 - porcentagem;
 }
 
 function fatorial(n) {

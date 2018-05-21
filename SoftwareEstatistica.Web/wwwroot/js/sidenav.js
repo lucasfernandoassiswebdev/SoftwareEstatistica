@@ -1,7 +1,7 @@
 $("#varQualitativa").click(function () {
     $.get("/QualitativasQuantitativas/Qualitativas").done(function (data) {
         $("#corpoSite").html(data);
-    }).error(erro);
+    }).fail(erro);
 });
 
 $("#varDiscreta").click(function () {
@@ -9,7 +9,7 @@ $("#varDiscreta").click(function () {
         tipo: "D"
     }).done(function (data) {
         $("#corpoSite").html(data);
-    }).error(erro);
+    }).fail(erro);
 });
 
 $("#varContinua").click(function () {
@@ -17,11 +17,11 @@ $("#varContinua").click(function () {
         tipo: "C"
     }).done(function (data) {
         $("#corpoSite").html(data);
-    }).error(erro);
+    }).fail(erro);
 });
 
 $("#distribuicaoBinomial").click(function () {
     $.get("/QualitativasQuantitativas/DistribuicaoBinomial").done(function (data) {
         $("#corpoSite").html(data);
-    }).error(erro);
+    }).fail(erro);
 });

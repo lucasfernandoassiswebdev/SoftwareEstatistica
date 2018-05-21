@@ -12,10 +12,6 @@ function erro(xhr) {
     M.toast({ html: xhr.responseText });
 }
 
-$(".sidenav-overlay").click(function () {
-    $("body").css("overflow", "hidden");
-});
-
 $("#retornar").click(function () {
     $(this).hide();
 

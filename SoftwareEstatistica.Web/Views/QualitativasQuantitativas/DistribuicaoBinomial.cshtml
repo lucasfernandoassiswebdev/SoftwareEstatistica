@@ -1,28 +1,69 @@
-﻿<form class="col s8 offset-s2">
-    <div class="areaDados">
-        <div class="row">
-            <div class="input-field col s6 offset-s1">
-                <input id="sucesso" type="text">
-                <label for="sucesso">Sucesso:</label>
-            </div>
-            <div class="input-field col s6 offset-s1">
-                <input id="falha" type="text">
-                <label for="falha">Falha:</label>
+﻿<div id="formulario-distribuicao-binomial" class="row center">
+    <form class="col s4 offset-s4">
+        <div class="areaDados">
+            <div class="container">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="quantidaden" type="text">
+                        <label for="quantidaden">Quantidade(n):</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="sucesso" type="text">
+                        <label for="sucesso">Sucesso(p):</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <select id="opcaoSucessoErro">
+                            <option value="s" selected>Sucesso</option>
+                            <option value="e">Erro</option>
+                        </select>
+                        <label>Você busca por:</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="quantidadex" type="text">
+                        <label for="quantidadex">Quantidade(x):</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <select id="opcoesDistribuicaoBinomial">
+                            <option value="i" selected>Igual a quantidade</option>
+                            <option value="maq">Maior que a quantidade</option>
+                            <option value="meq">Menor que a quantidade</option>
+                        </select>
+                        <label>Materialize Select</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s6 offset-s2">
+                        <a class="waves-effect waves-light btn right blue-grey darken-2" style="margin-bottom:10px;" id="btnEnviaDadosDistribuicaoBinomial">
+                            <i class="material-icons right">send</i>
+                            Enviar
+                        </a>
+                    </div>
+                </div>
+                <div class="row center" id="resultadoDistribuicaoBinomial">
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="input-field col s6 offset-s1">
-                <input id="amostra" type="text">
-                <label for="amostra">Amostra:</label>
-            </div>
-            <div class="input-field col s6 offset-s1">
-                <input id="quantidade" type="text">
-                <label for="quantidade">Quantidade:</label>
-            </div>
-        </div>
-    </div>
-</form>
+    </form>
+</div>
 
 <script>
     $("#slide-out").css("transform", "translateX(-105%)");
+
+    $("#opcoesDistribuicaoBinomial").change(function () {
+        if ($(this).val() == 4)
+            $("#inputHidden").show();
+        else
+            $("#inputHidden").hide();
+    });
+
+    $("#btnEnviaDadosDistribuicaoBinomial").click(function () {
+        $("#resultadoDistribuicaoBinomial").html("").append($("<p>",
+            {
+                html: ["A porcentagem é: " + distribuicaoBinomial($("#quantidaden").val(), $("#sucesso").val(), $("#quantidadex").val(), $("#opcaoSucessoErro").val(), $("#opcoesDistribuicaoBinomial").val())]
+            }));
+    });
 </script>

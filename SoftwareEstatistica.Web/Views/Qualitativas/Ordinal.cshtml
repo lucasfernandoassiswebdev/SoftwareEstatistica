@@ -4,14 +4,14 @@
 <link type="text/css" rel="stylesheet" href="~/lib/jqueryui/css/jquery-ui.structure.min.css">
 <link type="text/css" rel="stylesheet" href="~/lib/jqueryui/css/jquery-ui.theme.min.css">
 
-<i  class="material-icons right tooltipped" 
-    data-tooltip="Ajuda" 
-    data-position="left" 
-    onclick="ExibeAjudaOrdenacao()" 
-    style="cursor:pointer; margin-top: 10px;">help</i>
+<i class="material-icons right tooltipped"
+   data-tooltip="Ajuda"
+   data-position="left"
+   onclick="ExibeAjudaOrdenacao()"
+   style="cursor:pointer; margin-top: 10px;">help</i>
 <div class="row" style="padding: 0 50px;">
     <div class="col s12">
-        <h4 style="text-align: left; margin-left: -13px;">Ordenação</h4>    
+        <h4 style="text-align: left; margin-left: -13px;">Ordenação</h4>
     </div>
 </div>
 <div class="row" style="padding: 0 50px;">
@@ -87,8 +87,8 @@
                     class: "col s12 areaDados",
                     html: [data]
                 }));
-            }).error(erro);
-    });    
+            }).fail(erro);
+    });
 
     $("#sortable").sortable();
 

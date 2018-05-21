@@ -33,11 +33,11 @@
             class: "col s12 areaDados",
             html: [data]
         }));
-        }).error(erro);
+    }).fail(erro);
 
     $.get("/Qualitativas/Grafico",{
         jsonDadosColetados: JSON.stringify(montaInformacoesGrafico(dadosOrdenados))
-    }).success(function(data){
+    }).done(function(data){
         $("#graficoadicionado").append($("<div>",{
             class: "col s12 areaDados",
             html: [$("<h4>",{
@@ -45,7 +45,7 @@
                 html: ["Gráfico"]
             }),data]
         }));
-    }).error(erro);
+    }).fail(erro);
 
     $("#resultados, #retornar").show();
 </script>
