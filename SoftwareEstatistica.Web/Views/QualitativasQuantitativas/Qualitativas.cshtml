@@ -82,7 +82,35 @@
         });
 
         $("#varPesquisada, #divChips input")
-            .keyup(HabilitaDesabilita)
+            .keyup(function (event) {
+                if (event.which == 13) {
+                    let dadosSeparados = [];
+                    let dadosChips = M.Chips.getInstance($(".chips"));
+                    dadosChips.chipsData.forEach(function (item) {
+                        console.log(typeof (item.tag));
+                        let dadosSeparado = item.tag.split(/\s*;\s*/);
+                        if (dadosSeparado.length > 1) {
+                            dadosSeparado.forEach(function (itemSeparado) {
+                                dadosSeparados.push({
+                                    tag: itemSeparado
+                                });
+                            });
+                        } else {
+                            dadosSeparados.push({
+                                tag: item.tag
+                            });
+                        }
+                    });
+                    for (let i = dadosChips.chipsData.length - 1; i >= 0; i--) {
+                        dadosChips.deleteChip(i);
+                        console.log(i);
+                    }
+                    dadosSeparados.forEach(function (item) {
+                        dadosChips.addChip(item);
+                    });
+                }
+                HabilitaDesabilita();
+            })
             .change(HabilitaDesabilita)
             .blur(HabilitaDesabilita);
 
