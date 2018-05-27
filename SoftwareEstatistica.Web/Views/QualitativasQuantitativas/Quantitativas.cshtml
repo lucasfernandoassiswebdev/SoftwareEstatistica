@@ -41,10 +41,10 @@
 </div>
 
 <div id="resultados" class="row center" style="padding: 0 15px">
-    <div id="roladicionado" class="row col s2"></div>
-    <div id="frequenciaadcionada" class="row col s5"></div>
-    <div id="graficoadicionado" class="row col s5"></div>
-    <div id="mediamodamedianaadicionada" class="row col s5"></div>
+    <div id="roladicionado" class="row col m2"></div>
+    <div id="frequenciaadcionada" class="row col m5"></div>
+    <div id="graficoadicionado" class="row col m5"></div>
+    <div id="mediamodamedianaadicionada" class="row col m5"></div>
 </div>
 
 @section Scripts{
@@ -82,7 +82,7 @@
                 jsonDadosColetados: JSON.stringify(dadosColetados.sort(function (a, b) { return a - b }))
             }).done(function (data) {
                 $("#roladicionado").append($("<div>", {
-                    class: "col s12 areaDados",
+                    class: "col m12 areaDados",
                     html: [data]
                 }));
             }).fail(erro);
@@ -107,7 +107,7 @@
                 jsonDadosColetados: JSON.stringify(frequencia)
             }).done(function (data) {
                 $("#frequenciaadcionada").append($("<div>", {
-                    class: "col s12 areaDados",
+                    class: "col m12 areaDados",
                     html: [data]
                 }));
             }).fail(erro);
@@ -117,7 +117,7 @@
                 amostra: $("input[name=radioTipo]:checked").val()
             }).done(function (data) {
                 $("#mediamodamedianaadicionada").append($("<div>", {
-                    class: "col s12 areaDados",
+                    class: "col m12 areaDados",
                     html: [data]
                 }));
             }).fail(erro);
@@ -126,7 +126,7 @@
                 jsonDadosColetados: JSON.stringify(dadosPGrafico.sort(function (a, b) { return a - b }))
             }).done(function (data) {
                 $("#graficoadicionado").append($("<div>", {
-                    class: "col s12 areaDados",
+                    class: "col m12 areaDados",
                     html: [$("<h4>", {
                         style: "text-align: left",
                         html: ["Gráfico"]

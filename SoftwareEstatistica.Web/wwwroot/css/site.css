@@ -95,6 +95,10 @@ table:not(.tabela) tr td, table:not(.tabela) tr th:not(.tabela){
     font-size: 30px;
 }
 
+.rol h5{
+  width: 172px;   
+}
+
 .botoes-navegacao{
     display: flex;
     justify-content: flex-start;
@@ -137,7 +141,7 @@ table:not(.tabela) tr td, table:not(.tabela) tr th:not(.tabela){
 }
 
 .qualitativa #roladicionado .rol .scroll{
-    height: 488px;
+    height: 461px;
 }
 
 .grafico{
@@ -151,7 +155,6 @@ table:not(.tabela) tr td, table:not(.tabela) tr th:not(.tabela){
 #resultado{
     display: none;
 }
-
 
 @media only screen and (max-width : 992px) {
     #corpoSite, #divLoad {
