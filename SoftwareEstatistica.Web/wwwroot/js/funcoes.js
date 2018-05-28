@@ -169,7 +169,7 @@ function medidasEstatisticasContinua(dados, tipo) {
 
     //media
     dadosColetados.forEach(function (dado) {
-        media = (dado.Pontos[0] + ((dado.Pontos[0] - dado.Pontos[1]) / 2)) * dado.Fr;
+        media += (dado.Pontos[0] + ((dado.Pontos[1] - dado.Pontos[0]) / 2)) * dado.Fr;
     });
 
     media = (media / dadosColetados[dadosColetados.length - 1].FrA).toFixed(2);
