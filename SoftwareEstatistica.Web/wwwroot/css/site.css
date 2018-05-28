@@ -1,7 +1,3 @@
-body{
-    overflow: hidden;
-}
-
 .alinhaVerticalmente{
     height: 100%;
     display: flex;
@@ -145,7 +141,7 @@ table:not(.tabela) tr td, table:not(.tabela) tr th:not(.tabela){
 }
 
 .grafico{
-    margin: 10px;
+    margin: 0 10px;
 }
 
 #ordinal{

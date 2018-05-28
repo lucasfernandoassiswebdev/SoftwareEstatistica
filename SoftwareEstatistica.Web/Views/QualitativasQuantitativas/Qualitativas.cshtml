@@ -67,10 +67,11 @@
 
 @section Scripts{
     <script type="text/javascript">
-        var primeiraVez = true;
-
         $("#slide-out").css("transform", "translateX(-105%)");
+        $("body").css("overflow", "");
         $("#retornar").hide();
+
+        var primeiraVez = true;
 
         $("input[name=radioTipo]").change(function () {
             $("#hiddenInputs").slideDown("fast");
@@ -86,28 +87,15 @@
                 if (event.which == 13) {
                     let dadosSeparados = [];
                     let dadosChips = M.Chips.getInstance($(".chips"));
-                    dadosChips.chipsData.forEach(function (item) {
-                        console.log(typeof (item.tag));
-                        let dadosSeparado = item.tag.split(/\s*;\s*/);
-                        if (dadosSeparado.length > 1) {
-                            dadosSeparado.forEach(function (itemSeparado) {
-                                dadosSeparados.push({
-                                    tag: itemSeparado
-                                });
+                    let dadoSepardo = dadosChips.chipsData[dadosChips.chipsData.length - 1].tag.split(/\s*;\s*/);
+                    if (dadoSepardo.length > 1) {
+                        dadosChips.deleteChip(dadosChips.chipsData.length - 1);
+                        dadoSepardo.forEach(function (item) { 
+                            dadosChips.addChip({
+                                tag: item
                             });
-                        } else {
-                            dadosSeparados.push({
-                                tag: item.tag
-                            });
-                        }
-                    });
-                    for (let i = dadosChips.chipsData.length - 1; i >= 0; i--) {
-                        dadosChips.deleteChip(i);
-                        console.log(i);
+                        });
                     }
-                    dadosSeparados.forEach(function (item) {
-                        dadosChips.addChip(item);
-                    });
                 }
                 HabilitaDesabilita();
             })
