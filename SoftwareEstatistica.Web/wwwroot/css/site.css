@@ -136,7 +136,20 @@ table:not(.tabela) tr td, table:not(.tabela) tr th:not(.tabela){
     padding-right: 10px;
 }
 
-.qualitativa #roladicionado .rol .scroll{
+#mediamodamedianaadicionada .mediamodamediana .scroll{
+    width: 100%;
+    overflow-x: scroll;
+}
+
+#mediamodamedianaadicionada .mediamodamediana .scroll .tabela{
+    white-space: nowrap;
+}
+
+#mediamodamedianaadicionada .mediamodamediana .scroll .tabela tr th{
+    padding-right: 30px;
+}
+
+.qualitativa #roladicionado .rol .scroll {
     height: 461px;
 }
 

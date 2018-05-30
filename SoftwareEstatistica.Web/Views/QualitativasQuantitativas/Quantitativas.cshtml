@@ -86,7 +86,8 @@
 
         $("#btnEnviaDados").click(function () {
             let dadosColetados = [],
-                frequencia;
+                frequencia,
+                mediaModaMediana;
 
             $("#fomulario-dados").hide();
 
@@ -112,10 +113,11 @@
                         dadosPGrafico.push(dado.Var);
                 });
 
-                console.log(medidasEstatisticasContinua(dadosColetados.sort(function (a, b) { return a - b }), "A"));
+                mediaModaMediana = medidasEstatisticasContinua(dadosColetados.sort(function (a, b) { return a - b }), "A");
             }
             else {
                 frequencia = calculaFrequencias(dadosColetados.sort(function (a, b) { return a - b }));
+                mediaModaMediana = medidasEstatisticasDiscreta(dadosColetados.sort(function (a, b) { return a - b }), "A");
                 dadosPGrafico = dadosColetados;
             }
 
@@ -129,7 +131,7 @@
             }).fail(erro);
 
             $.get("/Quantitativas/MediaModaMediana", {
-                jsonDadosColetados: JSON.stringify(dadosColetados),
+                jsonDadosColetados: JSON.stringify(mediaModaMediana),
                 amostra: $("input[name=radioTipo]:checked").val()
             }).done(function (data) {
                 $("#mediamodamedianaadicionada").append($("<div>", {

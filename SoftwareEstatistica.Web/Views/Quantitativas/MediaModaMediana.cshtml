@@ -1,32 +1,59 @@
 <div class="mediamodamediana">
     <h5 class="left">Dados</h5>
-    <table class="tabela highlight" id="dadosMediaModaMediana" style="margin-bottom: 30px">
-        <thead>
-            <tr>
-                <th>C.V.</th>
-                <th>Desvio Padrão</th>
-                <th>Media</th>
-                <th>Mediana</th>
-                <th>Moda</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <div class="scroll">
+        <table class="tabela highlight" id="dadosMediaModaMediana">
+            <thead>
+                <tr>
+                    <th>C.V.</th>
+                    <th>Desvio Padrão</th>
+                    <th>Media</th>
+                    <th>Mediana</th>
+                    <th>Moda</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 </div>
 
 
 <script>
-        var objeto = medidasEstatisticasDiscreta(JSON.parse('@ViewBag.Dados'.replace(/&quot;/g,'"')),'@ViewBag.Amostra'),
-            modaConcatenada = "";
+        var objeto = JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g,'"'))),
+        modaConvencional = "", modaPearson = "", modaKing = "", modaCzuber = "";
 
+    if (Array.isArray(objeto.Moda)) {
         if (objeto.Moda != null) {
-            objeto.Moda.forEach(function(item) {
-                modaConcatenada += item + " - ";
+            objeto.Moda.forEach(function (item) {
+                modaConvencional += item + " - ";
             });
-
-            modaConcatenada = modaConcatenada.substring(0, modaConcatenada.length - 2);
+            modaConvencional = modaConvencional.substring(0, modaConvencional.length - 2);
         } else
-            modaConcatenada = "NÃO TEM MODA";
+            modaConvencional = "NÃO TEM MODA";
+    } else {
+        if (objeto.Moda.modaCovencional != null) {
+            objeto.Moda.modaCovencional.forEach(function (item) {
+                modaConvencional += item + " - ";
+            });
+            modaConvencional = modaConvencional.substring(0, modaConvencional.length - 2);
+
+            objeto.Moda.modaKing.forEach(function (item) {
+                modaKing += item + " - ";
+            });
+            modaKing = modaKing.substring(0, modaKing.length - 2);
+
+            objeto.Moda.modaCzuber.forEach(function (item) {
+                modaCzuber += item + " - ";
+            });
+            modaCzuber = modaCzuber.substring(0, modaCzuber.length - 2);
+
+            modaPearson = objeto.Moda.modaPearson;
+        } else {
+            modaConvencional = "NÃO TEM MODA";
+            modaKing = "NÃO TEM MODA";
+            modaCzuber = "NÃO TEM MODA";
+            modaPearson = "NÃO TEM MODA";
+        }
+    }
 
         $("#dadosMediaModaMediana tbody").append($("<tr>",{
                                                      html: [$("<td>",{
@@ -40,8 +67,22 @@
                                                             $("<td>",{
                                                                 html: [objeto.Mediana]
                                                             }),
-                                                            $("<td>",{
-                                                                html: [modaConcatenada]
+                                                         $("<td>", {
+                                                             html: [modaConvencional]
                                                             })]
-                                                 }));
+    }));
+
+    if (!Array.isArray(objeto.Moda)) {
+        $("#dadosMediaModaMediana thead tr").append(
+            $("<th>", { html: ["Moda Person"] }),
+            $("<th>", { html: ["Moda King"] }),
+            $("<th>", { html: ["Moda Czuber"] })
+        );
+        $("#dadosMediaModaMediana tbody tr").append(
+            $("<td>", { html: [modaPearson] }),
+            $("<td>", { html: [modaKing] }),
+            $("<td>", { html: [modaCzuber] }),
+        );
+    }
+
 </script>

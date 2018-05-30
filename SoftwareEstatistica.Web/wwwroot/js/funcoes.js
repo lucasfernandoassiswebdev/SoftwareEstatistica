@@ -179,7 +179,7 @@ function medidasEstatisticasContinua(dados, tipo) {
         let pontoMedio = (dadosColetados[dadosColetados.length - 1].FrA + 1) / 2;
 
         for (let i = 0; i < dadosColetados.length; i++)
-            if (dadosColetados[i].FrA >= pontoMedio && i != 0) {
+            if (dadosColetados[i].FrA >= pontoMedio ) {
                 if (i != 0) {
                     mediana = dadosColetados[i].Pontos[0] + (((
                         (dadosColetados[dadosColetados.length - 1].FrA / 2)
@@ -237,21 +237,21 @@ function medidasEstatisticasContinua(dados, tipo) {
             maiorFr = dado.Fr;
             modas.modaCovencional = [dado.Pontos[0] + ((dado.Pontos[1] - dado.Pontos[0]) / 2)];
         } else if (dado.Fr == maiorFr)
-            modas.modaCovencional.push((dado.Pontos[0] + ((dado.Pontos[1] - dado.Pontos[0]) / 2)));
+            modas.modaCovencional.push((dado.Pontos[0] + ((dado.Pontos[1] - dado.Pontos[0]) / 2)).toFixed(2));
     });
 
     //moda pearson
-    modas.modaPearson = (3 * mediana) - (2 * media);
+    modas.modaPearson = ((3 * mediana) - (2 * media)).toFixed(2);
 
     //moda king
     dadosColetados.forEach(function (dado, index) {
         if (index != 0 && (index != dadosColetados.length - 1)) {
             if (dado.Fr == maiorFr) {
-                modas.modaKing.push(dado.Pontos[0] + ((
+                modas.modaKing.push((dado.Pontos[0] + ((
                     (dadosColetados[index + 1].Fr)
                     / (dadosColetados[index + 1].Fr + dadosColetados[index - 1].Fr)
                 ) * (dado.Pontos[1] - dado.Pontos[0])
-                ));
+                )).toFixed(2));
             }
         }
     });
@@ -259,10 +259,11 @@ function medidasEstatisticasContinua(dados, tipo) {
     //Moda Czuber
     dadosColetados.forEach(function (dado, index) {
         if (index != 0 && (index != dadosColetados.length - 1))
-            if (dado.Fr == maiorFr)
-                modas.modaCzuber.push(dado.Pontos[0] + ((dado.Fr - dadosColetados[index + 1].Fr)
+            if (dado.Fr == maiorFr) {
+                modas.modaCzuber.push((dado.Pontos[0] + (((dado.Fr - dadosColetados[index - 1].Fr)
                     / ((dado.Fr - dadosColetados[index - 1].Fr) + (dado.Fr - dadosColetados[index + 1].Fr))
-                ));
+                ) * (dado.Pontos[1] - dado.Pontos[0]))).toFixed(2));
+            }
     });
 
     //Desvio Padrao
@@ -279,7 +280,7 @@ function medidasEstatisticasContinua(dados, tipo) {
 
     return {
         Media: media,
-        Modas: modas,
+        Moda: modas,
         Mediana: mediana,
         DesvioPadrao: desvioPadrao,
         CoeficienteDeVariacao: coeficienteDeVariacao
@@ -361,7 +362,6 @@ function montaGrafico(type, dados, context, titulo) {
             b: corSorteada.b
         };
     });
-
     return new Chart(context, {
         type: type,
         data: {

@@ -5,7 +5,7 @@
 
     <div class="scroll">
 
-        <table class="tabela highlight" id="dadosOrdenados" style="margin-bottom: 30px">
+        <table class="tabela highlight" id="tabela" style="margin-bottom: 30px">
             <thead>
                 <tr>
                     <td>VaP</td>
@@ -23,7 +23,7 @@
 
     <script>
         JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g,'"'))).forEach(function(item){
-            $("#dadosOrdenados tbody").append($("<tr>",{
+            $("#tabela tbody").append($("<tr>",{
                 html: [ $("<td>",{
                             html: [item.Var]
                         }),
