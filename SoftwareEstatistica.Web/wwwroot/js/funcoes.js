@@ -401,7 +401,7 @@ function distribuicaoUniforme(minimo, maximo, variavel, tipo, maiorQue, menorQue
         desvioPadrao = Math.sqrt(((maximoC - minimoC) ^ 2) / 2),
         de = media - desvioPadrao,
         ate = media + desvioPadrao,
-        porcentagemNormalidade = (desvioPadrao / media) * 100,
+        cv = (desvioPadrao / media) * 100,
         intervalo = 0;
 
     if (variavel)
@@ -420,7 +420,7 @@ function distribuicaoUniforme(minimo, maximo, variavel, tipo, maiorQue, menorQue
         zonaNormalidade: {
             de: de.toFixed(2),
             ate: ate.toFixed(2),
-            porcentagem: porcentagemNormalidade.toFixed(2)
+            cv: cv.toFixed(2)
         },
         probabilidade: ((1 / (maximoC - minimoC)) * intervalo) * 100
     };
