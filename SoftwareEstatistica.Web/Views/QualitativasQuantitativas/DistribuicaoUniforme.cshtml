@@ -1,0 +1,132 @@
+﻿<div id="formulario-distribuicao-uniforme" class="row center">
+    <form class="col s4 offset-s4">
+        <div class="areaDados">
+            <div class="container">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="minimo" type="text">
+                        <label for="minimo">Mínimo:</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="maximo" type="text">
+                        <label for="maximo">Máximo:</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <select id="selectIntervalo">
+                            <option value="" disabled selected>Escolha uma opção:</option>
+                            <option value="E">Entre</option>
+                            <option value="I">Igual a</option>
+                            <option value="MA">Maior que</option>
+                            <option value="ME">Menor que</option>
+                        </select>
+                        <label>Intervalo:</label>
+                    </div>
+                </div>
+                <div class="row" id="camposVariaveis">
+                    <div class="input-field col s6">
+                        <input id="campoVariavel" type="text">
+                        <label for="campoVariavel" id="labelCampoVariavel"></label>
+                    </div>
+                </div>
+                <div id="campoIntervalo">
+                    <div class="row" id="entre">
+                        <div class="input-field col s6">
+                            <input id="maiorQue" type="text">
+                            <label for="maiorQue">Maior que:</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="menorQue" type="text">
+                            <label for="menorQue">Menor que:</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s6 offset-s2">
+                        <a class="waves-effect waves-light btn right blue-grey darken-2" style="margin-bottom: 10px;" id="btnEnviaDadosDistribuicaoUniforme">
+                            <i class="material-icons right">send</i>
+                            Enviar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="row center">
+    <div class="col s4 offset-s4">
+        <div class="areaDados" style="margin-top: 40px; display: none" id="resultadoDistribuicaoUnifomre">
+            <table class="tabela highlight" id="dadosDistribuicaoUniforme">
+                <thead>
+                    <tr>
+                        <th>Probabilidade</th>
+                        <th>Media</th>
+                        <th>Desvio PAdrão</th>
+                        <th>De(ZN):</th>
+                        <th>Até(ZN):</th>
+                        <th>%(ZN):</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#selectIntervalo").change(function () {
+        if ($(this).val() != "E") {
+            $("#campoIntervalo").fadeOut("fast");
+            $("#camposVariaveis").fadeIn("fast");
+        } else {
+            $("#campoIntervalo").fadeIn("fast");
+            $("#camposVariaveis").fadeOut("fast");
+        }
+
+        if ($(this).val() == "I")
+            $("#labelCampoVariavel").text("Igual a:");
+        else if ($(this).val() == "MA")
+            $("#labelCampoVariavel").text("Maior que:");
+        else if ($(this).val() == "ME")
+            $("#labelCampoVariavel").text("Menor que:");
+    });
+
+    $("#btnEnviaDadosDistribuicaoUniforme").click(function () {
+        const dados = distribuicaoUniforme($("#minimo").val(),
+            $("#maximo").val(),
+            $("#selectIntervalo").val() != "E" ? $("#campoVariavel").val() : false,
+            $("#selectIntervalo").val(),
+            $("#maiorQue").val(),
+            $("#menorQue").val());
+
+        $("#dadosDistribuicaoUniforme tbody").append($("<tr>", {
+            html: [
+                $("<td>", {
+                    html: [dados.probabilidade + "%"]
+                }),
+                $("<td>", {
+                    html: [dados.media]
+                }),
+                $("<td>", {
+                    html: [dados.desvioPadrao]
+                }),
+                $("<td>", {
+                    html: [dados.zonaNormalidade.de]
+                }),
+                $("<td>", {
+                    html: [dados.zonaNormalidade.ate]
+                }),
+                $("<td>", {
+                    html: [dados.zonaNormalidade.porcentagem + "%"]
+                }),
+                $("<td>", {
+                    html: [dados.probabilidade]
+                })
+            ]
+        }));
+
+        $("#resultadoDistribuicaoUnifomre").fadeIn("fast");
+    });
+</script>

@@ -31,5 +31,10 @@ namespace SoftwareEstatistica.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult DistribuicaoUniforme()
+        {
+            return View();
+        }
     }
 }

@@ -25,3 +25,9 @@ $("#distribuicaoBinomial").click(function () {
         $("#corpoSite").html(data);
     }).fail(erro);
 });
+
+$("#distribuicaoUniforme").click(function () {
+    $.get('/QualitativasQuantitativas/DistribuicaoUniforme').done(function (data) {
+        $("#corpoSite").html(data);
+    }).fail(erro);
+});

@@ -179,7 +179,7 @@ function medidasEstatisticasContinua(dados, tipo) {
         let pontoMedio = (dadosColetados[dadosColetados.length - 1].FrA + 1) / 2;
 
         for (let i = 0; i < dadosColetados.length; i++)
-            if (dadosColetados[i].FrA >= pontoMedio ) {
+            if (dadosColetados[i].FrA >= pontoMedio) {
                 if (i != 0) {
                     mediana = dadosColetados[i].Pontos[0] + (((
                         (dadosColetados[dadosColetados.length - 1].FrA / 2)
@@ -391,6 +391,39 @@ function distribuicaoBinomial(quantidaden, sucessop, quantidadex, opcaoDistribui
     const porcentagem = (fatorial(quantidaden) / fatorial(sucessop) * fatorial(quantidaden - sucessop)) * Math.pow(porcentagemSucesso, sucessop) * Math.pow(porcentagemFracasso, quantidaden - sucessop) * 100;
 
     return opcaoDistribuicao == "s" ? porcentagem : 100 - porcentagem;
+}
+
+function distribuicaoUniforme(minimo, maximo, variavel, tipo, maiorQue, menorQue) {
+    const minimoC = parseFloat(minimo),
+        maximoC = parseFloat(maximo);
+
+    var media = (minimoC + maximoC) / 2,
+        desvioPadrao = Math.sqrt(((maximoC - minimoC) ^ 2) / 2),
+        de = media - desvioPadrao,
+        ate = media + desvioPadrao,
+        porcentagemNormalidade = (desvioPadrao / media) * 100,
+        intervalo = 0;
+
+    if (variavel)
+        if (tipo == "MA")
+            intervalo = maximoC - variavel;
+        else if (tipo == "ME")
+            intervalo = variavel - minimoC;
+        else
+            intervalo = variavel;
+    else
+        intervalo = maiorQue - menorQue;
+
+    return {
+        media: media,
+        desvioPadrao: desvioPadrao.toFixed(2),
+        zonaNormalidade: {
+            de: de.toFixed(2),
+            ate: ate.toFixed(2),
+            porcentagem: porcentagemNormalidade.toFixed(2)
+        },
+        probabilidade: ((1 / (maximoC - minimoC)) * intervalo) * 100
+    };
 }
 
 function fatorial(n) {

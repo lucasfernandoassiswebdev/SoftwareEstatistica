@@ -65,9 +65,8 @@
         });
 
         $("#varPesquisada, #divChips input")
-            .keyup(function (event) { 
+            .keyup(function (event) {
                 if (event.which == 13) {
-                    let dadosSeparados = [];
                     let dadosChips = M.Chips.getInstance($(".chips"));
                     let dadoSepardo = dadosChips.chipsData[dadosChips.chipsData.length - 1].tag.split(/\s*;\s*/);
                     if (dadoSepardo.length > 1) {
