@@ -41,10 +41,16 @@
 </div>
 
 <div id="resultados" class="row center" style="padding: 0 15px">
-    <div id="roladicionado" class="row col m2"></div>
-    <div id="frequenciaadcionada" class="row col m5"></div>
-    <div id="graficoadicionado" class="row col m5"></div>
-    <div id="mediamodamedianaadicionada" class="row col m5"></div>
+    <div id="roladicionado" class="row col s12"></div>
+    <div id="frequenciaadcionada" class="row col s12"></div>
+    <div id="mediamodamedianaadicionada" class="row col s12"></div>
+</div>
+<a class="btn-floating btn-large red btn-grafico">
+    <i class="large material-icons">insert_chart</i>
+</a>
+<div id="leyer-sobreposto" class="leyer-sobreposto">
+    <div id="fundo-leyer" class="fundo-leyer"></div>
+    <div id="graficoadicionado" class="container"></div>
 </div>
 
 @section Scripts{
@@ -94,11 +100,11 @@
                 dadosColetados.push(parseFloat(item.tag));
             });
 
-            $.get("/Quantitativas/Rol", {
+            $.post("/Quantitativas/Rol", {
                 jsonDadosColetados: JSON.stringify(dadosColetados.sort(function (a, b) { return a - b }))
             }).done(function (data) {
                 $("#roladicionado").append($("<div>", {
-                    class: "col m12 areaDados",
+                    class: "col s12 areaDados",
                     html: [data]
                 }));
             }).fail(erro);
@@ -112,46 +118,47 @@
                         dadosPGrafico.push(dado.Var);
                 });
 
-                mediaModaMediana = medidasEstatisticasContinua(dadosColetados.sort(function (a, b) { return a - b }), "A");
+                mediaModaMediana = medidasEstatisticasContinua(dadosColetados.sort(function (a, b) { return a - b }), $("input[name=radioTipo]:checked").val());
             }
             else {
                 frequencia = calculaFrequencias(dadosColetados.sort(function (a, b) { return a - b }));
-                mediaModaMediana = medidasEstatisticasDiscreta(dadosColetados.sort(function (a, b) { return a - b }), "A");
+                mediaModaMediana = medidasEstatisticasDiscreta(dadosColetados.sort(function (a, b) { return a - b }), $("input[name=radioTipo]:checked").val());
                 dadosPGrafico = dadosColetados;
             }
+            console.log($("input[name=radioTipo]:checked").val());
 
-            $.get("/QualitativasQuantitativas/Tabela", {
+            $.post("/QualitativasQuantitativas/Tabela", {
                 jsonDadosColetados: JSON.stringify(frequencia)
             }).done(function (data) {
                 $("#frequenciaadcionada").append($("<div>", {
-                    class: "col m12 areaDados",
+                    class: "col s12 areaDados",
                     html: [data]
                 }));
             }).fail(erro);
 
-            $.get("/Quantitativas/MediaModaMediana", {
+            $.post("/Quantitativas/MediaModaMediana", {
                 jsonDadosColetados: JSON.stringify(mediaModaMediana),
                 amostra: $("input[name=radioTipo]:checked").val()
             }).done(function (data) {
                 $("#mediamodamedianaadicionada").append($("<div>", {
-                    class: "col m12 areaDados",
+                    class: "col s12 areaDados",
                     html: [data]
                 }));
             }).fail(erro);
 
-            $.get("/Quantitativas/Grafico", {
+            $.post("/Quantitativas/Grafico", {
                 jsonDadosColetados: JSON.stringify(dadosPGrafico.sort(function (a, b) { return a - b }))
             }).done(function (data) {
                 $("#graficoadicionado").append($("<div>", {
-                    class: "col m12 areaDados",
-                    html: [$("<h4>", {
-                        style: "text-align: left",
+                    class: "col s12 areaDados",
+                    html: [$("<h5>", {
                         html: ["Gráfico"]
                     }), data]
                 }));
                 }).fail(erro);
 
             $("#resultados, #retornar").show();
+            $(".btn-grafico").show();
         });
 
         function ExibeAjuda() {

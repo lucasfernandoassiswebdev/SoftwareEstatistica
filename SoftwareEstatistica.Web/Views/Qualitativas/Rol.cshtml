@@ -9,24 +9,20 @@
 
 <script>
     var dadosOrdenados = '@ViewBag.Ordenar' != ""
-                            ? JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g,'"'))).sort()
-                            : JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g,'"'))),
-        coluna = 0;
+        ? JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g, '"'))).sort()
+        : JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g, '"')));
 
-    dadosOrdenados.forEach(function(dado,index){
-        if(index % 2 == 0 || index == 0){
-            $("#dadosOrdenados").append($("<tr>",{
-                html: [$("<td>"),$("<td>")]
-            }));
-
-            coluna = 0;
+    dadosOrdenados.forEach(function (dado, index) {
+        if (index == 0 || index == parseInt((dadosOrdenados.length/2 ))) {
+            $("#dadosOrdenados").append($("<tr>"));
         }
 
-        $("#dadosOrdenados tr:last-child td:eq("+coluna+")").html(dado);
-        coluna++;
+        $("#dadosOrdenados tr:last-child").append($("<td>", {
+            html:[dado]
+        }));
     });
 
-    $.get("/QualitativasQuantitativas/Tabela",{
+    $.post("/QualitativasQuantitativas/Tabela",{
         jsonDadosColetados: JSON.stringify(calculaFrequencias(dadosOrdenados))
     }).done(function(data){
         $("#frequenciaadcionada").append($("<div>",{
@@ -35,17 +31,15 @@
         }));
     }).fail(erro);
 
-    $.get("/Qualitativas/Grafico",{
+    $.post("/Qualitativas/Grafico",{
         jsonDadosColetados: JSON.stringify(montaInformacoesGrafico(dadosOrdenados))
     }).done(function(data){
         $("#graficoadicionado").append($("<div>",{
             class: "col s12 areaDados",
-            html: [$("<h4>",{
-                style: "text-align: left",
+            html: [$("<h5>",{
                 html: ["Gráfico"]
             }),data]
         }));
     }).fail(erro);
 
-    $("#resultados, #retornar").show();
 </script>

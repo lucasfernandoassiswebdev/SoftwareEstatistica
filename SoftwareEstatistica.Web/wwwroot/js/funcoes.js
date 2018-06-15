@@ -63,13 +63,18 @@ function calculaFrequenciasContinua(dados) {
         });
     }
 
-    objContinua.forEach(function (dadoD) {
-        objTabela.forEach(function (dado) {
+    objContinua.forEach(function (dadoD, indexC) {
+        let checkR = false;
+        objTabela.forEach(function (dado, index) {
             if (dado.Var >= dadoD.Pontos[0] && dado.Var < dadoD.Pontos[1]) {
                 dadoD.Fr += parseFloat(dado.Fr);
                 dadoD.FrP = (parseFloat(dadoD.FrP) + parseFloat(dado.FrP)).toFixed(2).toString() + "%";
                 dadoD.FrA = dado.FrA;
                 dadoD.FrAP = dado.FrAP;
+                checkR = true;
+            } else if (index == objTabela.length - 1 && !checkR) {
+                dadoD.FrA = objContinua[indexC - 1].FrA;
+                dadoD.FrAP = objContinua[indexC - 1].FrAP;
             }
         });
     });
@@ -142,7 +147,7 @@ function medidasEstatisticasDiscreta(dados, tipo) {
         desvioPadrao += (Math.pow(parseFloat(dado.Var) - parseFloat(media), 2) * parseFloat(dado.Fr));
     });
 
-    if (!tipo == "A")
+    if (tipo == "P")
         desvioPadrao = Math.sqrt(desvioPadrao / dadosColetados[dadosColetados.length - 1].FrA).toFixed(2);
     else
         desvioPadrao = Math.sqrt(desvioPadrao / (dadosColetados[dadosColetados.length - 1].FrA - 1)).toFixed(2);
@@ -271,7 +276,7 @@ function medidasEstatisticasContinua(dados, tipo) {
         desvioPadrao += Math.pow((dado.Pontos[0] + ((dado.Pontos[1] - dado.Pontos[0]) / 2)) - parseFloat(media), 2) * parseFloat(dado.Fr);
     });
 
-    if (!tipo == "A")
+    if (tipo == "P")
         desvioPadrao = Math.sqrt(desvioPadrao / dadosColetados[dadosColetados.length - 1].FrA).toFixed(2);
     else
         desvioPadrao = Math.sqrt(desvioPadrao / (dadosColetados[dadosColetados.length - 1].FrA - 1)).toFixed(2);

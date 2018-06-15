@@ -60,9 +60,16 @@
     <div class="col s8 offset-s2 areaDados"></div>
 </div>
 <div id="resultados" class="row center qualitativa" style="padding: 0 15px">
-    <div id="roladicionado" class="row col s3"></div>
-    <div id="frequenciaadcionada" class="row col s4"></div>
-    <div id="graficoadicionado" class="row col s5"></div>
+    <div id="roladicionado" class="row col s12"></div>
+    <div id="frequenciaadcionada" class="row col s12"></div>
+</div>
+
+<a class="btn-floating btn-large red btn-grafico">
+    <i class="large material-icons">insert_chart</i>
+</a>
+<div id="leyer-sobreposto" class="leyer-sobreposto">
+    <div id="fundo-leyer" class="fundo-leyer"></div>
+    <div id="graficoadicionado" class="container"></div>
 </div>
 
 @section Scripts{
@@ -90,7 +97,7 @@
                     let dadoSepardo = dadosChips.chipsData[dadosChips.chipsData.length - 1].tag.split(/\s*;\s*/);
                     if (dadoSepardo.length > 1) {
                         dadosChips.deleteChip(dadosChips.chipsData.length - 1);
-                        dadoSepardo.forEach(function (item) { 
+                        dadoSepardo.forEach(function (item) {
                             dadosChips.addChip({
                                 tag: item
                             });
@@ -113,7 +120,7 @@
             if ($("input[name=radioTipoQualitativa]:checked").val() == "N") {
                 $("#ordinal").hide();
 
-                $.get("/Qualitativas/Rol", {
+                $.post("/Qualitativas/Rol", {
                     jsonDadosColetados: JSON.stringify(dadosColetados),
                     ordenar: "S"
                 }).done(function (data) {
@@ -125,7 +132,7 @@
             } else {
                 $("#ordinal").show();
 
-                $.get("/Qualitativas/Ordinal", {
+                $.post("/Qualitativas/Ordinal", {
                     jsonDadosColetados: JSON.stringify(dadosColetados),
                     ordenar: ""
                 }).done(function (data) {
@@ -135,6 +142,8 @@
                     }));
                 }).fail(erro);
             }
+            $("#resultados, #retornar").show();
+            $(".btn-grafico").show();
         });
 
         function ExibeAjuda() {

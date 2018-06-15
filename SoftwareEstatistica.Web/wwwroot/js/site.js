@@ -18,6 +18,14 @@ $("#retornar").click(function () {
     $("#resultados").hide("fast", function () {
         $("#fomulario-dados").show();
     });
+    $(".btn-grafico").hide();
+    $("#resultados div div, #ordinal div div, #leyer-sobreposto div div").remove();
+});
 
-    $("#resultados div div, #ordinal div div").remove();
+$(".btn-grafico").click(function () {
+    $("#leyer-sobreposto").css("display", "flex");
+});
+
+$("#fundo-leyer").click(function () {
+    $("#leyer-sobreposto").hide();
 });

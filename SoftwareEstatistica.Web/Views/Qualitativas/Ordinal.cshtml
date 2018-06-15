@@ -80,7 +80,7 @@
             });
         });
 
-        $.get("/Qualitativas/Rol", {
+        $.post("/Qualitativas/Rol", {
                 jsonDadosColetados: JSON.stringify(dadosColetados),
             }).done(function(data){
                 $("#roladicionado").append($("<div>",{

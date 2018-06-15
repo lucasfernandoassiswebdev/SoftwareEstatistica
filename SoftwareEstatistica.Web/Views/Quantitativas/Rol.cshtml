@@ -9,16 +9,13 @@
     var dadosOrdenados = JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g,'"'))),
         coluna = 0;
 
-    dadosOrdenados.forEach(function(dado,index){
-        if(index % 2 == 0 || index == 0){
-            $("#dadosOrdenados").append($("<tr>",{
-                html: [$("<td>"),$("<td>")]
-            }));
-
-            coluna = 0;
+    dadosOrdenados.forEach(function (dado, index) {
+        if (index == 0 || index == parseInt((dadosOrdenados.length / 2))) {
+            $("#dadosOrdenados").append($("<tr>"));
         }
 
-        $("#dadosOrdenados tr:last-child td:eq("+coluna+")").html(dado);
-        coluna++;
+        $("#dadosOrdenados tr:last-child").append($("<td>", {
+            html: [dado]
+        }));
     });
 </script>
