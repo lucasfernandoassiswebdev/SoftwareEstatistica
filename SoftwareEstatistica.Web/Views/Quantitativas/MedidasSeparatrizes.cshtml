@@ -1,0 +1,56 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<div class="medidasSeparatrizes">
+    <h5>Medidas Separatrizes</h5>
+    <div class="input-field col s12" style="margin-bottom:10px;">
+        <select id="select_medidasSep">
+            <option value="Q">Quartil</option>
+            <option value="K">Quintil</option>
+            <option value="D">Decil</option>
+            <option value="P">Porcentil</option>
+        </select>
+        <input id="valueMed" type="number" min="1" max="4" value="1">
+    </div>
+    <a id="analisarMed" class="waves-effect waves-light btn">Analisar</a>
+    <div class="row" style="margin: 20px 0;">
+        <p id="resulMedMenor" class="col s1">0</p>
+        <div class="progress red col s10" style="margin:20px 0">
+            <div id="linhaMed" class="determinate green" style="width: 100%"></div>
+        </div>
+        <p id="resulMedMaior" class="col s1">0</p>
+    </div>
+</div>
+
+    <script>
+        let tabela = JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g, '"')));
+        $(document).ready(function () {
+            $("#select_medidasSep").formSelect();
+        });
+        $("#select_medidasSep").change(function () {
+            $("#valueMed").val(0);
+            switch (this.value) {
+                case "Q": $("#valueMed").attr("max", 4);
+                    break;
+                case "K": $("#valueMed").attr("max", 5);
+                    break;
+                case "D": $("#valueMed").attr("max", 10);
+                    break;
+                case "P": $("#valueMed").attr("max", 100);
+                    break;
+            }
+        });
+        $("#analisarMed").click(function () {
+            let med = parseInt($("#valueMed").val());
+            let maxMed = parseInt($("#valueMed").attr("max"));
+            let linha = (med * 100) / maxMed;
+            let value = medidaSeparatrizes(med, maxMed, tabela, "@ViewBag.Tipo");
+            $("#resulMedMenor").html("- " + value);
+            $("#resulMedMaior").html("+ " + value);
+            $("#linhaMed").css("width", linha.toString() + "%");
+        });
+    </script>

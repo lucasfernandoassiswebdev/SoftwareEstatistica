@@ -183,7 +183,7 @@ function medidasEstatisticasContinua(dados, tipo) {
     if (dadosColetados[dadosColetados.length - 1].FrA % 2 != 0) {
         let pontoMedio = (dadosColetados[dadosColetados.length - 1].FrA + 1) / 2;
 
-        for (let i = 0; i < dadosColetados.length; i++)
+        for (let i = 0; i < dadosColetados.length; i++) {
             if (dadosColetados[i].FrA >= pontoMedio) {
                 if (i != 0) {
                     mediana = dadosColetados[i].Pontos[0] + (((
@@ -192,10 +192,14 @@ function medidasEstatisticasContinua(dados, tipo) {
                         * (dadosColetados[i].Pontos[1] - dadosColetados[i].Pontos[0]));
                     break;
                 } else {
-                    mediana = (dadosColetados[i].Pontos[1] - dadosColetados[i].Pontos[0]);
+                    mediana = dadosColetados[i].Pontos[0] + (((
+                        (dadosColetados[dadosColetados.length - 1].FrA / 2)
+                        - 0) / dadosColetados[i].Fr)
+                        * (dadosColetados[i].Pontos[1] - dadosColetados[i].Pontos[0]));
                     break;
                 }
             }
+        }
     } else {
         let pontoMedio1 = (dadosColetados[dadosColetados.length - 1].FrA) / 2,
             pontoMedio2 = pontoMedio1 + 1,
@@ -210,7 +214,10 @@ function medidasEstatisticasContinua(dados, tipo) {
                         * (dadosColetados[i].Pontos[1] - dadosColetados[i].Pontos[0]));
                     checkPM1 = true;
                 } else {
-                    mediana += (dadosColetados[i].Pontos[1] - dadosColetados[i].Pontos[0]);
+                    mediana += dadosColetados[i].Pontos[0] + (((
+                        (dadosColetados[dadosColetados.length - 1].FrA / 2)
+                        - 0) / dadosColetados[i].Fr)
+                        * (dadosColetados[i].Pontos[1] - dadosColetados[i].Pontos[0]));
                     checkPM1 = true;
                 }
             }
@@ -224,7 +231,10 @@ function medidasEstatisticasContinua(dados, tipo) {
 
                     checkPM2 = true;
                 } else if (i == 0) {
-                    mediana += (dadosColetados[i].Pontos[1] - dadosColetados[i].Pontos[0]);
+                    mediana += dadosColetados[i].Pontos[0] + (((
+                        (dadosColetados[dadosColetados.length - 1].FrA / 2)
+                        - 0) / dadosColetados[i].Fr)
+                        * (dadosColetados[i].Pontos[1] - dadosColetados[i].Pontos[0]));
                     checkPM2 = true;
                 }
             }
@@ -250,25 +260,54 @@ function medidasEstatisticasContinua(dados, tipo) {
 
     //moda king
     dadosColetados.forEach(function (dado, index) {
-        if (index != 0 && (index != dadosColetados.length - 1)) {
-            if (dado.Fr == maiorFr) {
+        if (dado.Fr == maiorFr) {
+            if (index != 0 && (index != dadosColetados.length - 1)) {
                 modas.modaKing.push((dado.Pontos[0] + ((
                     (dadosColetados[index + 1].Fr)
                     / (dadosColetados[index + 1].Fr + dadosColetados[index - 1].Fr)
                 ) * (dado.Pontos[1] - dado.Pontos[0])
                 )).toFixed(2));
+            } else if (index == 0 && (index == dadosColetados.length - 1)) {
+                modas.modaKing.push((dado.Pontos[0] + ((0)
+                ) * (dado.Pontos[1] - dado.Pontos[0])
+                ).toFixed(2));
+            } else if (index == 0) {
+                modas.modaKing.push((dado.Pontos[0] + ((
+                    (dadosColetados[index + 1].Fr)
+                    / (dadosColetados[index + 1].Fr + 0)
+                ) * (dado.Pontos[1] - dado.Pontos[0])
+                )).toFixed(2));
+            } else if ((index == dadosColetados.length - 1)) {
+                modas.modaKing.push((dado.Pontos[0] + ((
+                    (0
+                    / (0 + dadosColetados[index - 1].Fr)
+                ) * (dado.Pontos[1] - dado.Pontos[0])
+                ))).toFixed(2));
             }
         }
     });
 
     //Moda Czuber
     dadosColetados.forEach(function (dado, index) {
-        if (index != 0 && (index != dadosColetados.length - 1))
-            if (dado.Fr == maiorFr) {
+        if (dado.Fr == maiorFr) {
+            if (index != 0 && (index != dadosColetados.length - 1)) {
                 modas.modaCzuber.push((dado.Pontos[0] + (((dado.Fr - dadosColetados[index - 1].Fr)
                     / ((dado.Fr - dadosColetados[index - 1].Fr) + (dado.Fr - dadosColetados[index + 1].Fr))
                 ) * (dado.Pontos[1] - dado.Pontos[0]))).toFixed(2));
+            } else if (index == 0 && (index == dadosColetados.length - 1)) {
+                modas.modaCzuber.push((dado.Pontos[0] + (((dado.Fr - 0)
+                    / ((dado.Fr - 0) + (dado.Fr - 0))
+                ) * (dado.Pontos[1] - dado.Pontos[0]))).toFixed(2));
+            } else if (index == 0) {
+                modas.modaCzuber.push((dado.Pontos[0] + (((dado.Fr - 0)
+                    / ((dado.Fr - 0) + (dado.Fr - dadosColetados[index + 1].Fr))
+                ) * (dado.Pontos[1] - dado.Pontos[0]))).toFixed(2));
+            } else if ((index == dadosColetados.length - 1)) {
+                modas.modaCzuber.push((dado.Pontos[0] + (((dado.Fr - dadosColetados[index - 1].Fr)
+                    / ((dado.Fr - dadosColetados[index - 1].Fr) + (dado.Fr - 0))
+                ) * (dado.Pontos[1] - dado.Pontos[0]))).toFixed(2));
             }
+        }
     });
 
     //Desvio Padrao
@@ -438,4 +477,27 @@ function fatorial(n) {
         return 1;
     else
         return (n * fatorial(n - 1));
+}
+
+
+function medidaSeparatrizes(med, maxMed, frequencia, tipo) {
+    let indexMed = 0;
+    let value = 0;
+    let posMed = (med * frequencia[frequencia.length - 1].FrA) / maxMed;
+    let checkMed = false;
+    frequencia.forEach(function (dado, index) {
+        if (dado.FrA >= posMed && !checkMed) {
+            value = (dado.Var).toString();
+            indexMed = index;
+            checkMed = true;
+        }
+    });
+    if (tipo == "C") {
+        if (indexMed != 0) {
+            value = (frequencia[indexMed].Pontos[0] + (((posMed - frequencia[indexMed - 1].FrA) / parseInt(frequencia[indexMed].Fr)) * (frequencia[indexMed].Pontos[1] - frequencia[indexMed].Pontos[0]))).toFixed(2);
+        } else {
+            value = (frequencia[indexMed].Pontos[0] + (((posMed - 0) / parseInt(frequencia[indexMed].Fr)) * (frequencia[indexMed].Pontos[1] - frequencia[indexMed].Pontos[0]))).toFixed(2);
+        }
+    }
+    return value;
 }

@@ -13,6 +13,17 @@ namespace SoftwareEstatistica.Web.Controllers
             return PartialView("Rol");
         }
 
+        public ActionResult MedidasSeparatrizes(string jsonDadosColetados, string tipo)
+        {
+            ViewBag.Tipo = tipo;
+            ViewBag.Dados = jsonDadosColetados;
+
+            if (string.IsNullOrEmpty(jsonDadosColetados))
+                return Error("Nenhum dado foi fornecido!");
+
+            return PartialView("MedidasSeparatrizes");
+        }
+
         public ActionResult Grafico(string jsonDadosColetados)
         {
             if (string.IsNullOrEmpty(jsonDadosColetados))

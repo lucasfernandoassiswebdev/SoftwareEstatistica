@@ -44,6 +44,7 @@
     <div id="roladicionado" class="row col s12"></div>
     <div id="frequenciaadcionada" class="row col s12"></div>
     <div id="mediamodamedianaadicionada" class="row col s12"></div>
+    <div id="medidasseparatrizes" class="row col s12"></div>
 </div>
 <a class="btn-floating btn-large red btn-grafico">
     <i class="large material-icons">insert_chart</i>
@@ -58,6 +59,7 @@
         $("#slide-out").css("transform", "translateX(-105%)");
         $("body").css("overflow", "");
         $("#retornar").hide();
+        let frequencia = [];
 
         var primeiraVez = true;
 
@@ -91,7 +93,6 @@
 
         $("#btnEnviaDados").click(function () {
             let dadosColetados = [],
-                frequencia,
                 mediaModaMediana;
 
             $("#fomulario-dados").hide();
@@ -125,7 +126,6 @@
                 mediaModaMediana = medidasEstatisticasDiscreta(dadosColetados.sort(function (a, b) { return a - b }), $("input[name=radioTipo]:checked").val());
                 dadosPGrafico = dadosColetados;
             }
-            console.log($("input[name=radioTipo]:checked").val());
 
             $.post("/QualitativasQuantitativas/Tabela", {
                 jsonDadosColetados: JSON.stringify(frequencia)
@@ -157,9 +157,23 @@
                 }));
                 }).fail(erro);
 
+            $.get("/Quantitativas/MedidasSeparatrizes", {
+                jsonDadosColetados: JSON.stringify(frequencia), tipo : "@ViewBag.Tipo"
+            })
+                .done(function (data) {
+                    $("#medidasseparatrizes").append($("<div>", {
+                        class: "col s12 areaDados",
+                        html: [data]
+                    }));
+                })
+                .fail(erro);
+
+
             $("#resultados, #retornar").show();
             $(".btn-grafico").show();
         });
+
+        
 
         function ExibeAjuda() {
             M.Toast.dismissAll();
