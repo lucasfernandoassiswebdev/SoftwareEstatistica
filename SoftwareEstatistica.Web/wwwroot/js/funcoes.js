@@ -428,13 +428,26 @@ function montaGrafico(type, dados, context, titulo) {
     });
 }
 
-function distribuicaoBinomial(quantidaden, sucessop, quantidadex, opcaoDistribuicao) {
-    const porcentagemSucesso = (quantidaden - sucessop) / 10,
-        porcentagemFracasso = quantidadex / 10;
-
-    const porcentagem = (fatorial(quantidaden) / fatorial(sucessop) * fatorial(quantidaden - sucessop)) * Math.pow(porcentagemSucesso, sucessop) * Math.pow(porcentagemFracasso, quantidaden - sucessop) * 100;
-
-    return opcaoDistribuicao == "s" ? porcentagem : 100 - porcentagem;
+function distribuicaoBinomial(quantidaden, sucessop, quantidadex, opcaoSucessoErro, opcaoDistribuicao) {
+    if (opcaoSucessoErro != "s") {
+        sucessop = 100 - sucessop;
+    }
+    let porcentSoc =  sucessop/ 100;
+    let porcentErro = 1 - porcentSoc;
+    let result = 0;
+    result = (fatorial(quantidaden) / (fatorial(quantidadex) * fatorial(quantidaden - quantidadex))) * Math.pow(porcentSoc, quantidadex) * Math.pow(porcentErro, quantidaden - quantidadex);
+    if (opcaoDistribuicao == "maq") {
+        for (var i = parseFloat(quantidadex) + 1; i <= parseFloat(quantidaden); i++) {
+            result += (fatorial(quantidaden) / (fatorial(i) * fatorial(quantidaden - i))) * Math.pow(porcentSoc, i) * Math.pow(porcentErro, quantidaden - i);
+        }
+    } else if (opcaoDistribuicao == "meq") {
+        debugger;
+        for (var i = 0; i <= parseFloat(quantidadex) - 1; i++) {
+            result += (fatorial(quantidaden) / (fatorial(i) * fatorial(quantidaden - i))) * Math.pow(porcentSoc, i) * Math.pow(porcentErro, quantidaden - i);
+        }
+    }
+    result = (result * 100).toFixed(2);
+    return result;
 }
 
 function distribuicaoUniforme(minimo, maximo, variavel, tipo, maiorQue, menorQue) {
