@@ -98,7 +98,7 @@
             $("#fomulario-dados").hide();
 
             M.Chips.getInstance($(".chips")).chipsData.forEach(function (item) {
-                dadosColetados.push(parseFloat(item.tag));
+                dadosColetados.push(parseFloat(item.tag.replace(",",".")));
             });
 
             $.post("/Quantitativas/Rol", {

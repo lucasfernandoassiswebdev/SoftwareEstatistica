@@ -105,7 +105,7 @@ function medidasEstatisticasDiscreta(dados, tipo) {
     });
 
     if (moda.length == dadosColetados.length)
-        moda = null;
+        moda = [null];
 
     //Media
     media = (media / parseInt(dadosColetados[dadosColetados.length - 1].FrA)).toFixed(2);
@@ -310,6 +310,8 @@ function medidasEstatisticasContinua(dados, tipo) {
         }
     });
 
+    if (modas.modaCovencional.length == dadosColetados.length)
+        modas = { modaCovencional: null, modaPearson: null, modaKing: null, modaCzuber: null };
     //Desvio Padrao
     dadosColetados.forEach(function (dado) {
         desvioPadrao += Math.pow((dado.Pontos[0] + ((dado.Pontos[1] - dado.Pontos[0]) / 2)) - parseFloat(media), 2) * parseFloat(dado.Fr);
@@ -441,7 +443,6 @@ function distribuicaoBinomial(quantidaden, sucessop, quantidadex, opcaoSucessoEr
             result += (fatorial(quantidaden) / (fatorial(i) * fatorial(quantidaden - i))) * Math.pow(porcentSoc, i) * Math.pow(porcentErro, quantidaden - i);
         }
     } else if (opcaoDistribuicao == "meq") {
-        debugger;
         for (var i = 0; i <= parseFloat(quantidadex) - 1; i++) {
             result += (fatorial(quantidaden) / (fatorial(i) * fatorial(quantidaden - i))) * Math.pow(porcentSoc, i) * Math.pow(porcentErro, quantidaden - i);
         }

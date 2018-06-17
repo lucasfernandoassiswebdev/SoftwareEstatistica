@@ -20,9 +20,8 @@
 <script>
         var objeto = JSON.parse(String('@ViewBag.Dados'.replace(/&quot;/g,'"'))),
         modaConvencional = "", modaPearson = "", modaKing = "", modaCzuber = "";
-
     if (Array.isArray(objeto.Moda)) {
-        if (objeto.Moda != null) {
+        if (objeto.Moda[0] != null) {
             objeto.Moda.forEach(function (item) {
                 modaConvencional += item + " - ";
             });
