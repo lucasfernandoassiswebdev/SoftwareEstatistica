@@ -51,33 +51,31 @@
                     </div>
                 </div>
             </div>
+            <div class="row center">
+                <div class="col s12">
+                    <div style="margin:20px; display: none" id="resultadoDistribuicaoUnifomre">
+                        <table class="tabela highlight" id="dadosDistribuicaoUniforme">
+                            <thead>
+                                <tr>
+                                    <th>Probabilidade</th>
+                                    <th>Media</th>
+                                    <th>Desvio Padrão</th>
+                                    <th>CV</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
-</div>
-
-<div class="row center">
-    <div class="col s4 offset-s4">
-        <div class="areaDados" style="margin-top: 40px; display: none" id="resultadoDistribuicaoUnifomre">
-            <table class="tabela highlight" id="dadosDistribuicaoUniforme">
-                <thead>
-                    <tr>
-                        <th>Probabilidade</th>
-                        <th>Media</th>
-                        <th>Desvio PAdrão</th>
-                        <th>De(ZN):</th>
-                        <th>Até(ZN):</th>
-                        <th>%(ZN):</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
-    </div>
 </div>
 
 <script>
 
     $("#slide-out").css("transform", "translateX(-105%)");
+    $("body").css("overflow", "");
 
     $("#selectIntervalo").change(function () {
         if ($(this).val() != "E") {
@@ -103,7 +101,7 @@
             $("#selectIntervalo").val(),
             $("#maiorQue").val(),
             $("#menorQue").val());
-
+        $("#dadosDistribuicaoUniforme tbody tr").remove();
         $("#dadosDistribuicaoUniforme tbody").append($("<tr>", {
             html: [
                 $("<td>", {
@@ -116,16 +114,7 @@
                     html: [dados.desvioPadrao]
                 }),
                 $("<td>", {
-                    html: [dados.zonaNormalidade.de]
-                }),
-                $("<td>", {
-                    html: [dados.zonaNormalidade.ate]
-                }),
-                $("<td>", {
                     html: [dados.zonaNormalidade.cv + "%"]
-                }),
-                $("<td>", {
-                    html: [dados.probabilidade]
                 })
             ]
         }));

@@ -280,8 +280,8 @@ function medidasEstatisticasContinua(dados, tipo) {
             } else if ((index == dadosColetados.length - 1)) {
                 modas.modaKing.push((dado.Pontos[0] + ((
                     (0
-                    / (0 + dadosColetados[index - 1].Fr)
-                ) * (dado.Pontos[1] - dado.Pontos[0])
+                        / (0 + dadosColetados[index - 1].Fr)
+                    ) * (dado.Pontos[1] - dado.Pontos[0])
                 ))).toFixed(2));
             }
         }
@@ -434,7 +434,7 @@ function distribuicaoBinomial(quantidaden, sucessop, quantidadex, opcaoSucessoEr
     if (opcaoSucessoErro != "s") {
         sucessop = 100 - sucessop;
     }
-    let porcentSoc =  sucessop/ 100;
+    let porcentSoc = sucessop / 100;
     let porcentErro = 1 - porcentSoc;
     let result = 0;
     result = (fatorial(quantidaden) / (fatorial(quantidadex) * fatorial(quantidaden - quantidadex))) * Math.pow(porcentSoc, quantidadex) * Math.pow(porcentErro, quantidaden - quantidadex);
@@ -454,23 +454,31 @@ function distribuicaoBinomial(quantidaden, sucessop, quantidadex, opcaoSucessoEr
 function distribuicaoUniforme(minimo, maximo, variavel, tipo, maiorQue, menorQue) {
     const minimoC = parseFloat(minimo),
         maximoC = parseFloat(maximo);
-
     var media = (minimoC + maximoC) / 2,
-        desvioPadrao = Math.sqrt(((maximoC - minimoC) ^ 2) / 2),
+        desvioPadrao = Math.sqrt(Math.pow((maximoC - minimoC), 2) / 12),
         de = media - desvioPadrao,
         ate = media + desvioPadrao,
         cv = (desvioPadrao / media) * 100,
+        intervaloAmostra = (1 / (maximoC - minimoC)),
         intervalo = 0;
-
-    if (variavel)
+    if (variavel) {
         if (tipo == "MA")
             intervalo = maximoC - variavel;
         else if (tipo == "ME")
             intervalo = variavel - minimoC;
         else
-            intervalo = variavel;
-    else
-        intervalo = maiorQue - menorQue;
+            intervalo = 0;
+        if (variavel > maximoC || variavel < minimoC)
+            intervaloAmostra = 0;
+    } else {
+        intervalo = parseFloat(maiorQue) - parseFloat(menorQue);
+        if (parseFloat(maiorQue) > maximoC || parseFloat(maiorQue) < minimoC || parseFloat(menorQue) > maximoC || parseFloat(menorQue) < minimoC) {
+            intervaloAmostra = 0;
+        }
+        if (intervalo < 0) {
+            intervalo = 0;
+        }
+    }
 
     return {
         media: media,
@@ -480,7 +488,7 @@ function distribuicaoUniforme(minimo, maximo, variavel, tipo, maiorQue, menorQue
             ate: ate.toFixed(2),
             cv: cv.toFixed(2)
         },
-        probabilidade: ((1 / (maximoC - minimoC)) * intervalo) * 100
+        probabilidade: (((intervaloAmostra) * intervalo) * 100).toFixed(2)
     };
 }
 
