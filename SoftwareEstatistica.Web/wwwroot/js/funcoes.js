@@ -25,9 +25,9 @@ function calculaFrequenciasContinua(dados) {
         maior = objTabela[objTabela.length - 1].Var,
         menor = objTabela[0].Var,
         quatLinhas = Math.trunc(Math.sqrt(objTabela[objTabela.length - 1].FrA));
-
+    debugger;
     let intervalo = 0,
-        at = maior - menor + 1,
+        at = maior - menor + 0.1,
         checkI;
 
     do {
@@ -44,7 +44,7 @@ function calculaFrequenciasContinua(dados) {
             checkI = true;
         }
 
-        at++;
+        at = parseFloat((at + 0.1).toFixed(2));
     } while (!(checkI))
 
     const objContinua = [{
@@ -250,7 +250,7 @@ function medidasEstatisticasContinua(dados, tipo) {
     dadosColetados.forEach(function (dado) {
         if (dado.Fr > maiorFr) {
             maiorFr = dado.Fr;
-            modas.modaCovencional = [dado.Pontos[0] + ((dado.Pontos[1] - dado.Pontos[0]) / 2)];
+            modas.modaCovencional = [(dado.Pontos[0] + ((dado.Pontos[1] - dado.Pontos[0]) / 2)).toFixed(2)];
         } else if (dado.Fr == maiorFr)
             modas.modaCovencional.push((dado.Pontos[0] + ((dado.Pontos[1] - dado.Pontos[0]) / 2)).toFixed(2));
     });
