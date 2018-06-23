@@ -595,3 +595,74 @@ function medidaSeparatrizes(med, maxMed, frequencia, tipo) {
     }
     return value;
 }
+
+function correlacao(idependente, dependente) {
+    let tabelaDispercao = [];
+    let somatoriaDispercao = { "X": 0, "Y": 0, "XY": 0, "X2": 0, "Y2": 0 };
+    let influencia = { coeficiente: "", direcao: "", forca: "" };
+    if (idependente.length != dependente.length) {
+        return "Valores não correspondem";
+    }
+    idependente.forEach(function (item, index) {
+        tabelaDispercao.push({
+            "X": parseFloat(item.toFixed(2)), "Y": parseFloat(dependente[index].toFixed(2)), "XY": parseFloat((item * dependente[index]).toFixed(2)),
+            "X2": parseFloat(Math.pow(item, 2).toFixed(2)), "Y2": parseFloat(Math.pow(dependente[index], 2).toFixed(2))
+        });
+        somatoriaDispercao["X"] += item;
+        somatoriaDispercao["Y"] += dependente[index];
+        somatoriaDispercao["XY"] += (item * dependente[index]);
+        somatoriaDispercao["X2"] += Math.pow(item, 2);
+        somatoriaDispercao["Y2"] += Math.pow(dependente[index], 2);
+    });
+    influencia["coeficiente"] = (((idependente.length * somatoriaDispercao["XY"]) - (somatoriaDispercao["X"] * somatoriaDispercao["Y"])) /
+        (Math.sqrt((idependente.length * somatoriaDispercao["X2"]) - Math.pow(somatoriaDispercao["X"], 2)) *
+            Math.sqrt((idependente.length * somatoriaDispercao["Y2"]) - Math.pow(somatoriaDispercao["Y"], 2))
+        )).toFixed(2);
+    if (parseFloat(influencia["coeficiente"]) < 0) {
+        influencia["direcao"] = "Negativo(Inversa)";
+    } else {
+        influencia["direcao"] = "Positivo(Direta)";
+    }
+
+    if (parseFloat(influencia["coeficiente"]) == 1 || parseFloat(influencia["coeficiente"]) == -1) {
+        influencia["forca"] = "Perfeita";
+    } else if (parseFloat(influencia["coeficiente"] == 0)) {
+        influencia["forca"] = "Nula";
+    } else if (parseFloat(influencia["coeficiente"]) < -0.50 || parseFloat(influencia["coeficiente"]) > 0.50) {
+        influencia["forca"] = "Forte";
+    } else {
+        influencia["forca"] = "Fraca";
+    }
+    return {
+        tabelaDis: tabelaDispercao,
+        somatoriaDis: somatoriaDispercao,
+        valoresInfluencia: influencia
+    };
+}
+
+function regressao(dadosDispercao) {
+    let m = (((dadosDispercao["tabelaDis"].length * dadosDispercao["somatoriaDis"]["XY"]) -
+        (dadosDispercao["somatoriaDis"]["X"] * dadosDispercao["somatoriaDis"]["Y"])) /
+        ((dadosDispercao["tabelaDis"].length * dadosDispercao["somatoriaDis"]["X2"]) -
+            (Math.pow(dadosDispercao["somatoriaDis"]["X"], 2)))
+    );
+    let b = (dadosDispercao["somatoriaDis"]["Y"] / dadosDispercao["tabelaDis"].length) -
+        (m * (dadosDispercao["somatoriaDis"]["X"] / dadosDispercao["tabelaDis"].length));
+    let maior = 0, menor = 0, posicoes = [];
+    dadosDispercao["tabelaDis"].forEach(function (item, index) {
+        if (index == 0) {
+            maior = item["X"];
+            menor = item["X"];
+        } else {
+            if (item["X"] > maior)
+                maior = item["X"];
+            if (item["X"] < menor)
+                menor = item["X"];
+        }
+    });
+    return {
+        equacaoRetaIlustrativa: "Y = " + m.toFixed(3) + "X + " + b.toFixed(3),
+        valorB: b,
+        valorM: m
+    };
+}

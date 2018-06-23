@@ -37,3 +37,11 @@ $("#distribuicaoNormal").click(function () {
         $("#corpoSite").html(data);
     }).fail(erro);
 });
+
+
+
+$("#correlacaoReg").click(function () {
+    $.get('/CorrelacaoRegrecao/FomularioCorReg').done(function (data) {
+        $("#corpoSite").html(data);
+    }).fail(erro);
+});

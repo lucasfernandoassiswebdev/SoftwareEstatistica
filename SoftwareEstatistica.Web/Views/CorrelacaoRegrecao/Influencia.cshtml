@@ -1,0 +1,24 @@
+﻿<div class="mediamodamediana">
+    <h5>Dados</h5>
+    <div class="scroll">
+        <table class="tabela highlight" id="dadosInfluencia">
+            <thead>
+                <tr>
+                    <th>Coeficiente</th>
+                    <th>Influência</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+<script>
+    var objeto = JSON.parse(String('@ViewBag.dados'.replace(/&quot;/g, '"')));
+    $("#dadosInfluencia tbody").append($("<tr>", {
+        html: [$("<td>", {
+            html: objeto["coeficiente"]
+        }), $("<td>", {
+                html: "Correlação " + objeto["direcao"] + " e " + objeto["forca"]
+        })]
+    }));
+</script>

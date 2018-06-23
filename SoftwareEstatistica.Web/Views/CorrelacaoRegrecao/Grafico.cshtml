@@ -1,0 +1,32 @@
+﻿<canvas id="graficoCorrelacao" class="grafico"></canvas>
+<script>
+    let dados = JSON.parse(String('@ViewBag.dadosGrafico'.replace(/&quot;/g, '"')));
+    let dadosRegressao = [];
+    dados.X.forEach(function (item) {
+        dadosRegressao.push((parseFloat((dados.M * item) + dados.B).toFixed(2)));
+    });
+    let chartCor = new Chart("graficoCorrelacao", {
+        type: "line",
+        data: {
+            labels: dados.X,
+            datasets: [{
+                label: "CORRELAÇÃO",
+                data: dados.Y,
+                fill: false
+            },
+            {
+                label: "REGRESSÃO",
+                data: dadosRegressao,
+                borderColor: "rgb(78, 86, 99)",
+                fill: false
+            }]
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    });
+</script>

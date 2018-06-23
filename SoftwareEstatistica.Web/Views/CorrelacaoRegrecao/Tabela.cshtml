@@ -1,0 +1,45 @@
+﻿@{ Layout = null; }
+
+<div class="frequencia">
+    <h5>Tabela</h5>
+
+    <div class="scroll">
+
+        <table class="tabela highlight" id="tabela" style="margin-bottom: 30px">
+            <thead>
+                <tr>
+                    <td>X</td>
+                    <td>Y</td>
+                    <td>XY</td>
+                    <td>X²</td>
+                    <td>Y²</td>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+        JSON.parse(String('@ViewBag.dadosTabela'.replace(/&quot;/g,'"'))).forEach(function(item){
+            $("#tabela tbody").append($("<tr>",{
+                html: [ $("<td>",{
+                            html: [item["X"]]
+                        }),
+                        $("<td>",{
+                            html: [item["Y"]]
+                        }),
+                        $("<td>",{
+                            html: [item["XY"]]
+                        }),
+                        $("<td>",{
+                            html: [item["X2"]]
+                        }),
+                        $("<td>",{
+                            html: [item["Y2"]]
+                        }) ]
+            }));
+        });
+</script>
+

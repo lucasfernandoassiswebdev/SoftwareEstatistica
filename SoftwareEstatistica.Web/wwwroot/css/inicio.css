@@ -1,0 +1,46 @@
+body{
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+.scope{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.icon_center{
+    width: 200px;
+    height: 200px;
+    font-size: 150px;
+    margin: 0 20px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    color: black;
+    box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.3);
+    opacity: 0.6;
+}
+.icon_center:hover{    
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.3);
+    opacity: 0.8;
+}
+
+.titulo{
+    position: absolute;
+    top: 60px;
+}
+
+p{
+    margin: 0;
+    font-size: 20px;
+    text-align: center;
+}
