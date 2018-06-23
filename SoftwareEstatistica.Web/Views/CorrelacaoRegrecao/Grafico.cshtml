@@ -1,4 +1,7 @@
-﻿<canvas id="graficoCorrelacao" class="grafico"></canvas>
+﻿<h5>Correlação</h5>
+<canvas id="graficoCorrelacao" class="grafico"></canvas>
+<h5>Regressão</h5>
+<canvas id="graficoRegressao" class="grafico"></canvas>
 <script>
     let dados = JSON.parse(String('@ViewBag.dadosGrafico'.replace(/&quot;/g, '"')));
     let dadosRegressao = [];
@@ -13,10 +16,25 @@
                 label: "CORRELAÇÃO",
                 data: dados.Y,
                 fill: false
-            },
+            }]
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    });
+
+    let chartReg = new Chart("graficoRegressao", {
+        type: "line",
+        data: {
+            labels: [dados.X[0], dados.X[dados.length - 1]],
+            datasets: [
             {
-                label: "REGRESSÃO",
-                data: dadosRegressao,
+                    label: "REGRESSÃO",
+                    data: [dadosRegressao[0], dadosRegressao[dadosRegressao.length - 1]],
                 borderColor: "rgb(78, 86, 99)",
                 fill: false
             }]
