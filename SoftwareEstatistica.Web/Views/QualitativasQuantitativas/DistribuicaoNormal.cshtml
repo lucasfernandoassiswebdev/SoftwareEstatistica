@@ -4,12 +4,12 @@
             <div class="container">
                 <div class="row">
                     <div class="input-field col s6">
-                        <input id="minimo" type="text">
-                        <label for="minimo">Mínimo:</label>
+                        <input id="desPadrao" type="text">
+                        <label for="desPadrao">Desvio Padrão:</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="maximo" type="text">
-                        <label for="maximo">Máximo:</label>
+                        <input id="media" type="text">
+                        <label for="media">Media:</label>
                     </div>
                 </div>
                 <div class="row">
@@ -17,7 +17,6 @@
                         <select id="selectIntervalo">
                             <option value="" disabled selected>Escolha uma opção:</option>
                             <option value="E">Entre</option>
-                            <option value="I">Igual a</option>
                             <option value="MA">Maior que</option>
                             <option value="ME">Menor que</option>
                         </select>
@@ -50,22 +49,7 @@
                         </a>
                     </div>
                 </div>
-            </div>
-            <div class="row center">
-                <div class="col s12">
-                    <div style="margin:20px; display: none" id="resultadoDistribuicaoUnifomre">
-                        <table class="tabela highlight" id="dadosDistribuicaoUniforme">
-                            <thead>
-                                <tr>
-                                    <th>Probabilidade</th>
-                                    <th>Media</th>
-                                    <th>Desvio Padrão</th>
-                                    <th>CV</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
+                <div class="row center" id="resultadoDistribuicaoNormal">
                 </div>
             </div>
         </div>
@@ -73,7 +57,6 @@
 </div>
 
 <script>
-
     $("#slide-out").css("transform", "translateX(-105%)");
     $("body").css("overflow", "");
 
@@ -95,30 +78,19 @@
     });
 
     $("#btnEnviaDadosDistribuicaoUniforme").click(function () {
-        const dados = distribuicaoUniforme($("#minimo").val(),
-            $("#maximo").val(),
-            $("#selectIntervalo").val() != "E" ? $("#campoVariavel").val() : false,
-            $("#selectIntervalo").val(),
-            $("#maiorQue").val(),
-            $("#menorQue").val());
-        $("#dadosDistribuicaoUniforme tbody tr").remove();
-        $("#dadosDistribuicaoUniforme tbody").append($("<tr>", {
-            html: [
-                $("<td>", {
-                    html: [dados.probabilidade + "%"]
-                }),
-                $("<td>", {
-                    html: [dados.media]
-                }),
-                $("<td>", {
-                    html: [dados.desvioPadrao]
-                }),
-                $("<td>", {
-                    html: [dados.zonaNormalidade.cv + "%"]
-                })
-            ]
-        }));
-
-        $("#resultadoDistribuicaoUnifomre").fadeIn("fast");
+        let dados = "";
+        if ($("#selectIntervalo").val() == "E") {
+            dados = distribuicaoNormal(parseFloat($("#desPadrao").val()), parseFloat($("#media").val()), [parseFloat($("#maiorQue").val()), parseFloat($("#menorQue").val())]);
+        } else if ($("#selectIntervalo").val() == "MA") {
+            dados = distribuicaoNormal(parseFloat($("#desPadrao").val()), parseFloat($("#media").val()), parseFloat($("#campoVariavel").val()), "MA");
+        } else if ($("#selectIntervalo").val() == "ME") {
+            dados = distribuicaoNormal(parseFloat($("#desPadrao").val()), parseFloat($("#media").val()), parseFloat($("#campoVariavel").val()));
+        }
+        $("#resultadoDistribuicaoNormal").html("").append($("<p>",
+            {
+                html: ["A porcentagem é: " + dados + "%"]
+            }));
     });
 </script>
+
+

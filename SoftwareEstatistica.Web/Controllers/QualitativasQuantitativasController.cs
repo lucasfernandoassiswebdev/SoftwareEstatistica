@@ -36,5 +36,10 @@ namespace SoftwareEstatistica.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult DistribuicaoNormal()
+        {
+            return View();
+        }
     }
 }

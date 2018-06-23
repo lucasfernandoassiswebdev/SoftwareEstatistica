@@ -31,3 +31,9 @@ $("#distribuicaoUniforme").click(function () {
         $("#corpoSite").html(data);
     }).fail(erro);
 });
+
+$("#distribuicaoNormal").click(function () {
+    $.get('/QualitativasQuantitativas/DistribuicaoNormal').done(function (data) {
+        $("#corpoSite").html(data);
+    }).fail(erro);
+});
